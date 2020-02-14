@@ -6,7 +6,7 @@ a web micro-framework.
 
 ## Team
 
-- MEMBER1
+- Chris Tremblay
 - MEMBER2
 - MEMBER3
 - MEMBER4
