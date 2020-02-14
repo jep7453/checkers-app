@@ -8,7 +8,7 @@ a web micro-framework.
 
 - Chris Tremblay
 - Scott Court
-- MEMBER3
+- Jonathan Pofcher
 - MEMBER4
 
 
