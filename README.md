@@ -7,7 +7,7 @@ a web micro-framework.
 ## Team
 
 - Chris Tremblay
-- MEMBER2
+- Scott Court
 - MEMBER3
 - MEMBER4
 
