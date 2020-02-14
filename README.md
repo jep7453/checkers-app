@@ -8,8 +8,8 @@ a web micro-framework.
 
 - Chris Tremblay
 - Scott Court
-- Jonathan Pofcher
-- MEMBER4
+- MEMBER3
+- Kesa Abbas Lnu
 
 
 ## Prerequisites
