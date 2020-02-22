@@ -18,6 +18,7 @@ public class Game {
   public Game(Player redPlayer, Player whitePlayer) {
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
+    this.board = new Checkerboard();
   }
 
   /** Gets the Player playing as red.
