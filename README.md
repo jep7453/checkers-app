@@ -9,7 +9,7 @@ a web micro-framework.
 - Chris Tremblay
 - Scott Court
 - Jonathan Pofcher
-- Sree Jupudy
+- Sreeram Jupudy
 - Kesa Abbas Lnu
 
 
