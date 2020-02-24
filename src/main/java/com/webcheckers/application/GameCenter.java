@@ -1,5 +1,8 @@
 package com.webcheckers.application;
 
+import com.webcheckers.model.Game;
+import com.webcheckers.model.Player;
+
 import java.util.ArrayList;
 
 /**
@@ -10,44 +13,68 @@ import java.util.ArrayList;
 public class GameCenter {
 
     /** List of all users currently signed in */
-    private ArrayList<String> playersSignedIn;
+    private ArrayList<Player> playersSignedIn;
+
+    /** Players playing a game */
+    private ArrayList<Player> currentlyPlaying;
 
     /**
      * Create a new GameCenter object
      */
     public GameCenter(){
         playersSignedIn = new ArrayList<>();
+        currentlyPlaying = new ArrayList<>();
     }
 
     /**
-     * Checks to see if a players user name is currently in user
+     * Checks to see if a player is signed in
      *
-     * @param userID the user id to check for
+     * @param player the user id to check for
      * @return true if signed in, false if not
      */
-    public synchronized boolean isSignedIn( String userID ){
-        return( playersSignedIn.contains(userID ) );
+    public synchronized boolean isSignedIn( Player player ){
+        return( playersSignedIn.contains(player ) );
     }
 
     /**
      * Adds a player to the signed in list
      *
-     * @param userID username to add
+     * @param player username to add
      */
-    public synchronized void signIn( String userID ){
-        playersSignedIn.add(userID);
+    public synchronized void signIn( Player player ){
+        playersSignedIn.add(player);
     }
 
     /**
      * Checks to see if player is signed in, if so
      * removes players user name from list
      *
-     * @param userID user name to sign out
+     * @param player user name to sign out
      */
-    public synchronized void signOut(String userID){
-        if( isSignedIn(userID ) ){
-            playersSignedIn.remove(userID);
+    public synchronized void signOut( Player player  ) {
+        if (isSignedIn(player)) {
+            playersSignedIn.remove(player);
         }
     }
 
+    /**
+     * Check to see if a player is currently playing a game or not
+     *
+     * @param player player to check for
+     * @return true if player is currently playing a game
+     */
+    public boolean isCurrentlyPlaying( Player player ){
+        return currentlyPlaying.contains(player);
+    }
+
+    /**
+     * Get a new game between players
+     *
+     * @param player1 first player
+     * @param player2 second player
+     * @return a new game object
+     */
+    public Game getGame( Player player1, Player player2 ){
+        return new Game(player1, player2);
+    }
 }
