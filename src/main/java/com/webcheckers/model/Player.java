@@ -23,5 +23,20 @@ public class Player {
     return new String(this.name);
   }
 
+  @Override
+  public boolean equals(Object o) {
+    Player that;
+    if (! o.getClass().equals(this.getClass())) {
+      return false;
+    }
+    that = (Player) o;
+    return this.name.equals(that.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return name.hashCode();
+  }
+
 }
 
