@@ -13,6 +13,8 @@ public class PlayerServices {
 
     private Player opponent;
 
+    private Player thisPlayer;
+
     /**
      * Create a new PlayerServices
      * @param gameCenter the game center for the whole game
@@ -27,6 +29,7 @@ public class PlayerServices {
      */
     public void finishedGame(){
         this.game = null;
+        this.opponent = null;
     }
 
     /**
@@ -39,13 +42,13 @@ public class PlayerServices {
 
     /**
      * Get the current game or a new game, or nothing if there is no opponent
-     * @return a new game, or null if there is not an opponent set
+     * @return a new game, or null if there is not an opponent stored
      */
     public Game currentGame(){
         if(this.opponent == null)
             return (null);
         if(this.game == null)
-            return (gameCenter.getGame(new Player(""), opponent));
+            return (gameCenter.getGame( thisPlayer, opponent));
         return (game);
     }
 }
