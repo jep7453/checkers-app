@@ -22,7 +22,7 @@
 
      <form action="./signinname" method="POST">
         <br/>
-        <input name="userName" />
+        <input name="myUserName" />
         <br/><br/>
         <button type="submit">Sign In</button>
       </form>
