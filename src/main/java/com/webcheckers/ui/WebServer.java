@@ -58,6 +58,10 @@ public class WebServer {
    * The URL pattern to request the Sign in Page.
    */
   public static final String SIGN_IN_URL = "/signin";
+  /**
+   * The URL pattern to post a username.
+   */
+  public static final String SIGN_IN_NAME_URL = "/signinname";
   //
   // Attributes
   //
@@ -144,8 +148,9 @@ public class WebServer {
     get(HOME_URL, new GetHomeRoute(templateEngine));
     // Shows the Sign In page.
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
+    // Post a Sign in.
+    post(SIGN_IN_NAME_URL, new PostSignInNameRoute(templateEngine));
 
-    //
     LOG.config("WebServer is initialized.");
   }
 
