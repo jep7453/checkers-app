@@ -6,10 +6,14 @@ import java.util.List;
 
 /**
 * The following classes implement the UML for the board  data structures required for the game.
- * author: Kesa Abbas Lnu
+ * @author: Kesa Abbas Lnu
  * */
 
-    public class BoardView implements Iterable<Row>{
+/**
+ * Implementing the Row and space classes to intialize the board view.
+ */
+
+public class BoardView implements Iterable<Row>{
 
         private List<Row> rows;
 
@@ -27,8 +31,11 @@ import java.util.List;
             rows.add(new Row(7));
         }
 
-        //Implementing the iterator class to return the initailized the rows.
-        public Iterator<Row> iterator() {
+    /**Implementing the iterator class to return the initailized the rows.
+     *
+     * @return rows intialized
+     */
+    public Iterator<Row> iterator() {
             return rows.iterator();
         }
     }

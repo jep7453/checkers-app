@@ -9,6 +9,10 @@ public class Space {
     private Piece piece;
     private int rowIdx;
 
+    /**
+     *Intialising the values for the Cell and Row Index
+     */
+
     public Space(int cellIdx, int rowIdx) {
         this.cellIdx = cellIdx;
         this.rowIdx = rowIdx;
@@ -18,6 +22,8 @@ public class Space {
         return cellIdx;
     }
 
+    /*Checking to see if the specific row and coulumn does exist
+     */
     public boolean isValid(){
         if((rowIdx + cellIdx) % 2 == 0 && piece == null) return true;
         return false;

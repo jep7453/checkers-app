@@ -6,12 +6,17 @@ import java.util.List;
 
 /**
  *The row class implements the Iterator class.
- * It intialses the rows and spaces on the checkers board.**/
+ * It intialses the rows and spaces on the checkers board.
+ * author : Kesa Abbas Lnu**/
 public class Row implements Iterable<Space> {
 
     private int index;
     private List<Space> spaces;
 
+
+/**
+ * Definning the constructor which intialises the a space on the board with the cell index.
+ * This method creates the object **/
     public Row(int index) {
         this.index = index;
         spaces = new ArrayList<Space>();
@@ -27,10 +32,14 @@ public class Row implements Iterable<Space> {
     }
 
     public Iterator<Space> iterator() {
+
         return spaces.iterator();
     }
 
+    /**
+     * Getting the index for intializing the rows.**/
     public int getIndex() {
+
         return index;
     }
 }

@@ -6,6 +6,7 @@ package com.webcheckers.ui;
  * Initializing the pieces to fetch the values **/
 public class Piece {
 
+    //Definning the Enumerators for the Colors and the type of the checker pieces.
 
     public enum Type{
         SINGLE, KING
@@ -15,6 +16,7 @@ public class Piece {
         RED, WHITE
     }
 
+    // Definning the types for the data structures.
     private final Type type;
     private final Color color;
 
@@ -24,10 +26,12 @@ public class Piece {
     }
 
     public Type getType() {
+
         return type;
     }
 
     public Color getColor() {
+
         return color;
     }
 }
