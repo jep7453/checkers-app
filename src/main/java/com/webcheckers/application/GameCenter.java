@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class GameCenter {
 
     /** List of all users currently signed in */
-    private ArrayList<Player> playersSignedIn;
+    private ArrayList<String> playersSignedIn;
 
     /** Players playing a game */
-    private ArrayList<Player> currentlyPlaying;
+    private ArrayList<String> currentlyPlaying;
 
     /**
      * Create a new GameCenter object
@@ -32,7 +32,7 @@ public class GameCenter {
      * @param player the user id to check for
      * @return true if signed in, false if not
      */
-    public synchronized boolean isSignedIn( Player player ){
+    public synchronized boolean isSignedIn( String player ){
         return( playersSignedIn.contains(player ) );
     }
 
@@ -41,7 +41,7 @@ public class GameCenter {
      *
      * @param player username to add
      */
-    public synchronized void signIn( Player player ){
+    public synchronized void signIn( String player ){
         playersSignedIn.add(player);
     }
 
@@ -51,7 +51,7 @@ public class GameCenter {
      *
      * @param player user name to sign out
      */
-    public synchronized void signOut( Player player  ) {
+    public synchronized void signOut( String player  ) {
         if (isSignedIn(player)) {
             playersSignedIn.remove(player);
         }
@@ -63,7 +63,7 @@ public class GameCenter {
      * @param player player to check for
      * @return true if player is currently playing a game
      */
-    public boolean isCurrentlyPlaying( Player player ){
+    public boolean isCurrentlyPlaying( String player ){
         return currentlyPlaying.contains(player);
     }
 
@@ -82,7 +82,7 @@ public class GameCenter {
      * Get the list of players currently signed in
      * @return the ArrayList of players currently signed in
      */
-    public ArrayList<Player> getPlayers() {
+    public synchronized ArrayList<String> getPlayers() {
         return playersSignedIn;
     }
 }
