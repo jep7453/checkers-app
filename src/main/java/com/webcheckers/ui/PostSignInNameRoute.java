@@ -5,13 +5,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.model.Player;
+import spark.*;
 
 import com.webcheckers.util.Message;
+
+import static spark.Spark.halt;
 
 /**
  * The UI Controller to POST the SignIn page.
@@ -27,7 +26,7 @@ public class PostSignInNameRoute implements Route {
 
     private static final String USER_NAME = "userName";
     private static final String USER_PARAM = "myUserName";
-
+    private static final String CURRENT_USER= "currentUser";
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
@@ -53,28 +52,30 @@ public class PostSignInNameRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        LOG.finer("GetHomeRoute is invoked.");
+        LOG.finer("PostSignInName is invoked.");
         //
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Welcome!");
 
-
+        final Session httpSession = request.session();
 
         // retrieve username
         final String userName = request.queryParams(USER_PARAM);
 
         //error check username
-        if(userName == null || !userName.matches("^[a-zA-Z0-9]*$"))
+        if(userName == null || !userName.matches("^[a-zA-Z0-9]*$") || userName=="")
         {
             vm.put("message", Message.info("Error: Please enter a correctly formated username"));
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
 
         }
-
-        // display a username
-        vm.put("message", Message.info(userName));
+        //create player with input userName
+        final Player player = new Player(userName);
+        httpSession.attribute("currentUser",player);
 
         // render the View
-        return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+        response.redirect(WebServer.HOME_URL);
+        halt();
+        return null;
     }
 }
