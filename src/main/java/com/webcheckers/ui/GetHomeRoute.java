@@ -5,11 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.model.Player;
+import spark.*;
 
 import com.webcheckers.util.Message;
 
@@ -22,6 +19,8 @@ public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+
+  private static final String CURRENT_USER= "currentUser";
 
   private final TemplateEngine templateEngine;
 
@@ -55,6 +54,13 @@ public class GetHomeRoute implements Route {
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
 
+    final Session httpSession = request.session();
+
+    final Player currentUser = httpSession.attribute("currentUser");
+    if (currentUser != null) {
+      vm.put("currentUser", currentUser);
+      httpSession.removeAttribute("currentUser");
+    }
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
 
