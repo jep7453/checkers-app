@@ -77,4 +77,12 @@ public class GameCenter {
     public Game getGame( Player player1, Player player2 ){
         return new Game(player1, player2);
     }
+
+    /**
+     * Get the list of players currently signed in
+     * @return the ArrayList of players currently signed in
+     */
+    public ArrayList<Player> getPlayers() {
+        return playersSignedIn;
+    }
 }

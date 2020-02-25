@@ -15,6 +15,8 @@ public class PlayerServices {
 
     private Player thisPlayer;
 
+    private boolean isSignedIn;
+
     /**
      * Create a new PlayerServices
      * @param gameCenter the game center for the whole game
@@ -22,6 +24,7 @@ public class PlayerServices {
     public PlayerServices( GameCenter gameCenter ){
         this.gameCenter = gameCenter;
         this.game = null;
+        this.isSignedIn = false;
     }
 
     /**
