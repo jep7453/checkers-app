@@ -58,6 +58,22 @@ public class GameCenter {
     }
 
     /**
+     * Allow GameCenter to know that a player started playing
+     * @param name player playing game
+     */
+    public synchronized void playerStartedPlayingGame( String name ){
+        currentlyPlaying.add(name);
+    }
+
+    /**
+     * Allow GameCenter to know that a player is not currently playing a game
+     * @param name the name of player who finished a game
+     */
+    public synchronized void playerFinishedPlayingGame( String name ){
+        currentlyPlaying.remove(name);
+    }
+
+    /**
      * Check to see if a player is currently playing a game or not
      *
      * @param player player to check for
