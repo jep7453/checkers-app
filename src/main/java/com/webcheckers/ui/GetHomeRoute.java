@@ -59,7 +59,6 @@ public class GetHomeRoute implements Route {
     final Player currentUser = httpSession.attribute("currentUser");
     if (currentUser != null) {
       vm.put("currentUser", currentUser);
-      httpSession.removeAttribute("currentUser");
     }
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
