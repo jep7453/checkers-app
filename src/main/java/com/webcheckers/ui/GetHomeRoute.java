@@ -1,10 +1,12 @@
 package com.webcheckers.ui;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -21,7 +23,10 @@ public class GetHomeRoute implements Route {
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
   private static final String CURRENT_USER= "currentUser";
+  private static final String TOTAL_PLAYERS="totalPlayers";
+  private static final String PLAYER_LIST="playerList";
 
+  private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
 
   /**
@@ -30,8 +35,9 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final TemplateEngine templateEngine) {
+  public GetHomeRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+    this.playerLobby=playerLobby;
     //
     LOG.config("GetHomeRoute is initialized.");
   }
@@ -59,6 +65,11 @@ public class GetHomeRoute implements Route {
     final Player currentUser = httpSession.attribute("currentUser");
     if (currentUser != null) {
       vm.put("currentUser", currentUser);
+      vm.put("playerList",playerLobby.getPlayersNames(currentUser));
+
+    }
+    else {
+      vm.put("totalPlayers",playerLobby.getTotalPlayers());
     }
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
@@ -66,4 +77,7 @@ public class GetHomeRoute implements Route {
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));
   }
+
+
+
 }
