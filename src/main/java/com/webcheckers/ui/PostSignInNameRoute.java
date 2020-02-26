@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -22,6 +23,7 @@ public class PostSignInNameRoute implements Route {
 
     private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
+    private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
     private static final String USER_NAME = "userName";
@@ -33,10 +35,11 @@ public class PostSignInNameRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public PostSignInNameRoute(final TemplateEngine templateEngine) {
+    public PostSignInNameRoute(final PlayerLobby playerLobby,final TemplateEngine templateEngine) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
         LOG.config("PostSignInNameRoute is initialized.");
+        this.playerLobby=playerLobby;
     }
 
     /**
@@ -63,16 +66,22 @@ public class PostSignInNameRoute implements Route {
         final String userName = request.queryParams(USER_PARAM);
 
         //error check username
-        if(userName == null || !userName.matches("^[a-zA-Z0-9]*$") || userName=="")
-        {
+        if(userName == null || !userName.matches("^[a-zA-Z0-9]*$") || userName=="") {
             vm.put("message", Message.info("Error: Please enter a correctly formated username"));
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
 
         }
         //create player with input userName
         final Player player = new Player(userName);
-        httpSession.attribute("currentUser",player);
 
+        //error check playerlobby
+        if(playerLobby.lobbyContains(player)) {
+            vm.put("message", Message.info("Error: This username has already been taken"));
+            return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+        }
+
+        httpSession.attribute("currentUser",player);
+        playerLobby.addPlayer(player);
         // render the View
         response.redirect(WebServer.HOME_URL);
         halt();
