@@ -50,10 +50,10 @@ public class PlayerLobby {
     }
 
     /**
-     * Get the list of all players signed in.
+     * Get the list of names all players signed in.
      *
      * @return
-     *   The list of players
+     *   The string list names of players
      */
     public List<String> getPlayersNames() {
         List<String> playersNames = new ArrayList<>();
@@ -63,6 +63,12 @@ public class PlayerLobby {
         return playersNames;
     }
 
+    /**
+     * Get the list of names all players signed in, except that send in the parameters
+     *
+     * @return
+     *   The string list names of players, except the submitted one
+     */
     public List<String> getPlayersNames(Player currentUser) {
         List<String> playersNames = new ArrayList<>();
         for(Player player : players) {
@@ -71,7 +77,12 @@ public class PlayerLobby {
         }
         return playersNames;
     }
-
+    /**
+     * Get the list of all players signed in.
+     *
+     * @return
+     *   The list of players
+     */
     public List<Player> getPlayersList() {
             return players;
     }
