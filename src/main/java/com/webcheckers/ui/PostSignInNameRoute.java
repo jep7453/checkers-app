@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -23,7 +24,7 @@ public class PostSignInNameRoute implements Route {
 
     private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
-    private final PlayerLobby playerLobby;
+    private final GameCenter gameCenter;
     private final TemplateEngine templateEngine;
 
     private static final String USER_NAME = "userName";
@@ -35,11 +36,11 @@ public class PostSignInNameRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public PostSignInNameRoute(final PlayerLobby playerLobby,final TemplateEngine templateEngine) {
+    public PostSignInNameRoute(final GameCenter gameCenter, final TemplateEngine templateEngine) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
         //
         LOG.config("PostSignInNameRoute is initialized.");
-        this.playerLobby=playerLobby;
+        this.gameCenter=gameCenter;
     }
 
     /**
@@ -75,13 +76,13 @@ public class PostSignInNameRoute implements Route {
         final Player player = new Player(userName);
 
         //error check playerlobby
-        if(playerLobby.lobbyContains(player)) {
+        if(gameCenter.isSignedIn(userName)) {
             vm.put("message", Message.info("Error: This username has already been taken"));
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
 
         httpSession.attribute("currentUser",player);
-        playerLobby.addPlayer(player);
+        gameCenter.signIn(userName);
         // render the View
         response.redirect(WebServer.HOME_URL);
         halt();

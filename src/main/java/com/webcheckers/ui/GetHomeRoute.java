@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -25,7 +26,7 @@ public class GetHomeRoute implements Route {
   private static final String TOTAL_PLAYERS="totalPlayers";
   private static final String PLAYER_LIST="playerList";
 
-  private final PlayerLobby playerLobby;
+  private final GameCenter gameCenter;
   private final TemplateEngine templateEngine;
 
   /**
@@ -34,9 +35,9 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+  public GetHomeRoute(final GameCenter gameCenter, final TemplateEngine templateEngine) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-    this.playerLobby=playerLobby;
+    this.gameCenter=gameCenter;
     //
     LOG.config("GetHomeRoute is initialized.");
   }
@@ -58,6 +59,8 @@ public class GetHomeRoute implements Route {
     //
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
+
+    PlayerLobby playerLobby = gameCenter.getLobby();
 
     final Session httpSession = request.session();
 
