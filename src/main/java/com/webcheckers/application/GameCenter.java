@@ -108,6 +108,14 @@ public class GameCenter {
     }
 
     /**
+     * Get the game lobby
+     * @return the game lobby
+     */
+    public PlayerLobby getLobby() {
+        return lobby;
+    }
+
+    /**
      * Get a new player services object from game center
      * @return a new player services object
      */
