@@ -97,4 +97,12 @@ public class GameCenter {
     public Game getGame( Player player1, Player player2 ){
         return new Game(player1, player2);
     }
+
+    /**
+     * Get a new player services object from game center
+     * @return a new player services object
+     */
+    public PlayerServices newPlayerServices(){
+        return (new PlayerServices(this));
+    }
 }
