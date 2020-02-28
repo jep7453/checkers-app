@@ -3,6 +3,7 @@ package com.webcheckers.application;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 
 /**
@@ -11,9 +12,6 @@ import java.util.ArrayList;
  * @author Chris Tremblay
  */
 public class GameCenter {
-
-    /** List of all users currently signed in */
-    private ArrayList<String> playersSignedIn;
 
     /** Players playing a game */
     private ArrayList<String> currentlyPlaying;
@@ -25,27 +23,32 @@ public class GameCenter {
      * Create a new GameCenter object
      */
     public GameCenter(){
-        playersSignedIn = new ArrayList<>();
         currentlyPlaying = new ArrayList<>();
+        lobby = new PlayerLobby();
     }
 
     /**
-     * Checks to see if a player is signed in
+     * Add a player to the list of players signed in
      *
-     * @param player the user id to check for
+     * @param player the player to check for
      * @return true if signed in, false if not
      */
-    public synchronized boolean isSignedIn( String player ){
-        return( playersSignedIn.contains(player ) );
+    public synchronized boolean isSignedIn(String player){
+        return (lobby.lobbyContains(new Player(player)));
     }
 
     /**
-     * Adds a player to the signed in list
+     * Sign in a player
      *
-     * @param player username to add
+     * @param name the name of player
+     * @return true if it could sign in, false if not
      */
-    public synchronized void signIn( String player ){
-        playersSignedIn.add(player);
+    public synchronized boolean signIn(String name){
+        if( isSignedIn(name) ){
+            return (false);
+        }
+        lobby.addPlayer(new Player(name));
+        return (true);
     }
 
     /**
@@ -55,9 +58,7 @@ public class GameCenter {
      * @param player user name to sign out
      */
     public synchronized void signOut( String player  ) {
-        if (isSignedIn(player)) {
-            playersSignedIn.remove(player);
-        }
+        // todo - eventually
     }
 
     /**
@@ -95,13 +96,5 @@ public class GameCenter {
      */
     public Game getGame( Player player1, Player player2 ){
         return new Game(player1, player2);
-    }
-
-    /**
-     * Get the list of players currently signed in
-     * @return the ArrayList of players currently signed in
-     */
-    public synchronized ArrayList<String> getPlayers() {
-        return playersSignedIn;
     }
 }
