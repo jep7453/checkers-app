@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
-import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.application.PlayerLobby;
 import spark.TemplateEngine;
 
 

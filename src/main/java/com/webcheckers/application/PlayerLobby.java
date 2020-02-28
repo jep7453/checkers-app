@@ -1,4 +1,4 @@
-package com.webcheckers.appl;
+package com.webcheckers.application;
 
 import java.util.ArrayList;
 import java.util.List;
