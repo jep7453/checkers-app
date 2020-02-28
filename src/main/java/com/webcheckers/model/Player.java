@@ -26,7 +26,7 @@ public class Player {
   @Override
   public boolean equals(Object o) {
     Player that;
-    if (! o.getClass().equals(this.getClass())) {
+    if (!(o instanceof Player)) {
       return false;
     }
     that = (Player) o;
