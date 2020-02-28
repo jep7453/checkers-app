@@ -73,7 +73,7 @@ public class PostSignInNameRoute implements Route {
 
         }
         //create player with input userName
-        final Player player = new Player(userName);
+        final Player player = new Player(userName.trim());
 
         //error check playerlobby
         if(gameCenter.isSignedIn(userName)) {
