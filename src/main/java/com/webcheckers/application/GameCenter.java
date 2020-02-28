@@ -18,6 +18,9 @@ public class GameCenter {
     /** Players playing a game */
     private ArrayList<String> currentlyPlaying;
 
+    /** Player lobby */
+    private PlayerLobby lobby;
+
     /**
      * Create a new GameCenter object
      */

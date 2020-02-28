@@ -34,7 +34,7 @@ public class PlayerLobby {
     /**
      * Add a player to the lobby
      */
-    public void addPlayer(Player player) {
+    public synchronized void addPlayer(Player player) {
         players.add(player);
         totalPlayers++;
     }
@@ -45,7 +45,7 @@ public class PlayerLobby {
      * @return
      *   The number of players signed in.
      */
-    public int getTotalPlayers() {
+    public synchronized int getTotalPlayers() {
         return totalPlayers;
     }
 
@@ -55,7 +55,7 @@ public class PlayerLobby {
      * @return
      *   The string list names of players
      */
-    public List<String> getPlayersNames() {
+    public synchronized List<String> getPlayersNames() {
         List<String> playersNames = new ArrayList<>();
         for(Player player : players) {
             playersNames.add(player.getName());
@@ -69,7 +69,7 @@ public class PlayerLobby {
      * @return
      *   The string list names of players, except the submitted one
      */
-    public List<String> getPlayersNames(Player currentUser) {
+    public synchronized List<String> getPlayersNames(Player currentUser) {
         List<String> playersNames = new ArrayList<>();
         for(Player player : players) {
             if(!currentUser.equals(player))
@@ -83,7 +83,7 @@ public class PlayerLobby {
      * @return
      *   The list of players
      */
-    public List<Player> getPlayersList() {
+    public synchronized List<Player> getPlayersList() {
         return players;
     }
 
@@ -93,7 +93,7 @@ public class PlayerLobby {
      * @return
      *      a boolean if the player is on the list, false if
      */
-    public boolean lobbyContains(Player player) {
+    public synchronized boolean lobbyContains(Player player) {
         return players.contains(player);
     }
 }
