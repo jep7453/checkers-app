@@ -3,7 +3,11 @@ package com.webcheckers.application;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
+import java.util.logging.Logger;
+
 public class PlayerServices {
+    /** Logger for the server */
+    private static final Logger LOG = Logger.getLogger(GameCenter.class.getName());
 
     /** The global game center */
     private GameCenter gameCenter;

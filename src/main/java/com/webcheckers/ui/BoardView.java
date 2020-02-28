@@ -11,15 +11,20 @@ import java.util.List;
  */
 
 /**
- * Implementing the Row and space classes to intialize the board view.
+ * Implementing the Row and space classes to intialize the board for the checkerboard.
  */
-//Import Scott's Checker Board and implement it.
+
 public class BoardView extends Checkerboard implements Iterable<Row> {
+
+    /**
+     * Creates the row for checkerboard, using spaces and cell index.
+     */
 
         private List<Row> rows;
 
-        //Initializing the board's view to contain the seven rows and it utilizes the arrays to do it.
-
+        /**
+         * This method intializes the rows and new rows to the checker board.
+         * */
         public BoardView() {
             rows = new ArrayList<Row>();
             rows.add(new Row(0));
