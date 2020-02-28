@@ -67,7 +67,7 @@ public class PostSignInNameRoute implements Route {
         final String userName = request.queryParams(USER_PARAM);
 
         //error check username
-        if(userName == null || !userName.matches("^[a-zA-Z0-9]*$") || userName=="") {
+        if(userName == null || !userName.matches("^[ a-zA-Z0-9]*$") || userName=="") {
             vm.put("message", Message.info("Error: Please enter a correctly formated username"));
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
 
