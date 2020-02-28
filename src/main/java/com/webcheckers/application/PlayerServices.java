@@ -37,20 +37,15 @@ public class PlayerServices {
      * @return true if it could sign in, false if not
      */
     public boolean signIn( String name ){
-        if( gameCenter.isSignedIn(name)) {
-            return (false);
-        }
-        gameCenter.signIn(thisPlayer);
-        signedIn = true;
-        return (true);
+        return gameCenter.signIn(name);
     }
 
     /**
      * Sign out this player from the game center
      */
     public void signOut(){
-        gameCenter.signOut(thisPlayer);
-        signedIn = false;
+        /*gameCenter.signOut(thisPlayer);
+        signedIn = false;*/
     }
 
     /**
@@ -58,7 +53,9 @@ public class PlayerServices {
      * @return true if signed in to game center, false if not
      */
     public boolean isSignedIn(){
-        return (signedIn);
+        if(thisPlayer.equals(""))
+            return (false);
+        return (gameCenter.isSignedIn(thisPlayer));
     }
 
     /**
@@ -68,6 +65,7 @@ public class PlayerServices {
     public void finishedGame(){
         this.game = null;
         this.opponent = null;
+        gameCenter.playerFinishedPlayingGame(thisPlayer);
     }
 
     /**
@@ -87,6 +85,7 @@ public class PlayerServices {
             return (null);
         if(this.opponent == null)
             return (null);
+        gameCenter.playerFinishedPlayingGame(thisPlayer);
         if(this.game == null)
             return ( gameCenter.getGame( new Player(thisPlayer), new Player(opponent) ) );
         return (game);
