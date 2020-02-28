@@ -26,7 +26,7 @@
         <p>
         <#list playerList as player>
             <p>
-                <a href="/game?${player}=<${player}>">${player}</a>
+                <a href="/game?player=${player}">${player}</a>
             </p>
         </#list>
       <#else>
