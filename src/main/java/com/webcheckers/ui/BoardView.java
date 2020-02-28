@@ -1,19 +1,20 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.model.Checkerboard;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
-* The following classes implement the UML for the board  data structures required for the game.
- * @author: Kesa Abbas Lnu
- * */
+/*The following classes implement the UML for the board  data structures required for the game.
+ * @author: Kesa Abbas Lnu <kl3468@rit.edu>
+ */
 
 /**
  * Implementing the Row and space classes to intialize the board view.
  */
-
-public class BoardView implements Iterable<Row>{
+//Import Scott's Checker Board and implement it.
+public class BoardView extends Checkerboard implements Iterable<Row> {
 
         private List<Row> rows;
 
