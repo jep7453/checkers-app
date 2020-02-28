@@ -20,6 +20,10 @@ public class Piece {
     private final Type type;
     private final Color color;
 
+    /**
+     * Initializing the colors and the type.
+     * @param color the color of the spaces
+     * @param type  black or white**/
     public Piece(Type type, Color color) {
         this.type = type;
         this.color = color;
