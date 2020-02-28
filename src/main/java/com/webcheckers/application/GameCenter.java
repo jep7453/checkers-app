@@ -5,6 +5,7 @@ import com.webcheckers.model.Player;
 
 import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * This class is used to keep track of all global game information
@@ -12,6 +13,8 @@ import java.util.ArrayList;
  * @author Chris Tremblay
  */
 public class GameCenter {
+    /** Logger for the server */
+    private static final Logger LOG = Logger.getLogger(GameCenter.class.getName());
 
     /** Players playing a game */
     private ArrayList<String> currentlyPlaying;
@@ -45,9 +48,11 @@ public class GameCenter {
      */
     public synchronized boolean signIn(String name){
         if( isSignedIn(name) ){
+            LOG.fine("Attempted sign with name: + '" + name + "', that name already taken");
             return (false);
         }
         lobby.addPlayer(new Player(name));
+        LOG.fine("Player '" + name + "' signed in");
         return (true);
     }
 
@@ -67,6 +72,7 @@ public class GameCenter {
      */
     public synchronized void playerStartedPlayingGame( String name ){
         currentlyPlaying.add(name);
+        LOG.fine("Player '" + name + "' started player a game" );
     }
 
     /**
@@ -75,6 +81,7 @@ public class GameCenter {
      */
     public synchronized void playerFinishedPlayingGame( String name ){
         currentlyPlaying.remove(name);
+        LOG.fine("Player '" + name + "' finished playing a game");
     }
 
     /**
@@ -95,6 +102,8 @@ public class GameCenter {
      * @return a new game object
      */
     public Game getGame( Player player1, Player player2 ){
+        LOG.fine("Creating new game for player '" + player1.getName() +
+                "' and '" + player2.getName() + "'");
         return new Game(player1, player2);
     }
 
@@ -103,6 +112,7 @@ public class GameCenter {
      * @return a new player services object
      */
     public PlayerServices newPlayerServices(){
+        LOG.fine("Creating new PlayerServices Object");
         return (new PlayerServices(this));
     }
 }
