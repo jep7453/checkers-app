@@ -1,24 +1,30 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.model.Checkerboard;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
-* The following classes implement the UML for the board  data structures required for the game.
- * @author: Kesa Abbas Lnu
- * */
-
-/**
- * Implementing the Row and space classes to intialize the board view.
+/*The following classes implement the UML for the board  data structures required for the game.
+ * @author: Kesa Abbas Lnu <kl3468@rit.edu>
  */
 
-public class BoardView implements Iterable<Row>{
+/**
+ * Implementing the Row and space classes to intialize the board for the checkerboard.
+ */
+
+public class BoardView extends Checkerboard implements Iterable<Row> {
+
+    /**
+     * Creates the row for checkerboard, using spaces and cell index.
+     */
 
         private List<Row> rows;
 
-        //Initializing the board's view to contain the seven rows and it utilizes the arrays to do it.
-
+        /**
+         * This method intializes the rows and new rows to the checker board.
+         * */
         public BoardView() {
             rows = new ArrayList<Row>();
             rows.add(new Row(0));
