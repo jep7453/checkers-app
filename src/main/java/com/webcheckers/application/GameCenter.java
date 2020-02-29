@@ -106,7 +106,6 @@ public class GameCenter {
      * @return a new game object
      */
     public Game getGame( Player player1, Player player2 ) {
-
         // create game iff both players are signed in
         if(isSignedIn(player1) && isSignedIn(player2)){
             Game game = new Game(player1, player2);
@@ -120,6 +119,19 @@ public class GameCenter {
         LOG.fine("Could not create game for player '" + player1.getName() +
                 "' and '\" + player2.getName()");
         return null;
+    }
+
+    public Game findActiveGame(Player player){
+        // search list of games
+        for(Game g : games){
+            Player gRedPlayer = g.getRedPlayer();
+            Player gWhitePlayer = g.getWhitePlayer();
+            if(player.getName().equals(gRedPlayer.getName()) ||
+            player.getName().equals(gWhitePlayer.getName())){
+                return (g);
+            }
+        }
+        return (null);
     }
 
     /**

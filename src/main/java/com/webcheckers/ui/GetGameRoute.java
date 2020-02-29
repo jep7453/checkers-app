@@ -103,12 +103,12 @@ public class GetGameRoute implements Route {
 
 
                 //redPlayer
-                Player redPlayer = playerServices.getThisPlayer(); // todo: initiallise the red player
+                Player redPlayer = playerServices.getThisPlayer();
                 vm.put(RED_PLAYER,redPlayer.getName());
 
 
                 //whitePlayer
-                Player whitePlayer = playerServices.getOpponent(); // todo: initiallise the white player
+                Player whitePlayer = playerServices.getOpponent();
                 vm.put(WHITE_PLAYER,whitePlayer.getName());
 
                 Game game = playerServices.currentGame();
