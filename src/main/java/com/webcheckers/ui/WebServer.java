@@ -70,11 +70,9 @@ public class WebServer {
   // Attributes
   //
 
-  final private GameCenter gameCenter;
-
   private final TemplateEngine templateEngine;
   private final Gson gson;
-  private final GameCenter gamecenter;
+  private final GameCenter gameCenter;
 
   //
   // Constructor
@@ -91,7 +89,7 @@ public class WebServer {
    * @throws NullPointerException
    *    If any of the parameters are {@code null}.
    */
-  public WebServer(final GameCenter gameCenter, final TemplateEngine templateEngine, final Gson gson) {
+    public WebServer(final GameCenter gameCenter, final TemplateEngine templateEngine, final Gson gson) {
     // validation
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
     Objects.requireNonNull(gson, "gson must not be null");
@@ -159,7 +157,7 @@ public class WebServer {
     // Post a Sign in.
     post(SIGN_IN_NAME_URL, new PostSignInNameRoute(gameCenter,templateEngine));
 
-    get(GAME_URL, new GetGameRoute(templateEngine,  gamecenter));
+    get(GAME_URL, new GetGameRoute(templateEngine,  gameCenter));
     LOG.config("WebServer is initialized.");
   }
 
