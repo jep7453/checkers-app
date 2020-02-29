@@ -138,7 +138,13 @@ public class GetGameRoute implements Route {
                 game = playerServices.currentGame(); //incase we didn't already retreive it
 
                 //activeColor
-                boolean idRedPlayerTurn = true; // todo: initiallise isRedPlayerTurn depending on the players turn
+                boolean idRedPlayerTurn;
+                if(game.getCurrentPlayer().equals(redPlayer)){
+                        idRedPlayerTurn = true;
+                } else{
+                        idRedPlayerTurn = false;
+                }
+
                 if(idRedPlayerTurn){
                         vm.put(ACTIVE_COLOR,ActiveColor.RED);
                 }
