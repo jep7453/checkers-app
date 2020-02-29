@@ -70,6 +70,7 @@ public class PlayerServices {
     public void finishedGame(){
         this.game = null;
         this.opponent = null;
+        // let game center know player finished game
         gameCenter.playerFinishedPlayingGame(new Player(thisPlayer));
     }
 
@@ -92,6 +93,8 @@ public class PlayerServices {
             return (null);
         gameCenter.playerFinishedPlayingGame(new Player(thisPlayer));
         if(this.game == null) {
+            // Let game center know player is starting a new game and create a new game
+            gameCenter.playerStartedPlayingGame(new Player(thisPlayer));
             game = gameCenter.getGame(new Player(thisPlayer), new Player(opponent));
         }
         return (game);
