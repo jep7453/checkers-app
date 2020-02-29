@@ -32,6 +32,16 @@ public class PlayerServices {
         this.gameCenter = gameCenter;
         this.game = null;
         this.signedIn = false;
+        this.thisPlayer="";
+
+    }
+
+    /**
+     * Create the current players name
+     * @return the current players name as a string
+     */
+    public String getThisPlayer() {
+        return thisPlayer;
     }
 
     /**

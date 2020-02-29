@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -60,13 +61,22 @@ public class GetHomeRoute implements Route {
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
 
+
     PlayerLobby playerLobby = gameCenter.getLobby();
 
     final Session httpSession = request.session();
+    //get playerServices from session
+    PlayerServices playerServices = httpSession.attribute("playerServices");
+    //if none exists, make PlayerSession
+    if(playerServices==null) {
+      playerServices = new PlayerServices(gameCenter);
+      httpSession.attribute("playerServices",playerServices);
+    }
 
-    final Player currentUser = httpSession.attribute("currentUser");
-    if (currentUser != null) {
-      vm.put("currentUser", currentUser);
+
+    if (playerServices.isSignedIn()) {
+      Player currentUser = new Player(playerServices.getThisPlayer());
+      vm.put("currentUser",currentUser );
       vm.put("playerList",playerLobby.getPlayersNames(currentUser));
 
     }

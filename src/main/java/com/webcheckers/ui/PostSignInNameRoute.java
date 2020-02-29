@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -63,6 +63,9 @@ public class PostSignInNameRoute implements Route {
 
         final Session httpSession = request.session();
 
+        //retrieve playerServices
+        final PlayerServices playerServices = httpSession.attribute("playerServices");
+
         // retrieve username
         final String userName = request.queryParams(USER_PARAM);
 
@@ -76,12 +79,12 @@ public class PostSignInNameRoute implements Route {
         final Player player = new Player(userName.trim());
 
         //error check playerlobby
-        if(gameCenter.isSignedIn(userName)) {
+        if(gameCenter.isSignedIn(userName.trim())) {
             vm.put("message", Message.info("Error: This username has already been taken"));
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
 
-        httpSession.attribute("currentUser",player);
+        playerServices.signIn(userName.trim());
         gameCenter.signIn(userName);
         // render the View
         response.redirect(WebServer.HOME_URL);

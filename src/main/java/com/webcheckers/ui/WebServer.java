@@ -70,8 +70,6 @@ public class WebServer {
   // Attributes
   //
 
-  final private PlayerLobby playerLobby;
-
   private final TemplateEngine templateEngine;
   private final Gson gson;
   private final GameCenter gamecenter;
@@ -91,15 +89,14 @@ public class WebServer {
    * @throws NullPointerException
    *    If any of the parameters are {@code null}.
    */
-  public WebServer(final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson, final GameCenter gamecenter) {
+  public WebServer(final GameCenter gameCenter, final TemplateEngine templateEngine, final Gson gson) {
     // validation
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
     Objects.requireNonNull(gson, "gson must not be null");
     //
     this.templateEngine = templateEngine;
     this.gson = gson;
-    this.playerLobby = playerLobby;
-    this.gamecenter = gamecenter;
+    this.gamecenter = gameCenter;
   }
 
   //
