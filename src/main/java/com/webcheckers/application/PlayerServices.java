@@ -114,6 +114,8 @@ public class PlayerServices {
         if(this.opponent == null)
             return (null);
         if(this.game == null) {
+            gameCenter.playerStartedPlayingGame(thisPlayer);
+            gameCenter.playerStartedPlayingGame(opponent);
             // Let game center know player is starting a new game and create a new game
             game = gameCenter.getGame(thisPlayer, opponent);
         }
