@@ -89,6 +89,10 @@ public class GetGameRoute implements Route {
                 String opponentName = request.queryParams("player");
                 //playerServices.setOpponent();
                 System.out.println("Opponent name: " + opponentName);
+                /*if(playerServices == null ){
+                        System.err.println("Player services is null");
+                }*/
+                playerServices.setOpponent(opponentName);
 
 
                 //viewMode
@@ -114,6 +118,9 @@ public class GetGameRoute implements Route {
                 Player whitePlayer = null; // todo: initiallise the white player
                 vm.put(WHITE_PLAYER,whitePlayer);
                 Game game = playerServices.currentGame();
+                if(game == null){
+                        System.err.println("game is null");
+                }
 
 
                 //activeColor

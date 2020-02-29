@@ -96,8 +96,8 @@ public class PlayerServices {
      * set the opponent
      * @param opponent the opponent
      */
-    public void setOpponent( Player opponent ){
-        this.opponent = opponent;
+    public void setOpponent( String opponent ){
+        this.opponent = new Player(opponent);
     }
 
     /**
