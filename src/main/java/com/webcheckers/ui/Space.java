@@ -1,4 +1,8 @@
 package com.webcheckers.ui;
+
+import com.webcheckers.model.Checker;
+import com.webcheckers.model.Checkerboard;
+
 /**
  * This class intialises the an individua space on the checker board.
  * And returns the position to the main board.
@@ -13,9 +17,14 @@ public class Space {
      *Intialising the values for the Cell and Row Index
      */
 
-    public Space(int cellIdx, int rowIdx) {
+    public Space(int cellIdx, int rowIdx, Checkerboard checkerboard) {
         this.cellIdx = cellIdx;
         this.rowIdx = rowIdx;
+        if(checkerboard.getSquare(rowIdx,cellIdx).hasChecker()){
+            Checker checker = checkerboard.getSquare(rowIdx,cellIdx).getChecker();
+            piece = new Piece(checker.getType() == Checker.Type.SINGLE ? Piece.Type.SINGLE : Piece.Type.KING,
+                    checker.getColor() == Checker.Color.RED ? Piece.Color.RED : Piece.Color.WHITE);
+        }
     }
 
     public int getCellIdx() {
@@ -30,10 +39,12 @@ public class Space {
     }
 
     public Piece getPiece(){
+
         return piece;
     }
 
     public void setPiece(Piece piece) {
+
         this.piece = piece;
     }
 }

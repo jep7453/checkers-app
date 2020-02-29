@@ -41,6 +41,7 @@ public class PlayerServices {
      * @return true if it could sign in, false if not
      */
     public boolean signIn( String name ){
+        thisPlayer = name;
         return gameCenter.signIn(name);
     }
 
@@ -69,14 +70,14 @@ public class PlayerServices {
     public void finishedGame(){
         this.game = null;
         this.opponent = null;
-        gameCenter.playerFinishedPlayingGame(thisPlayer);
+        gameCenter.playerFinishedPlayingGame(new Player(thisPlayer));
     }
 
     /**
      * set the opponent
      * @param opponent the opponent
      */
-    public void setOpponent(String opponent){
+    public void setOpponent( String opponent ){
         this.opponent = opponent;
     }
 
@@ -89,9 +90,10 @@ public class PlayerServices {
             return (null);
         if(this.opponent == null)
             return (null);
-        gameCenter.playerFinishedPlayingGame(thisPlayer);
-        if(this.game == null)
-            return ( gameCenter.getGame( new Player(thisPlayer), new Player(opponent) ) );
+        gameCenter.playerFinishedPlayingGame(new Player(thisPlayer));
+        if(this.game == null) {
+            game = gameCenter.getGame(new Player(thisPlayer), new Player(opponent));
+        }
         return (game);
     }
 }

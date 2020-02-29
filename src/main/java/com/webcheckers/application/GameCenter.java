@@ -17,7 +17,7 @@ public class GameCenter {
     private static final Logger LOG = Logger.getLogger(GameCenter.class.getName());
 
     /** Players playing a game */
-    private ArrayList<String> currentlyPlaying;
+    private ArrayList<Player> currentlyPlaying;
 
     /** Player lobby */
     private PlayerLobby lobby;
@@ -68,20 +68,20 @@ public class GameCenter {
 
     /**
      * Allow GameCenter to know that a player started playing
-     * @param name player playing game
+     * @param player player playing game
      */
-    public synchronized void playerStartedPlayingGame( String name ){
-        currentlyPlaying.add(name);
-        LOG.fine("Player '" + name + "' started player a game" );
+    public synchronized void playerStartedPlayingGame( Player player ){
+        currentlyPlaying.add(player);
+        LOG.fine("Player '" + player.getName() + "' started player a game" );
     }
 
     /**
      * Allow GameCenter to know that a player is not currently playing a game
-     * @param name the name of player who finished a game
+     * @param player the name of player who finished a game
      */
-    public synchronized void playerFinishedPlayingGame( String name ){
-        currentlyPlaying.remove(name);
-        LOG.fine("Player '" + name + "' finished playing a game");
+    public synchronized void playerFinishedPlayingGame( Player player ){
+        currentlyPlaying.remove(player);
+        LOG.fine("Player '" + player + "' finished playing a game");
     }
 
     /**
@@ -90,7 +90,7 @@ public class GameCenter {
      * @param player player to check for
      * @return true if player is currently playing a game
      */
-    public boolean isCurrentlyPlaying( String player ){
+    public boolean isCurrentlyPlaying( Player player ){
         return currentlyPlaying.contains(player);
     }
 
