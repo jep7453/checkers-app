@@ -59,8 +59,9 @@ public class PlayerServices {
      * @return true if it could sign in, false if not
      */
     public boolean signIn( String name ){
-        if( gameCenter.signIn(thisPlayer) ){
-            thisPlayer = new Player(name);
+        Player temp = new Player(name);
+        if( gameCenter.signIn(temp) ){
+            thisPlayer = temp;
             return (true);
         }
         return (false);
@@ -112,10 +113,8 @@ public class PlayerServices {
             return (null);
         if(this.opponent == null)
             return (null);
-        gameCenter.playerFinishedPlayingGame(thisPlayer);
         if(this.game == null) {
             // Let game center know player is starting a new game and create a new game
-            gameCenter.playerStartedPlayingGame(thisPlayer);
             game = gameCenter.getGame(thisPlayer, opponent);
         }
         return (game);

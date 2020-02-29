@@ -84,7 +84,7 @@ public class PostSignInNameRoute implements Route {
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
 
-        playerServices.signIn(userName.trim());
+        playerServices.signIn(player.getName());
         // render the View
         response.redirect(WebServer.HOME_URL);
         halt();
