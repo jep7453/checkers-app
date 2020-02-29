@@ -19,8 +19,9 @@ public class Checkerboard {
     for(int rank = 0; rank < NUM_RANKS; rank++) {
       for(int file = 0; file < NUM_FILES; file++) {
         Square square = new Square(
-            (rank * 8 + file) % 2 == 0 ? Square.Color.LIGHT : Square.Color.DARK
+            (rank + file) % 2 == 0 ? Square.Color.LIGHT : Square.Color.DARK
             );
+        System.out.printf("Created square rank %d file %d color %s\n", rank, file, square.getColor().toString());
         if( square.getColor() == Square.Color.DARK && rank < 3 )
           square.setChecker(new Checker(Checker.Color.RED));
         if( square.getColor() == Square.Color.DARK && rank > 4 )
