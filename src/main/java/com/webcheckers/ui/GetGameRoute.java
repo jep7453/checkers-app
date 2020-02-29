@@ -83,14 +83,8 @@ public class GetGameRoute implements Route {
                 //currentUser
                 final Session httpSession = request.session();
                 final PlayerServices playerServices = httpSession.attribute("playerServices");
-                /*if (currentUser != null) {
-                        vm.put("currentUser", currentUser);
-                }*/
+                vm.put("currentUser", playerServices.getThisPlayer().getName());
                 String opponentName = request.queryParams("player");
-                //playerServices.setOpponent();
-                /*if(playerServices == null ){
-                        System.err.println("Player services is null");
-                }*/
                 playerServices.setOpponent(opponentName);
 
 
@@ -114,12 +108,10 @@ public class GetGameRoute implements Route {
 
 
                 //whitePlayer
-                Player whitePlayer = null; // todo: initiallise the white player
-                vm.put(WHITE_PLAYER,whitePlayer);
+                Player whitePlayer = playerServices.getOpponent(); // todo: initiallise the white player
+                vm.put(WHITE_PLAYER,whitePlayer.getName());
 
                 Game game = playerServices.currentGame();
-
-                System.out.println(game.getRedPlayer().getName());
                 if(game == null){
                         System.err.println("game is null");
                 }
