@@ -86,6 +86,10 @@ public class GetHomeRoute implements Route {
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
 
+    if( gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
+      response.redirect(WebServer.GAME_URL);
+    }
+
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));
   }

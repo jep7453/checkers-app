@@ -101,21 +101,41 @@ public class GetGameRoute implements Route {
                         vm.put(MODE_OPTIONS_AS_JSON,modeOptionsAsJSON);
                 }
 
+                // Initialize player and game objects
+                Player redPlayer;
+                Player whitePlayer;
+                Game game;
 
-                //redPlayer
-                Player redPlayer = playerServices.getThisPlayer();
-                vm.put(RED_PLAYER,redPlayer.getName());
+                // Check to see if there is currently a game
+                if(gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
+                        game = playerServices.currentGame();
 
+                        // If the current player is the white player in the game object
+                        // set respective variables
+                        if(playerServices.getThisPlayer().equals(game.getWhitePlayer())){
+                                playerServices.setOpponent(game.getRedPlayer().getName()); // set opponent
+                                redPlayer = playerServices.getOpponent(); // red player is the opponent
+                                whitePlayer = playerServices.getThisPlayer(); // this player is the white player
+                        } else {
+                                // if the player is the red player in the game object
+                                // set respective variables
+                                playerServices.setOpponent(game.getWhitePlayer().getName()); // set opponent
+                                redPlayer = playerServices.getThisPlayer(); // we are the red player
+                                whitePlayer = playerServices.getOpponent(); // the opponent is the white player
+                        }
+                } else { // else there is no current game
+                        //redPlayer
+                        redPlayer = playerServices.getThisPlayer();
 
-                //whitePlayer
-                Player whitePlayer = playerServices.getOpponent();
-                vm.put(WHITE_PLAYER,whitePlayer.getName());
-
-                Game game = playerServices.currentGame();
-                if(game == null){
-                        System.err.println("game is null");
+                        //whitePlayer
+                        whitePlayer = playerServices.getOpponent();
                 }
 
+                // populate vm
+                vm.put(RED_PLAYER, redPlayer.getName());
+                vm.put(WHITE_PLAYER, whitePlayer.getName());
+
+                game = playerServices.currentGame(); //incase we didn't already retreive it
 
                 //activeColor
                 boolean idRedPlayerTurn = true; // todo: initiallise isRedPlayerTurn depending on the players turn

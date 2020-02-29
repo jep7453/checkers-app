@@ -112,6 +112,8 @@ public class GameCenter {
             games.add(game);
             LOG.fine("Creating new game for player '" + player1.getName() +
                     "' and '" + player2.getName() + "'");
+            playerStartedPlayingGame(player1);
+            playerStartedPlayingGame(player2);
             return (game);
         }
 
