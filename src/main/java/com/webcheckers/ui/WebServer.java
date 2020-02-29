@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.google.gson.Gson;
 
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.PlayerLobby;
 import spark.TemplateEngine;
 
 
@@ -64,6 +65,8 @@ public class WebServer {
    */
   public static final String SIGN_IN_NAME_URL = "/signinname";
   //
+
+  public static final String GAME_URL = "/game";
   // Attributes
   //
 
@@ -71,6 +74,7 @@ public class WebServer {
 
   private final TemplateEngine templateEngine;
   private final Gson gson;
+  private final GameCenter gamecenter;
 
   //
   // Constructor
@@ -155,6 +159,7 @@ public class WebServer {
     // Post a Sign in.
     post(SIGN_IN_NAME_URL, new PostSignInNameRoute(gameCenter,templateEngine));
 
+    get(GAME_URL, new GetGameRoute(templateEngine,  gamecenter));
     LOG.config("WebServer is initialized.");
   }
 
