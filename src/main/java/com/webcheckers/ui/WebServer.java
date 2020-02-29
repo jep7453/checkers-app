@@ -70,11 +70,9 @@ public class WebServer {
   // Attributes
   //
 
-   final private GameCenter gameCenter;
-
   private final TemplateEngine templateEngine;
   private final Gson gson;
-  private final GameCenter gameCenter;
+  private final GameCenter gamecenter;
 
   //
   // Constructor
@@ -91,23 +89,14 @@ public class WebServer {
    * @throws NullPointerException
    *    If any of the parameters are {@code null}.
    */
-<<<<<<<<< Temporary merge branch 1
   public WebServer(final GameCenter gameCenter, final TemplateEngine templateEngine, final Gson gson) {
-=========
-  public WebServer(final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson, final GameCenter gamecenter) {
->>>>>>>>> Temporary merge branch 2
     // validation
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
     Objects.requireNonNull(gson, "gson must not be null");
     //
     this.templateEngine = templateEngine;
     this.gson = gson;
-<<<<<<<<< Temporary merge branch 1
-    this.gameCenter = gameCenter;
-=========
-    this.playerLobby = playerLobby;
-    this.gamecenter = gamecenter;
->>>>>>>>> Temporary merge branch 2
+    this.gamecenter = gameCenter;
   }
 
   //
@@ -162,13 +151,13 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the Checkers game Home page.
-    get(HOME_URL, new GetHomeRoute(gameCenter,templateEngine));
+    get(HOME_URL, new GetHomeRoute(gamecenter,templateEngine));
     // Shows the Sign In page.
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
     // Post a Sign in.
-    post(SIGN_IN_NAME_URL, new PostSignInNameRoute(gameCenter,templateEngine));
+    post(SIGN_IN_NAME_URL, new PostSignInNameRoute(gamecenter,templateEngine));
 
-    get(GAME_URL, new GetGameRoute(templateEngine,  gameCenter));
+    get(GAME_URL, new GetGameRoute(templateEngine,  gamecenter));
     LOG.config("WebServer is initialized.");
   }
 
