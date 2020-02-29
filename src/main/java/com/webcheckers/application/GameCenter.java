@@ -22,12 +22,16 @@ public class GameCenter {
     /** Player lobby */
     private PlayerLobby lobby;
 
+    /** list of all games in game center */
+    private ArrayList<Game> games;
+
     /**
      * Create a new GameCenter object
      */
     public GameCenter(){
         currentlyPlaying = new ArrayList<>();
         lobby = new PlayerLobby();
+        games = new ArrayList<>();
     }
 
     /**
@@ -101,10 +105,12 @@ public class GameCenter {
      * @param player2 second player
      * @return a new game object
      */
-    public Game getGame( Player player1, Player player2 ){
+    public Game getGame( Player player1, Player player2 ) {
         LOG.fine("Creating new game for player '" + player1.getName() +
                 "' and '" + player2.getName() + "'");
-        return new Game(player1, player2);
+        Game game = new Game(player1, player2);
+        games.add(game);
+        return (game);
     }
 
     /**
