@@ -32,6 +32,17 @@ public class GetGameRoute implements Route {
         private static final Message WELCOME_MSG = Message.info("Lets begin the game.");
         private final GameCenter gameCenter; // game center
 
+        public static final String HOME_URL = "/";
+
+        /**
+         * The URL pattern to request the Sign in Page.
+         */
+        public static final String SIGN_IN_URL = "/signin";
+        /**
+         * The URL pattern to post a username.
+         */
+        public static final String SIGN_IN_NAME_URL = "/signinname";
+        private static final String GAME_ROUTE = "/get_game";
         public enum ViewMode{
                 PLAY, SPECTATOR, REPLAY
         }
@@ -119,8 +130,8 @@ public class GetGameRoute implements Route {
                 vm.put("message", WELCOME_MSG);
 
                 //todo: use FreeMaker Template to fillup game.ftl
-
-                return gameCenter.getGame(redPlayer, whitePlayer);
+                return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+                //return gameCenter.getGame(redPlayer, whitePlayer);
         }
 }
 
