@@ -11,6 +11,8 @@ public class Game {
   private Player whitePlayer;   /** The WHITE Player of this game. */
   private Checkerboard board;   /** The Checkerboard this game is played on. */
 
+  Player currentPlayer;         /** The Player whose turn it currently is. */
+
   /** Creates a new Game object with the specified players.
    * @param redPlayer   The Player to play as red.
    * @param whitePlayer The Player to play as white.
@@ -19,6 +21,14 @@ public class Game {
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
     this.board = new Checkerboard();
+    this.currentPlayer = redPlayer;
+  }
+
+  /** Gets the Player whose turn it currently is.
+   * @return The Player whose turn it currently is.
+   */
+  public Player getCurrentPlayer() {
+    return this.currentPlayer;
   }
 
   /** Gets the Player playing as red.
