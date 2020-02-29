@@ -75,7 +75,7 @@ public class GetHomeRoute implements Route {
 
 
     if (playerServices.isSignedIn()) {
-      Player currentUser = new Player(playerServices.getThisPlayer());
+      Player currentUser = playerServices.getThisPlayer();
       vm.put("currentUser",currentUser );
       vm.put("playerList",playerLobby.getPlayersNames(currentUser));
 

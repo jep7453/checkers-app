@@ -16,10 +16,10 @@ public class PlayerServices {
     private Game game;
 
     /** The opponent the player is playing against */
-    private String opponent;
+    private Player opponent;
 
     /** This player */
-    private String thisPlayer;
+    private Player thisPlayer;
 
     /** Is this player signed in? */
     private boolean signedIn;
@@ -32,7 +32,7 @@ public class PlayerServices {
         this.gameCenter = gameCenter;
         this.game = null;
         this.signedIn = false;
-        this.thisPlayer="";
+        this.thisPlayer= null;
 
     }
 
@@ -40,8 +40,16 @@ public class PlayerServices {
      * Create the current players name
      * @return the current players name as a string
      */
-    public String getThisPlayer() {
+    public Player getThisPlayer() {
         return thisPlayer;
+    }
+
+    /**
+     * Getter for the opponent
+     * @return the opponent
+     */
+    public Player getOpponent(){
+        return (opponent);
     }
 
     /**
@@ -51,7 +59,7 @@ public class PlayerServices {
      * @return true if it could sign in, false if not
      */
     public boolean signIn( String name ){
-        thisPlayer = name;
+        thisPlayer = new Player(name);
         return gameCenter.signIn(name);
     }
 
@@ -68,9 +76,9 @@ public class PlayerServices {
      * @return true if signed in to game center, false if not
      */
     public boolean isSignedIn(){
-        if(thisPlayer.equals(""))
+        if(thisPlayer == null)
             return (false);
-        return (gameCenter.isSignedIn(thisPlayer));
+        return (gameCenter.isSignedIn(thisPlayer.getName()));
     }
 
     /**
@@ -81,14 +89,14 @@ public class PlayerServices {
         this.game = null;
         this.opponent = null;
         // let game center know player finished game
-        gameCenter.playerFinishedPlayingGame(new Player(thisPlayer));
+        gameCenter.playerFinishedPlayingGame(thisPlayer);
     }
 
     /**
      * set the opponent
      * @param opponent the opponent
      */
-    public void setOpponent( String opponent ){
+    public void setOpponent( Player opponent ){
         this.opponent = opponent;
     }
 
@@ -101,11 +109,11 @@ public class PlayerServices {
             return (null);
         if(this.opponent == null)
             return (null);
-        gameCenter.playerFinishedPlayingGame(new Player(thisPlayer));
+        gameCenter.playerFinishedPlayingGame(thisPlayer);
         if(this.game == null) {
             // Let game center know player is starting a new game and create a new game
-            gameCenter.playerStartedPlayingGame(new Player(thisPlayer));
-            game = gameCenter.getGame(new Player(thisPlayer), new Player(opponent));
+            gameCenter.playerStartedPlayingGame(thisPlayer);
+            game = gameCenter.getGame(thisPlayer, opponent);
         }
         return (game);
     }

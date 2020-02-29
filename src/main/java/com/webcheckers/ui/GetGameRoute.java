@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
@@ -80,10 +82,13 @@ public class GetGameRoute implements Route {
 
                 //currentUser
                 final Session httpSession = request.session();
-                final Player currentUser = httpSession.attribute("currentUser");
-                if (currentUser != null) {
+                final PlayerServices playerServices = httpSession.attribute("playerServices");
+                /*if (currentUser != null) {
                         vm.put("currentUser", currentUser);
-                }
+                }*/
+                String opponentName = request.queryParams("player");
+                //playerServices.setOpponent();
+                System.out.println("Opponent name: " + opponentName);
 
 
                 //viewMode
@@ -101,13 +106,14 @@ public class GetGameRoute implements Route {
 
 
                 //redPlayer
-                Player redPlayer = null; // todo: initiallise the red player
-                vm.put(RED_PLAYER,redPlayer);
+                Player redPlayer = playerServices.getThisPlayer(); // todo: initiallise the red player
+                vm.put(RED_PLAYER,redPlayer.getName());
 
 
                 //whitePlayer
                 Player whitePlayer = null; // todo: initiallise the white player
                 vm.put(WHITE_PLAYER,whitePlayer);
+                Game game = playerServices.currentGame();
 
 
                 //activeColor
@@ -121,7 +127,7 @@ public class GetGameRoute implements Route {
 
 
                 //board
-                Game game = gameCenter.getGame(redPlayer,whitePlayer);
+
                 //NOTE: I have changed BoardView Class because I think this is correct
                 vm.put(BOARD_VIEW_KEY,new BoardView(game.getBoard()));
 
