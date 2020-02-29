@@ -22,9 +22,9 @@ public class Checkerboard {
             (rank * 8 + file) % 2 == 0 ? Square.Color.LIGHT : Square.Color.DARK
             );
         if( square.getColor() == Square.Color.DARK && rank < 3 )
-          squares[rank][file].setChecker(new Checker(Checker.Color.RED));
+          square.setChecker(new Checker(Checker.Color.RED));
         if( square.getColor() == Square.Color.DARK && rank > 4 )
-          squares[rank][file].setChecker(new Checker(Checker.Color.WHITE));
+          square.setChecker(new Checker(Checker.Color.WHITE));
         squares[rank][file] = square;
       }
     }
