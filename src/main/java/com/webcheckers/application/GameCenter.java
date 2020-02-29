@@ -40,23 +40,23 @@ public class GameCenter {
      * @param player the player to check for
      * @return true if signed in, false if not
      */
-    public synchronized boolean isSignedIn(String player){
-        return (lobby.lobbyContains(new Player(player)));
+    public synchronized boolean isSignedIn(Player player){
+        return (lobby.lobbyContains(player));
     }
 
     /**
      * Sign in a player
      *
-     * @param name the name of player
+     * @param player the name of player
      * @return true if it could sign in, false if not
      */
-    public synchronized boolean signIn(String name){
-        if( isSignedIn(name) ){
-            LOG.fine("Attempted sign with name: + '" + name + "', that name already taken");
+    public synchronized boolean signIn(Player player){
+        if( isSignedIn(player) ){
+            LOG.fine("Attempted sign with name: + '" + player.getName() + "', that name already taken");
             return (false);
         }
-        lobby.addPlayer(new Player(name));
-        LOG.fine("Player '" + name + "' signed in");
+        lobby.addPlayer(player);
+        LOG.fine("Player '" + player.getName() + "' signed in");
         return (true);
     }
 
@@ -106,11 +106,20 @@ public class GameCenter {
      * @return a new game object
      */
     public Game getGame( Player player1, Player player2 ) {
-        LOG.fine("Creating new game for player '" + player1.getName() +
-                "' and '" + player2.getName() + "'");
-        Game game = new Game(player1, player2);
-        games.add(game);
-        return (game);
+
+        // create game iff both players are signed in
+        if(isSignedIn(player1) && isSignedIn(player2)){
+            Game game = new Game(player1, player2);
+            games.add(game);
+            LOG.fine("Creating new game for player '" + player1.getName() +
+                    "' and '" + player2.getName() + "'");
+            return (game);
+        }
+
+        // both players not signed in
+        LOG.fine("Could not create game for player '" + player1.getName() +
+                "' and '\" + player2.getName()");
+        return null;
     }
 
     /**

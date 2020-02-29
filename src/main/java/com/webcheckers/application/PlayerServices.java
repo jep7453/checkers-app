@@ -59,8 +59,11 @@ public class PlayerServices {
      * @return true if it could sign in, false if not
      */
     public boolean signIn( String name ){
-        thisPlayer = new Player(name);
-        return gameCenter.signIn(name);
+        if( gameCenter.signIn(thisPlayer) ){
+            thisPlayer = new Player(name);
+            return (true);
+        }
+        return (false);
     }
 
     /**
@@ -78,7 +81,7 @@ public class PlayerServices {
     public boolean isSignedIn(){
         if(thisPlayer == null)
             return (false);
-        return (gameCenter.isSignedIn(thisPlayer.getName()));
+        return (gameCenter.isSignedIn(thisPlayer));
     }
 
     /**

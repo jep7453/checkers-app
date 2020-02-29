@@ -79,13 +79,12 @@ public class PostSignInNameRoute implements Route {
         final Player player = new Player(userName.trim());
 
         //error check playerlobby
-        if(gameCenter.isSignedIn(userName.trim())) {
+        if(gameCenter.isSignedIn(player)) {
             vm.put("message", Message.info("Error: This username has already been taken"));
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
 
         playerServices.signIn(userName.trim());
-        gameCenter.signIn(userName);
         // render the View
         response.redirect(WebServer.HOME_URL);
         halt();
