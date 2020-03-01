@@ -106,6 +106,8 @@ public class GetGameRoute implements Route {
                 Player whitePlayer;
                 Game game;
 
+
+
                 // Check to see if there is currently a game
                 if(gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
                         game = playerServices.currentGame();
@@ -129,6 +131,13 @@ public class GetGameRoute implements Route {
 
                         //whitePlayer
                         whitePlayer = playerServices.getOpponent();
+                }
+
+                if(gameCenter.isCurrentlyPlaying(whitePlayer) && !gameCenter.isCurrentlyPlaying(redPlayer)) {
+                        httpSession.attribute("error","Error: Player already in game");
+                        response.redirect(WebServer.HOME_URL);
+                        halt();
+                        return null;
                 }
 
                 // populate vm

@@ -85,7 +85,12 @@ public class GetHomeRoute implements Route {
       vm.put("totalPlayers",playerLobby.getTotalPlayers());
     }
     // display a user message in the Home page
-    vm.put("message", WELCOME_MSG);
+    if(httpSession.attribute("error")!=null) {
+      vm.put("message",Message.info(httpSession.attribute("error")));
+    }
+    else {
+      vm.put("message", WELCOME_MSG);
+    }
 
     if( gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
       response.redirect(WebServer.GAME_URL);
