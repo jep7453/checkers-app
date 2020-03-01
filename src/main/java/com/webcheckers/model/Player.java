@@ -20,7 +20,7 @@ public class Player {
    * @return The name of the Player.
    */
   public String getName() {
-    return new String(this.name);
+    return this.name;
   }
 
   @Override
