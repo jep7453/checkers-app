@@ -117,7 +117,11 @@ public class PlayerServices {
             gameCenter.playerStartedPlayingGame(thisPlayer);
             gameCenter.playerStartedPlayingGame(opponent);
             // Let game center know player is starting a new game and create a new game
-            game = gameCenter.getGame(thisPlayer, opponent);
+            Game temp = gameCenter.findActiveGame(thisPlayer);
+            if(temp == null)
+                game = gameCenter.getGame(thisPlayer, opponent);
+            else
+                game = temp;
         }
         return (game);
     }

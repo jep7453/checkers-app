@@ -13,8 +13,6 @@ import spark.*;
 
 import com.webcheckers.util.Message;
 
-import static spark.Spark.halt;
-
 /**
  * The UI Controller to GET the Home page.
  *
@@ -78,13 +76,8 @@ public class GetHomeRoute implements Route {
 
     if (playerServices.isSignedIn()) {
       Player currentUser = playerServices.getThisPlayer();
-      vm.put("currentUser",currentUser.getName() );
+      vm.put("currentUser",currentUser );
       vm.put("playerList",playerLobby.getPlayersNames(currentUser));
-      if(gameCenter.isCurrentlyPlaying(currentUser)) {
-        response.redirect("/game");
-        halt();
-        return null;
-      }
 
     }
     else {
@@ -93,6 +86,9 @@ public class GetHomeRoute implements Route {
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
 
+    if( gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
+      response.redirect(WebServer.GAME_URL);
+    }
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));
