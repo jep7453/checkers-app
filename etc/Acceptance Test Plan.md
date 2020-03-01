@@ -7,14 +7,14 @@
 || Given that someone else with my name has signed-in when I enter my name in the Sign-in form  and click the Sign-in button then I expect the system to reject my sign-in and return the Sign-in page for me to try a different name. |PASS|CT 2-28-2020||||
 || Given that I am signed-in when I navigate to the Home page then I expect to see a list of all other signed-in players.  (NOTE: in the next story you will use this list to pick opponents for checkers games.) |PASS|CT 2-28-2020||||
 || Given that I am not signed-in when I navigate to the Home page then I expect to see a message of how many players are signed-in but not a list of them (for privacy reasons).| PASS|CT 2-28-2020|||||
-| As a Player I want to start a game so that I can play checkers with an opponent. | Given that I'm signed in when I view the Home page then I can start a game by selecting a player listed on the Home page. ||||||
-|| Given that the player I selected isn't yet in a game when I select that player then the system will begin a checkers game and assign me as the starting (Red) player and my opponent as the White player. ||||||
+| As a Player I want to start a game so that I can play checkers with an opponent. | Given that I'm signed in when I view the Home page then I can start a game by selecting a player listed on the Home page. |PASS|SJ 3-1-2020||||
+|| Given that the player I selected isn't yet in a game when I select that player then the system will begin a checkers game and assign me as the starting (Red) player and my opponent as the White player. |PASS|SJ 3-1-2020||||
 || Given that the player I selected is already in a game when I select that player then the system will return me to the Home page with an error message. ||||||
-|| Given that I'm waiting for a game when another player selects a game with me then the system will automatically send me to the Game View as the White player.  NOTE: the `home.ftl` HTML includes a `<meta>` tag that tells the browser to refresh the game every 5 seconds; thus you need to update the `GetHomeRoute` controller to handle the situation when a player is assigned a game. ||||||
-|| Given a valid, initial game board when I drag a piece to a white space then the piece should not be droppable. ||||||
-|| Given a valid, initial game board when I drag a piece to an occupied space then the piece should not be droppable. ||||||
-|| Given a valid, initial game board when I drag a piece to an open space then the piece should be droppable.  NOTE: In this Story the drop action should not do anything; piece movement will be the focus of future stories. ||||||
-|| Given a valid, initial game board when I view the board in the browser then my pieces are oriented on the bottom of the board grid just like I would see the board if I were playing in the physical world. ||||||
+|| Given that I'm waiting for a game when another player selects a game with me then the system will automatically send me to the Game View as the White player.  NOTE: the `home.ftl` HTML includes a `<meta>` tag that tells the browser to refresh the game every 5 seconds; thus you need to update the `GetHomeRoute` controller to handle the situation when a player is assigned a game. |PASS|SJ 3-1-2020||||
+|| Given a valid, initial game board when I drag a piece to a white space then the piece should not be droppable. |PASS|SJ 3-1-2020||||
+|| Given a valid, initial game board when I drag a piece to an occupied space then the piece should not be droppable. |PASS|SJ 3-1-2020||||
+|| Given a valid, initial game board when I drag a piece to an open space then the piece should be droppable.  NOTE: In this Story the drop action should not do anything; piece movement will be the focus of future stories. |PASS|SJ 2-1-2020||||
+|| Given a valid, initial game board when I view the board in the browser then my pieces are oriented on the bottom of the board grid just like I would see the board if I were playing in the physical world. |PASS|SJ 2-1-2020||||
 | As a player, I want to be able to move checker pieces diagonally so that I can take a turn. |||||||
 | As a player I want to jump an opposing piece so that I can win the game. |||||||
 | As a player I want to eliminate multiple pieces so that I can win the game. |||||||
