@@ -74,6 +74,7 @@ public class GetHomeRoute implements Route {
     }
 
 
+    // Check if the player is signed in and populate the correct attributes
     if (playerServices.isSignedIn()) {
       Player currentUser = playerServices.getThisPlayer();
       vm.put("currentUser",currentUser );
