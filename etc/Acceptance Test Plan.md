@@ -18,7 +18,7 @@
 | As a player, I want to be able to move checker pieces diagonally so that I can take a turn. | ||||||
 | As a player I want to jump an opposing piece so that I can win the game. | | |||||
 | As a player I want to eliminate multiple pieces so that I can win the game. | ||||||
-| As a player, I want my piece promoted to a king if it reaches the other side of the board so that I can move it backwards. |\ | SJ 3-1-2020|||||
+| As a player, I want my piece promoted to a king if it reaches the other side of the board so that I can move it backwards. |||||||
 | As a player, I want to sign-out so that I can stop playing checkers. | | |||||
 | As a player, I want the game to end if I cannot make a move so that my opponent can be declared the winner. | | |||||
 | As a player, I want the game to end if all of one player's pieces have been captured so that the game can have a winner. | | |||||
