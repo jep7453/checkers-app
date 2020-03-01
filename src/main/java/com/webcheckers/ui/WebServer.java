@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.PlayerLobby;
 import spark.TemplateEngine;
 
 
@@ -54,12 +56,23 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
 
+  /**
+   * The URL pattern to request the Sign in Page.
+   */
+  public static final String SIGN_IN_URL = "/signin";
+  /**
+   * The URL pattern to post a username.
+   */
+  public static final String SIGN_IN_NAME_URL = "/signinname";
   //
+
+  public static final String GAME_URL = "/game";
   // Attributes
   //
 
   private final TemplateEngine templateEngine;
   private final Gson gson;
+  private final GameCenter gamecenter;
 
   //
   // Constructor
@@ -76,13 +89,14 @@ public class WebServer {
    * @throws NullPointerException
    *    If any of the parameters are {@code null}.
    */
-  public WebServer(final TemplateEngine templateEngine, final Gson gson) {
+  public WebServer(final GameCenter gameCenter, final TemplateEngine templateEngine, final Gson gson) {
     // validation
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
     Objects.requireNonNull(gson, "gson must not be null");
     //
     this.templateEngine = templateEngine;
     this.gson = gson;
+    this.gamecenter = gameCenter;
   }
 
   //
@@ -137,9 +151,13 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the Checkers game Home page.
-    get(HOME_URL, new GetHomeRoute(templateEngine));
+    get(HOME_URL, new GetHomeRoute(gamecenter,templateEngine));
+    // Shows the Sign In page.
+    get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
+    // Post a Sign in.
+    post(SIGN_IN_NAME_URL, new PostSignInNameRoute(gamecenter,templateEngine));
 
-    //
+    get(GAME_URL, new GetGameRoute(templateEngine,  gamecenter));
     LOG.config("WebServer is initialized.");
   }
 

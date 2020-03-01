@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.application.PlayerServices;
+import com.webcheckers.model.Player;
+import spark.*;
 
 import com.webcheckers.util.Message;
 
@@ -23,6 +23,11 @@ public class GetHomeRoute implements Route {
 
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
+  private static final String CURRENT_USER= "currentUser";
+  private static final String TOTAL_PLAYERS="totalPlayers";
+  private static final String PLAYER_LIST="playerList";
+
+  private final GameCenter gameCenter;
   private final TemplateEngine templateEngine;
 
   /**
@@ -31,8 +36,9 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final TemplateEngine templateEngine) {
+  public GetHomeRoute(final GameCenter gameCenter, final TemplateEngine templateEngine) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+    this.gameCenter=gameCenter;
     //
     LOG.config("GetHomeRoute is initialized.");
   }
@@ -55,10 +61,40 @@ public class GetHomeRoute implements Route {
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
 
+
+    PlayerLobby playerLobby = gameCenter.getLobby();
+
+    final Session httpSession = request.session();
+    //get playerServices from session
+    PlayerServices playerServices = httpSession.attribute("playerServices");
+    //if none exists, make PlayerSession
+    if(playerServices==null) {
+      playerServices = new PlayerServices(gameCenter);
+      httpSession.attribute("playerServices",playerServices);
+    }
+
+
+    // Check if the player is signed in and populate the correct attributes
+    if (playerServices.isSignedIn()) {
+      Player currentUser = playerServices.getThisPlayer();
+      vm.put("currentUser",currentUser.getName() );
+      vm.put("playerList",playerLobby.getPlayersNames(currentUser));
+
+    }
+    else {
+      vm.put("totalPlayers",playerLobby.getTotalPlayers());
+    }
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
+
+    if( gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
+      response.redirect(WebServer.GAME_URL);
+    }
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));
   }
+
+
+
 }
