@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * This is a test suite for the PlayerServices class
+ * This is a test suite for the {@Link PlayerServices} class
  * @author Chris Tremblay
  */
 @Tag("Application-tier")
