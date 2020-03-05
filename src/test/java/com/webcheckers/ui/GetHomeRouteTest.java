@@ -102,6 +102,9 @@ public class GetHomeRouteTest {
         CuT = new GetHomeRoute(gameCenter, engine);
     }
 
+    /**
+     * Test when no one is signed in that the page has a sign in tag and zero users playing
+     */
     @Test
     public void renderHomeNoSignIn(){
         // initialize template engine tester
@@ -125,22 +128,89 @@ public class GetHomeRouteTest {
         assertTrue(html.contains(TITLE_TAG));
     }
 
+    /**
+     * Test when there are players playing and you are not playing there
+     * is a sign in tag and the number of users is displayed
+     */
+    @Test
+    public void noSignInOnePlayer(){
+        // add a player to GameCenter
+        gameCenter.signIn(new Player(oid));
+        final Map<String, Object> vm = new HashMap<>();
+        final ModelAndView modelAndView = new ModelAndView(vm, GetHomeRoute.VIEW_NAME);
+
+        // load attributes
+        PlayerLobby lobby = gameCenter.getLobby();
+        vm.put(GetHomeRoute.TOTAL_PLAYERS, lobby.getTotalPlayers()); // should be zero
+        vm.put(GetHomeRoute.MESSAGE, GetHomeRoute.WELCOME_MSG);
+        vm.put(GetHomeRoute.TITLE, GetHomeRoute.TITLE_MSG);
+
+        // render page
+        final String html = engine.render(modelAndView);
+
+        // check that there are no players signed in and there is a sign in link
+        assertTrue(html.contains(SIGN_IN_TAG));
+        assertTrue(html.contains("Users Playing: 1"));
+        assertTrue(html.contains(TITLE_TAG));
+    }
+
+    /**
+     * Test if you are signed in but no one else is, that you see
+     * your name in the sign out tag on the page
+     */
     @Test
     public void playerSignedIn(){
         // mock sign in player
+        Player p = new Player(pid);
+        gameCenter.signIn(p);
+        PlayerLobby lobby = gameCenter.getLobby();
+
         final Map<String, Object> vm = new HashMap<>();
         final ModelAndView modelAndView = new ModelAndView(vm, GetHomeRoute.VIEW_NAME);
+
 
         // load attributes
         vm.put(GetHomeRoute.TITLE, GetHomeRoute.TITLE_MSG);
         vm.put(GetHomeRoute.MESSAGE, GetHomeRoute.WELCOME_MSG);
         vm.put(GetHomeRoute.CURRENT_USER, pid);
+        vm.put(GetHomeRoute.PLAYER_LIST, lobby.getPlayersNames(p));
 
         // render html
+        final String html = engine.render(modelAndView);
+
+        // tests
+        assertTrue(html.contains(makeSignOutTag(pid)));
+        assertTrue(html.contains(TITLE_TAG));
+        assertTrue(html.contains("Users Playing:"));
     }
 
     @Test
     public void playerSignedInWithOtherPlayers(){
+        // mock sign in player
+        Player opponent = new Player(oid);
+        Player player = new Player(pid);
+        gameCenter.signIn(player);
+        gameCenter.signIn(opponent);
+        PlayerLobby lobby = gameCenter.getLobby();
+
+        final Map<String, Object> vm = new HashMap<>();
+        final ModelAndView modelAndView = new ModelAndView(vm, GetHomeRoute.VIEW_NAME);
+
+
+        // load attributes
+        vm.put(GetHomeRoute.TITLE, GetHomeRoute.TITLE_MSG);
+        vm.put(GetHomeRoute.MESSAGE, GetHomeRoute.WELCOME_MSG);
+        vm.put(GetHomeRoute.CURRENT_USER, pid);
+        vm.put(GetHomeRoute.PLAYER_LIST, lobby.getPlayersNames(new Player(pid)));
+
+        // render html
+        final String html = engine.render(modelAndView);
+
+        // tests
+        assertTrue(html.contains(makeSignOutTag(pid)));
+        assertTrue(html.contains(TITLE_TAG));
+        assertTrue(html.contains("Users Playing:"));
+        assertTrue(html.contains(makePlayerListTag(opponent.getName())));
     }
 
     @Test
