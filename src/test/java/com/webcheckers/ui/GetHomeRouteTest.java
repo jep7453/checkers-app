@@ -60,6 +60,9 @@ public class GetHomeRouteTest {
     /** title tag */
     private static final String TITLE_TAG = "<title>Web Checkers | Welcome!</title>";
 
+    /** Error tag */
+    private static final String ERR = "error";
+
     /**
      * Creates a player tag like the one that would redirect you when you click a
      * name to start a game
@@ -201,7 +204,7 @@ public class GetHomeRouteTest {
         vm.put(GetHomeRoute.TITLE, GetHomeRoute.TITLE_MSG);
         vm.put(GetHomeRoute.MESSAGE, GetHomeRoute.WELCOME_MSG);
         vm.put(GetHomeRoute.CURRENT_USER, pid);
-        vm.put(GetHomeRoute.PLAYER_LIST, lobby.getPlayersNames(new Player(pid)));
+        vm.put(GetHomeRoute.PLAYER_LIST, lobby.getPlayersNames(player));
 
         // render html
         final String html = engine.render(modelAndView);
@@ -212,7 +215,4 @@ public class GetHomeRouteTest {
         assertTrue(html.contains("Users Playing:"));
         assertTrue(html.contains(makePlayerListTag(opponent.getName())));
     }
-
-    @Test
-    public void errorMessage(){}
 }
