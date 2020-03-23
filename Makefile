@@ -1,4 +1,5 @@
 MVN=mvn
+PANDOC=pandoc
 
 run:
 	$(MVN) compile exec:java
@@ -19,4 +20,7 @@ test-appl: build-test
 
 test-model: build-test
 	$(MVN) surefire:test@model
+
+docs/DesignDoc.pdf: docs/DesignDoc.md
+	cd docs; $(PANDOC) DesignDoc.md -o DesignDoc.pdf
 
