@@ -21,11 +21,17 @@ import com.webcheckers.util.Message;
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-  private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  public static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  public static final String TITLE_MSG = "Welcome!";
 
-  private static final String CURRENT_USER= "currentUser";
-  private static final String TOTAL_PLAYERS="totalPlayers";
-  private static final String PLAYER_LIST="playerList";
+  public static final String CURRENT_USER= "currentUser";
+  public static final String TOTAL_PLAYERS="totalPlayers";
+  public static final String PLAYER_LIST="playerList";
+  public static final String MESSAGE = "message";
+  public static final String TITLE = "title";
+
+  public static final String VIEW_NAME = "home.ftl";
+
 
   private final GameCenter gameCenter;
   private final TemplateEngine templateEngine;
@@ -59,7 +65,7 @@ public class GetHomeRoute implements Route {
     LOG.finer("GetHomeRoute is invoked.");
     //
     Map<String, Object> vm = new HashMap<>();
-    vm.put("title", "Welcome!");
+    vm.put(TITLE, TITLE_MSG);
 
 
     PlayerLobby playerLobby = gameCenter.getLobby();
@@ -97,7 +103,7 @@ public class GetHomeRoute implements Route {
     }
 
     // render the View
-    return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+    return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
   }
 
 
