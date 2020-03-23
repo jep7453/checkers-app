@@ -9,23 +9,22 @@ geometry: margin=1in
 > and appear in the generated PDF in italics._
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: Insert Name Here (Team B)
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Sree Jupudy
+  * Kesa Abbas
+  * Jon Pofcher
+  * Scott Court
+  * Chris Tremblay
 
 ## Executive Summary
 
-This is a summary of the project.
-
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+> Allow players to play checkers with other players that are 
+> signed in. Allow them to play on a board where pieces can be 
+> easily dragged and dropped.
 
 ### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
 
 | Term | Definition |
 |------|------------|
@@ -33,33 +32,42 @@ This is a summary of the project.
 
 
 ## Requirements
-
-This section describes the features of the application.
-
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
+> As a player I want to be able to sign in and see other people I can play checkers against. 
+> Once I have selected and opponent I want to be able to play a game of checkers by the American
+> Standard Rules. I want to be able to make a move by dragging a piece when it is my turn. 
+> I want to be able resign a game at any point and have it end, or end the game by winning or loosing.
+> I want to be able to sign out at any point after signing in. 
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+> Every player will be able to sign in and then play a game. 
+> Two players must be able to play checkers by the American
+> Standard Rules. Players must be able to choose to resign
+> at any point which will end the game.
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+> - As a player I want to make a move so that the game progresses.
+> - As a player I want to end the game so that a winner is declared.
+> - As a player I want to start a game so that I can play checkers with an opponent.
+> - As a player I want to sign in so I can play a game of checkers.
+> - As a player I want to sign out so I can stop checkers.
+
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+> - Spectate, As a Player I want to spectate a game so that I can see the moves being made in real time.
+> - Replay, As a player, I want to be able to replay the game so that I can see what moves I used in the previous game.
 
 
 ## Application Domain
 
 This section describes the application domain.
 
-![The WebCheckers Domain Model](domain-model-placeholder.png)
+![The WebCheckers Domain Model](domain_model.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
 
+> A Player plays of game checkers, where they can make a move. A move changes the space the checker is
+> at on the checkerboard. The checkerboard holds and displays the state of the game. A player plays a
+> game of checkers against another player with a variable amount of spectators watching the game. 
+> A player can watch a replay of a game that has already been played.
 
 ## Architecture and Design
 
@@ -87,7 +95,7 @@ Details of the components within these tiers are supplied below.
 This section describes the web interface flow; this is how the user views and interacts
 with the WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
+![The WebCheckers Web Interface Statechart](state_diagram.png)
 
 > _Provide a summary of the application's user interface.  Describe, from
 > the user's perspective, the flow of the pages in the web application._
