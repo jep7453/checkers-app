@@ -97,8 +97,12 @@ with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](state_diagram.png)
 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+> When a player first connects to the WebCheckers site they will be met with home page 
+> and an option to sign in. Clicking the sign in button will take them to the sign in page
+> where they can enter a name, and sign in with it. If the name is not acceptable it will redirect them
+> back to the sign in page. If the name is accepted it will send them back to the home page where they can 
+> see other players that are signed in. Upon selecting another players name, it will send them to a game page
+> where they can player their game of checkers.
 
 
 ### UI Tier
