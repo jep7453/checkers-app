@@ -44,4 +44,8 @@ public class Row implements Iterable<Space> {
 
         return index;
     }
+
+    public List<Space> getSpaces() {
+        return spaces;
+    }
 }

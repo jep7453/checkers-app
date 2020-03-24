@@ -47,4 +47,8 @@ public class Space {
 
         this.piece = piece;
     }
+
+    public int getRowIdx() {
+        return rowIdx;
+    }
 }
