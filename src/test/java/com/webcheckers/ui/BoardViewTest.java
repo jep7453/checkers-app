@@ -7,6 +7,10 @@ import org.junit.jupiter.api.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+/***
+ * This is unit test for BoardView class of UI Tier.
+ * @author Kesa Abbas Lnu <kl3468rit.edu>
+ */
 
 @Tag("UI-tier")
 class BoardViewTest {

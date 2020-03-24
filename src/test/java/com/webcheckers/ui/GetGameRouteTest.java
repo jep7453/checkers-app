@@ -24,6 +24,11 @@ import static org.mockito.ArgumentMatchers.eq;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/***
+ * This is unit test for BoardView class of UI Tier.
+ * @author Kesa Abbas Lnu <kl3468rit.edu>
+ */
+
 class GetGameRouteTest {
 
     private GetGameRoute CuT;
