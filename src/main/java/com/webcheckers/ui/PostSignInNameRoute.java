@@ -22,14 +22,19 @@ import static spark.Spark.halt;
 public class PostSignInNameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-    private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+    public static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
     private final GameCenter gameCenter;
     private final TemplateEngine templateEngine;
 
-    private static final String USER_NAME = "userName";
-    private static final String USER_PARAM = "myUserName";
-    private static final String CURRENT_USER= "currentUser";
+    public static final String USER_NAME = "userName";
+    public static final String USER_PARAM = "myUserName";
+    public static final String CURRENT_USER= "currentUser";
+    public static final String MESSAGE_TYPE_ATTR = "message";
+    public static final String ERROR_TYPE = "error";
+    public static final String TITLE= "title";
+    public static final String TITLE_MSG= "Welcome!";
+    public static final String HELP_MSG = "Error: Please enter a correctly formated username";
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
@@ -67,11 +72,10 @@ public class PostSignInNameRoute implements Route {
         final PlayerServices playerServices = httpSession.attribute("playerServices");
 
         // retrieve username
-        final String userName = request.queryParams(USER_PARAM);
-
+        final String userName = request.queryParams(USER_PARAM);        
         //error check username
         if(userName == null || !userName.matches("^[ a-zA-Z0-9]*$")  || userName.matches("^[ ]*$") || userName=="") {
-            vm.put("message", Message.info("Error: Please enter a correctly formated username"));
+            vm.put("message", Message.info(HELP_MSG));
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
 
         }
