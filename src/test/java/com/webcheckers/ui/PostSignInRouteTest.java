@@ -30,25 +30,19 @@ import com.webcheckers.model.Player;
 @Tag("UI-tier")
 public class PostSignInRouteTest {
     private static final String PLAYER1_NAME = "joe";
-	private static final String PLAYER2_NAME = "greg";
 
-	private static final String PLAYER_LOBBY_EXCEPTION = "This is the exception";
     public static final String HELP_MSG = "Error: Please enter a correctly formated username";
     private PostSignInNameRoute CuT;
 
 	// friendly objects
 	private Player player1;
-	private Player player2;
 
 	// attributes holding mock objects
-	private Request request;
-	private Session session;
-	private Response response;
-	private TemplateEngine engine;
-    private PlayerLobby playerLobby;
-    private GameCenter gameCenter;
-
-    //private static String HELP_MSG = "Error: Please enter a correctly formated username";
+	private static Request request;
+	private static Session session;
+	private static Response response;
+	private static TemplateEngine engine;
+    private static GameCenter gameCenter;
 
     @BeforeEach
     public void setup(){
@@ -57,18 +51,9 @@ public class PostSignInRouteTest {
 		engine = mock(TemplateEngine.class);
         response = mock(Response.class);
         gameCenter = new GameCenter();
-
-		// internal mocks
 		playerLobby = mock(PlayerLobby.class);
-
-		// build model objects
 		player1 = new Player(PLAYER1_NAME);
-		player2 = new Player(PLAYER2_NAME);
-
-		// mock behavior
 		when(request.session()).thenReturn(session);
-
-		// create a unique CuT for each test
 		CuT = new PostSignInNameRoute(gameCenter, engine);
     }
 
@@ -91,7 +76,6 @@ public class PostSignInRouteTest {
         vm.put("message", PostSignInNameRoute.HELP_MSG);
         final ModelAndView modelAndView = new ModelAndView(vm, "signin.ftl");
         final String html = engine.render(modelAndView);
-        //assertTrue(html.contains(HELP_MSG), "Title head tag exists.");
     }
 
     @Test
@@ -105,6 +89,5 @@ public class PostSignInRouteTest {
         final ModelAndView modelAndView = new ModelAndView(vm, "signin.ftl");
         vm.put("message", PostSignInNameRoute.HELP_MSG);
         final String html = engine.render(modelAndView);
-        //assertTrue(html.contains(HELP_MSG), "Help message tag exists.");
     }
 }
