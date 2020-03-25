@@ -1,7 +1,7 @@
 ---
 geometry: margin=1in
 ---
-# PROJECT Design Documentation
+# WebCheckers Design Documentation
 
 > _The following template provides the headings for your Design
 > Documentation.  As you edit each section make sure you remove these
