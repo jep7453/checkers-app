@@ -21,9 +21,15 @@ import com.webcheckers.util.Message;
 public class GetSignInRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
-    private static final Message SIGN_IN_MSG = Message.info("Please enter a name.");
+    public static final Message SIGN_IN_MSG = Message.info("Please enter a name.");
+    public static final String MSG = "message";
+    public static final String TITLE_MSG= "Sign In!";
+    public static final String TITLE = "title";
+
 
     private final TemplateEngine templateEngine;
+
+    public static final String VIEW_NAME = "signin.ftl";
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -53,12 +59,12 @@ public class GetSignInRoute implements Route {
         LOG.finer("GetSignInRoute is invoked.");
         //
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Sign In!");
+        vm.put(TITLE, TITLE_MSG);
 
         // display a user message in the Home page
-        vm.put("message", SIGN_IN_MSG);
+        vm.put(MSG, SIGN_IN_MSG);
 
         // render the View
-        return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+        return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
     }
 }
