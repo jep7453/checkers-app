@@ -34,7 +34,7 @@ public class Space {
     /*Checking to see if the specific row and coulumn does exist
      */
     public boolean isValid(){
-        if((rowIdx + cellIdx) % 2 == 1 && piece == null) return true;
+             if((rowIdx + cellIdx) % 2 == 1 && piece == null) return true;
         return false;
     }
 
