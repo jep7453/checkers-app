@@ -34,7 +34,7 @@ public class PostSignInNameRoute implements Route {
     public static final String ERROR_TYPE = "error";
     public static final String TITLE= "title";
     public static final String TITLE_MSG= "Welcome!";
-    public static final String HELP_MSG = "Error: Please enter a correctly formated username";
+    public static final String HELP_MSG = "Error: Please enter a correctly formatted username";
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
@@ -63,6 +63,9 @@ public class PostSignInNameRoute implements Route {
     private boolean userNameValid(final String username){
         // assume username is valid
         boolean isValid = true;
+
+//        if(username == null)
+  //          return (false);
 
         // check length requirements. 6 <= len <= 25 chars
         if (username.length() < 6 || username.length() > 25)
@@ -118,8 +121,8 @@ public class PostSignInNameRoute implements Route {
         final String userName = request.queryParams(USER_PARAM);
 
         //error check username
-        if( userNameValid(userName) ) {
-            vm.put("message", Message.info("Error: Please enter a correctly formated username"));
+        if( !userNameValid(userName) ) {
+            vm.put("message", HELP_MSG);
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
 
@@ -128,7 +131,7 @@ public class PostSignInNameRoute implements Route {
 
         //error check playerlobby
         if(gameCenter.isSignedIn(player)) {
-            vm.put("message", Message.info("Error: This username has already been taken"));
+            vm.put("message", "Error: This username has already been taken");
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
 

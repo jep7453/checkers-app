@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -23,6 +24,8 @@ import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Player;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * This is a test suite for the @Link GetSignInRoute class
  * @author Jonathan Pofcher
@@ -44,6 +47,7 @@ public class PostSignInRouteTest {
 	private static TemplateEngine engine;
     private static GameCenter gameCenter;
     private static PlayerLobby playerLobby;
+    private static PlayerServices playerServices;
 
     @BeforeEach
     public void setup(){
@@ -53,51 +57,49 @@ public class PostSignInRouteTest {
         response = mock(Response.class);
         gameCenter = new GameCenter();
         playerLobby = mock(PlayerLobby.class);
+        playerServices = new PlayerServices(gameCenter);
 		player1 = new Player(PLAYER1_NAME);
 		when(request.session()).thenReturn(session);
 		CuT = new PostSignInNameRoute(gameCenter, engine);
     }
 
-    @Test
+   @Test
 	public void signInValidUsername() {
-        
-        CuT.handle(request, response);
-        when(request.queryParams(PostSignInNameRoute.USER_PARAM)).thenReturn(PLAYER1_NAME);
-        verify(response, times(0)).redirect(WebServer.HOME_URL);
-    }
-    
-    @Test
-	public void signInInvalidUsername() {
-
+        // Set up mocks
         TemplateEngineTester testHelper = new TemplateEngineTester();
-		when(request.queryParams(PostSignInNameRoute.USER_PARAM)).thenReturn("$hi");
-        CuT.handle(request, response);
+        when(request.queryParams(PostSignInNameRoute.USER_PARAM)).thenReturn("aaa1aaa");
+        when(engine.render(any(ModelAndView.class))).then(testHelper.makeAnswer());
+        when(session.attribute("playerServices")).thenReturn(playerServices);
 
-        final Map<String, Object> vm = new HashMap<>();
-        vm.put("message", PostSignInNameRoute.HELP_MSG);
-        final ModelAndView modelAndView = new ModelAndView(vm, "signin.ftl");
-        final String html = engine.render(modelAndView);
-    }
-
-    @Test
-	public void signInInvalidUsernameTwo() {
-
-        TemplateEngineTester testHelper = new TemplateEngineTester();
-		when(request.queryParams(PostSignInNameRoute.USER_PARAM)).thenReturn("&hello");
-        CuT.handle(request, response);
-
-        final Map<String, Object> vm = new HashMap<>();
-        final ModelAndView modelAndView = new ModelAndView(vm, "signin.ftl");
-        vm.put("message", PostSignInNameRoute.HELP_MSG);
-        final String html = engine.render(modelAndView);
+        // do the thing
+        try {
+            CuT.handle(request, response);
+            fail("Did not reach halt");
+        } catch (HaltException e){
+            // it worked
+        }
     }
 
     /**
      * Test the username is not greater than 25 characters
      */
     @Test
-    public void greater25Characters(){
-        return;  // TODO
+    public void greater25Characters() {
+        // Set up mocks
+        TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(request.queryParams(PostSignInNameRoute.USER_PARAM)).thenReturn("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        when(engine.render(any(ModelAndView.class))).then(testHelper.makeAnswer());
+
+        // do the thing
+        CuT.handle(request, response );
+
+        // make sure view model exists and is a map
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+
+        // see if the sign in page is there with the correct error message
+        testHelper.assertViewName("signin.ftl");
+        testHelper.assertViewModelAttribute(PostSignInNameRoute.MESSAGE_TYPE_ATTR, PostSignInNameRoute.HELP_MSG);
     }
 
     /**
@@ -105,7 +107,21 @@ public class PostSignInRouteTest {
      */
     @Test
     public void lessThan6Characters(){
-        return; // TODO
+        // Set up mocks
+        TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(request.queryParams(PostSignInNameRoute.USER_PARAM)).thenReturn("aaa");
+        when(engine.render(any(ModelAndView.class))).then(testHelper.makeAnswer());
+
+        // do the thing
+        CuT.handle(request, response );
+
+        // make sure view model exists and is a map
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+
+        // see if the sign in page is there with the correct error message
+        testHelper.assertViewName("signin.ftl");
+        testHelper.assertViewModelAttribute(PostSignInNameRoute.MESSAGE_TYPE_ATTR, PostSignInNameRoute.HELP_MSG);
     }
 
     /**
@@ -113,7 +129,21 @@ public class PostSignInRouteTest {
      */
     @Test
     public void doesNotContainNumber(){
-        return; // TODO
+        // Set up mocks
+        TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(request.queryParams(PostSignInNameRoute.USER_PARAM)).thenReturn("aaaaaaa");
+        when(engine.render(any(ModelAndView.class))).then(testHelper.makeAnswer());
+
+        // do the thing
+        CuT.handle(request, response );
+
+        // make sure view model exists and is a map
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+
+        // see if the sign in page is there with the correct error message
+        testHelper.assertViewName("signin.ftl");
+        testHelper.assertViewModelAttribute(PostSignInNameRoute.MESSAGE_TYPE_ATTR, PostSignInNameRoute.HELP_MSG);
     }
 
     /**
@@ -121,6 +151,43 @@ public class PostSignInRouteTest {
      */
     @Test
     public void numberAtBeginning(){
-        return; // TODO
+        // Set up mocks
+        TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(request.queryParams(PostSignInNameRoute.USER_PARAM)).thenReturn("1aaaaaa");
+        when(engine.render(any(ModelAndView.class))).then(testHelper.makeAnswer());
+
+        // do the thing
+        CuT.handle(request, response );
+
+        // make sure view model exists and is a map
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+
+        // see if the sign in page is there with the correct error message
+        testHelper.assertViewName("signin.ftl");
+        testHelper.assertViewModelAttribute(PostSignInNameRoute.MESSAGE_TYPE_ATTR, PostSignInNameRoute.HELP_MSG);
+    }
+
+    @Test
+    public void alreadyTaken(){
+        // Set up mocks
+        String name = "aaa1aaa";
+        Player player = new Player(name);
+        gameCenter.signIn(player);
+        TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(request.queryParams(PostSignInNameRoute.USER_PARAM)).thenReturn(name);
+        when(engine.render(any(ModelAndView.class))).then(testHelper.makeAnswer());
+        when(session.attribute("playerServices")).thenReturn(playerServices);
+
+        // do the thing
+        CuT.handle(request, response );
+
+        // make sure view model exists and is a map
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+
+        // see if the sign in page is there with the correct error message
+        testHelper.assertViewName("signin.ftl");
+        testHelper.assertViewModelAttribute(PostSignInNameRoute.MESSAGE_TYPE_ATTR, "Error: This username has already been taken");
     }
 }
