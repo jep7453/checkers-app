@@ -29,7 +29,7 @@ import com.webcheckers.model.Player;
  */
 @Tag("UI-tier")
 public class PostSignInRouteTest {
-    private static final String PLAYER1_NAME = "joe";
+    private static final String PLAYER1_NAME = "abcdefg1";
 
     public static final String HELP_MSG = "Error: Please enter a correctly formated username";
     private PostSignInNameRoute CuT;
@@ -43,6 +43,7 @@ public class PostSignInRouteTest {
 	private static Response response;
 	private static TemplateEngine engine;
     private static GameCenter gameCenter;
+    private static PlayerLobby playerLobby;
 
     @BeforeEach
     public void setup(){
@@ -51,7 +52,7 @@ public class PostSignInRouteTest {
 		engine = mock(TemplateEngine.class);
         response = mock(Response.class);
         gameCenter = new GameCenter();
-		playerLobby = mock(PlayerLobby.class);
+        playerLobby = mock(PlayerLobby.class);
 		player1 = new Player(PLAYER1_NAME);
 		when(request.session()).thenReturn(session);
 		CuT = new PostSignInNameRoute(gameCenter, engine);
@@ -89,5 +90,37 @@ public class PostSignInRouteTest {
         final ModelAndView modelAndView = new ModelAndView(vm, "signin.ftl");
         vm.put("message", PostSignInNameRoute.HELP_MSG);
         final String html = engine.render(modelAndView);
+    }
+
+    /**
+     * Test the username is not greater than 25 characters
+     */
+    @Test
+    public void greater25Characters(){
+        return;  // TODO
+    }
+
+    /**
+     * Username is greater than or equal to 6 characters
+     */
+    @Test
+    public void lessThan6Characters(){
+        return; // TODO
+    }
+
+    /**
+     * username must contain a number, test that is fails when it doesnt
+     */
+    @Test
+    public void doesNotContainNumber(){
+        return; // TODO
+    }
+
+    /**
+     * check failure when there is a number at the beginning
+     */
+    @Test
+    public void numberAtBeginning(){
+        return; // TODO
     }
 }
