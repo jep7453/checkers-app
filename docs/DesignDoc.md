@@ -106,10 +106,13 @@ with the WebCheckers application.
 
 
 ### UI Tier
-> _Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
+> The user can sign in with the parameters for the username as follows:
+> - Must be equal to or more than 6 characters long
+> - Cannot be than 25 characters long
+> - It must contain at least 1 number
+> - The first character cannot be a number
+> - Cannot already be taken
+> - Can contain spaces betwen words
 
 > _At appropriate places as part of this narrative provide one or more
 > static models (UML class structure or object diagrams) with some
