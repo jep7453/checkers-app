@@ -49,6 +49,48 @@ public class PostSignInNameRoute implements Route {
     }
 
     /**
+     * This function checks the validity of a username based on there
+     * requirements:
+     *     - username should be at least
+     *       6 characters but less or equal to 25
+     *     - character must contain at least 1 number
+     *       but it cannot be the first character
+     *     - follow other criteria from previous sprint
+     *
+     * @param username the username to check
+     * @return true if username is valid, false if not
+     */
+    private boolean userNameValid(final String username){
+        // assume username is valid
+        boolean isValid = true;
+
+        // check length requirements. 6 <= len <= 25 chars
+        if (username.length() < 6 || username.length() > 25)
+            isValid = false;
+
+        // John stuff for original requirements
+        if(!username.matches("^[ a-zA-Z0-9]*$") || username.matches("^[ ]*$") || username.isEmpty())
+            isValid = false;
+
+        // first char cannot be number, but username should contain a number
+        if(Character.isDigit(username.charAt(0)))
+            isValid = false;
+
+        boolean hasNum = false;
+        for(int i = 1; i < username.length(); i++){
+            if(Character.isDigit(username.charAt(i))){
+                hasNum = true;
+                break;
+            }
+        }
+
+        if(!hasNum)
+            isValid = false;
+
+        return (isValid);
+    }
+
+    /**
      * Render the WebCheckers Home page.
      *
      * @param request
