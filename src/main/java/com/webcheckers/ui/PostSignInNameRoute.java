@@ -22,14 +22,19 @@ import static spark.Spark.halt;
 public class PostSignInNameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-    private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+    public static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
     private final GameCenter gameCenter;
     private final TemplateEngine templateEngine;
 
-    private static final String USER_NAME = "userName";
-    private static final String USER_PARAM = "myUserName";
-    private static final String CURRENT_USER= "currentUser";
+    public static final String USER_NAME = "userName";
+    public static final String USER_PARAM = "myUserName";
+    public static final String CURRENT_USER= "currentUser";
+    public static final String MESSAGE_TYPE_ATTR = "message";
+    public static final String ERROR_TYPE = "error";
+    public static final String TITLE= "title";
+    public static final String TITLE_MSG= "Welcome!";
+    public static final String HELP_MSG = "Error: Please enter a correctly formated username";
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
@@ -41,6 +46,48 @@ public class PostSignInNameRoute implements Route {
         //
         LOG.config("PostSignInNameRoute is initialized.");
         this.gameCenter=gameCenter;
+    }
+
+    /**
+     * This function checks the validity of a username based on there
+     * requirements:
+     *     - username should be at least
+     *       6 characters but less or equal to 25
+     *     - character must contain at least 1 number
+     *       but it cannot be the first character
+     *     - follow other criteria from previous sprint
+     *
+     * @param username the username to check
+     * @return true if username is valid, false if not
+     */
+    private boolean userNameValid(final String username){
+        // assume username is valid
+        boolean isValid = true;
+
+        // check length requirements. 6 <= len <= 25 chars
+        if (username.length() < 6 || username.length() > 25)
+            isValid = false;
+
+        // John stuff for original requirements
+        if(!username.matches("^[ a-zA-Z0-9]*$") || username.matches("^[ ]*$") || username.isEmpty())
+            isValid = false;
+
+        // first char cannot be number, but username should contain a number
+        if(Character.isDigit(username.charAt(0)))
+            isValid = false;
+
+        boolean hasNum = false;
+        for(int i = 1; i < username.length(); i++){
+            if(Character.isDigit(username.charAt(i))){
+                hasNum = true;
+                break;
+            }
+        }
+
+        if(!hasNum)
+            isValid = false;
+
+        return (isValid);
     }
 
     /**
@@ -66,15 +113,16 @@ public class PostSignInNameRoute implements Route {
         //retrieve playerServices
         final PlayerServices playerServices = httpSession.attribute("playerServices");
 
-        // retrieve username
+        // retrieve username assume username is valid until
+        // it fails from checks
         final String userName = request.queryParams(USER_PARAM);
 
         //error check username
-        if(userName == null || !userName.matches("^[ a-zA-Z0-9]*$")  || userName.matches("^[ ]*$") || userName=="") {
+        if( userNameValid(userName) ) {
             vm.put("message", Message.info("Error: Please enter a correctly formated username"));
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
-
         }
+
         //create player with input userName
         final Player player = new Player(userName.trim());
 
