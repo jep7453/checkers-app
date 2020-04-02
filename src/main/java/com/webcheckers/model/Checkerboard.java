@@ -10,11 +10,31 @@ import java.util.Scanner;
  */
 public class Checkerboard {
 
-  private final int NUM_RANKS = 8;
-  private final int NUM_FILES = 8;
+  public static final int NUM_RANKS = 8;
+  public static final int NUM_FILES = 8;
 
   /** The squares on the board. */
   private Square[][] squares = new Square[NUM_RANKS][NUM_FILES];
+
+  /** Creates a new Checkerboard with all the Checkers in starting position. */
+  public Checkerboard() {
+    populateBoard();
+  }
+
+  /**
+   * If you need a custom board you can create a file with the pieces you need
+   * See src/main/resources/testboard for more
+   * @param fp the file to test in resources file
+   */
+  public Checkerboard(String fp){populateBoard(fp);}
+
+  /**
+   * Create a checkerboard based on a board already made
+   * @param board
+   */
+  private Checkerboard(Square[][] board){
+    this.squares = board;
+  }
 
   /** Populates the squares of the Checkerboard and places pieces in their
    * starting positions. */
@@ -62,6 +82,14 @@ public class Checkerboard {
 
   }
 
+  /**
+   * Make a checker based on the code in the text file
+   * r -> red piece
+   * w -> white piece
+   * has k in it makes it a king
+   * @param checkerCode
+   * @return
+   */
   private Checker makeChecker(String checkerCode){
     Checker.Color col;
     Checker.Type type;
@@ -80,18 +108,6 @@ public class Checkerboard {
     Checker checker = new Checker(col, type);
     return (checker);
   }
-
-  /** Creates a new Checkerboard with all the Checkers in starting position. */
-  public Checkerboard() {
-    populateBoard();
-  }
-
-  /**
-   * If you need a custom board you can create a file with the pieces you need
-   * See src/main/resources/testboard for more
-   * @param fp the file to test in resources file
-   */
-  public Checkerboard(String fp){populateBoard(fp);}
 
   /** Gets the Square at a rank and file.
    * @param rank        The rank of the Square to get.
@@ -120,7 +136,7 @@ public class Checkerboard {
 
     // check if piece is a king or not
     Checker checker = square.getChecker();
-    boolean isKing = checker.getType().equals(Checker.Type.KING);
+    boolean isKing = checker.getType() == Checker.Type.KING;
 
     // get rank and file
     int rank = square.getRank();
@@ -133,6 +149,7 @@ public class Checkerboard {
     X -> the space jumping to
     C -> the piece being moved
     J -> the square being jumped
+
     This algorithm first checks for a simple jump move, in either direction. And if it is a
     king then it it checks behind as well
     |   |   |   |   |   |
@@ -154,23 +171,23 @@ public class Checkerboard {
       tempRank = rank - i;
       tempFile = file + i;
 
-      // move diagonally upwards and to the left
-      if(canMoveHelper(tempRank, tempFile, rank-1, file-1,
-              (i==2), checker.getColor()))
-        return (true);
-
       // move diagonally upwards and to the right
-      if(canMoveHelper(tempRank,tempFile-(2*i), rank-1, file+1,
+      if(canMoveHelper(tempRank, tempFile, rank-1, file+1,
               (i==2), checker.getColor()))
         return (true);
 
-      // move diagonally DOWNWARDS and to the left
-      if(isKing && canMoveHelper(tempRank-(2*i), tempFile,rank+1, file-1,
+      // move diagonally upwards and to the left
+      if(canMoveHelper(tempRank,tempFile-(2*i), rank-1, file-1,
               (i==2), checker.getColor()))
         return (true);
 
       // move diagonally DOWNWARDS and to the right
-      if(isKing && canMoveHelper(tempRank - (2*i), tempFile - (2*i), rank+1, file + 1,
+      if(isKing && canMoveHelper(tempRank+(2*i), tempFile,rank+1, file+1,
+              (i==2), checker.getColor()))
+        return (true);
+
+      // move diagonally DOWNWARDS and to the left
+      if(isKing && canMoveHelper(tempRank + (2*i), tempFile - (2*i), rank+1, file - 1,
               (i==2), checker.getColor()))
         return (true);
     }
@@ -197,27 +214,45 @@ public class Checkerboard {
    * @return of the piece can move to that square
    */
   private boolean canMoveHelper(int tempRank, int tempFile, int jumpRank, int jumpFile, boolean jumpMove, Checker.Color col){
+    // check that piece attempting to move to is in bounds
     if(0 <= tempRank && tempRank < NUM_RANKS && 0 <= tempFile && tempFile < NUM_FILES ){
+      // is this a jump move?
       if(jumpMove){
+        // get the checker that is getting jumped over
         Checker checker = squares[jumpRank][jumpFile].getChecker();
-        System.out.print("jump move rank: ");
-        System.out.println(jumpRank);
-        System.out.print("jump move file:" );
-        System.out.println(jumpFile);
-        if(checker.getColor().equals(col))
+
+        // if it is the same color as the current checker
+        if(checker.getColor() == col)
           return (false);
       }
-      System.out.println(tempRank);
-      System.out.println(tempFile);
 
-      System.out.println(String.format("%s", squares[tempRank][tempFile].hasChecker() ? "has" : "doesn't have"));
-      System.out.flush();
+      // is the square free where we are trying to move to?
       if(squares[tempRank][tempFile].hasChecker())
         return (false);
       else
         return (true);
     }
+
+    // all failed, cannot move
     return (false);
+  }
+
+  /**
+   * Reverse the checker board to check if a red player can move
+   *
+   * @return the reversed board
+   */
+  public Checkerboard reverseBoard(){
+    int my_rows = squares.length;
+    int my_cols = squares[0].length;
+    Square reversedArray[][]=new Square[my_rows][my_cols];
+    for(int i = my_rows-1; i >= 0; i--) {
+      for(int j = my_cols-1; j >= 0; j--) {
+        squares[my_rows-1-i][my_cols-1-j] = squares[i][j];
+      }
+    }
+
+    return(new Checkerboard(reversedArray));
   }
 
 }
