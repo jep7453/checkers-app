@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+import java.io.File;
+import java.util.Scanner;
+
 /** Represents a checkerboard entity.
  *
  * @author Scott Court <sxc4981@rit.edu>
@@ -11,7 +14,7 @@ public class Checkerboard {
   private final int NUM_FILES = 8;
 
   /** The squares on the board. */
-  private Square[][] squares = new Square[NUM_RANKS][NUM_FILES]; 
+  private Square[][] squares = new Square[NUM_RANKS][NUM_FILES];
 
   /** Populates the squares of the Checkerboard and places pieces in their
    * starting positions. */
@@ -20,7 +23,7 @@ public class Checkerboard {
       for(int file = 0; file < NUM_FILES; file++) {
         Square square = new Square(
                 ((rank + file) % 2 == 0 ? Square.Color.LIGHT : Square.Color.DARK), rank, file
-            );
+        );
         if( square.getColor() == Square.Color.DARK && rank < 3 )
           square.setChecker(new Checker(Checker.Color.RED));
         if( square.getColor() == Square.Color.DARK && rank > 4 )
@@ -30,10 +33,58 @@ public class Checkerboard {
     }
   }
 
+  private void populateBoard(String fp){
+    Scanner in;
+    try{
+      in = new Scanner(new File(fp));
+      for(int rank = 0; rank < NUM_RANKS; rank++){
+        String line = in.nextLine();
+        String[] pieces = line.split(",");
+
+        for(int file = 0; file < NUM_FILES; file++) {
+          Square square = new Square(
+                  ((rank + file) % 2 == 0 ? Square.Color.LIGHT : Square.Color.DARK), rank, file
+          );
+          if(!pieces[file].trim().equals("")){
+            square.setChecker(makeChecker(pieces[file]));
+          }
+
+          squares[rank][file] = square;
+        }
+      }
+    } catch (Exception e){
+      System.out.println(e.getMessage());
+      e.printStackTrace();
+      populateBoard();
+    }
+
+  }
+
+  private Checker makeChecker(String checkerCode){
+    Checker.Color col;
+    Checker.Type type;
+
+    if(checkerCode.contains("k"))
+      type = Checker.Type.KING;
+    else
+      type = Checker.Type.SINGLE;
+
+
+    if(checkerCode.contains("r"))
+      col = Checker.Color.RED;
+    else
+      col = Checker.Color.WHITE;
+
+    Checker checker = new Checker(col, type);
+    return (checker);
+  }
+
   /** Creates a new Checkerboard with all the Checkers in starting position. */
   public Checkerboard() {
     populateBoard();
   }
+
+  public Checkerboard(String fp){populateBoard(fp);}
 
   /** Gets the Square at a rank and file.
    * @param rank        The rank of the Square to get.
@@ -93,26 +144,26 @@ public class Checkerboard {
      */
     for(int i = 1; i < 3; i++){
       // calculate space being jumped to
-      tempRank = rank + i;
+      tempRank = rank - i;
       tempFile = file + i;
 
-      // move diagonally upwards and to the right
-      if(canMoveHelper(tempRank, tempFile, tempRank-1, tempFile-1,
-              (i==2), checker.getColor()))
-        return (true);
-
       // move diagonally upwards and to the left
-      if(canMoveHelper(tempRank,-tempFile, tempRank-1, tempFile+1,
+      if(canMoveHelper(tempRank, tempFile, rank-1, file-1,
               (i==2), checker.getColor()))
         return (true);
 
-      // move diagonally DOWNWARDS and to the right
-      if(isKing && canMoveHelper(-tempRank, tempFile,-tempRank+1, tempFile-1,
+      // move diagonally upwards and to the right
+      if(canMoveHelper(tempRank,tempFile-(2*i), rank-1, file+1,
               (i==2), checker.getColor()))
         return (true);
 
       // move diagonally DOWNWARDS and to the left
-      if(isKing && canMoveHelper(-tempRank, -tempFile, -tempRank+1, -tempFile + 1,
+      if(isKing && canMoveHelper(tempRank-(2*i), tempFile,rank+1, file-1,
+              (i==2), checker.getColor()))
+        return (true);
+
+      // move diagonally DOWNWARDS and to the right
+      if(isKing && canMoveHelper(tempRank - (2*i), tempFile - (2*i), rank+1, file + 1,
               (i==2), checker.getColor()))
         return (true);
     }
@@ -142,10 +193,21 @@ public class Checkerboard {
     if(0 <= tempRank && tempRank < NUM_RANKS && 0 <= tempFile && tempFile < NUM_FILES ){
       if(jumpMove){
         Checker checker = squares[jumpRank][jumpFile].getChecker();
+        System.out.print("jump move rank: ");
+        System.out.println(jumpRank);
+        System.out.print("jump move file:" );
+        System.out.println(jumpFile);
         if(checker.getColor().equals(col))
           return (false);
       }
-      if(!squares[tempRank][tempFile].hasChecker())
+      System.out.println(tempRank);
+      System.out.println(tempFile);
+
+      System.out.println(String.format("%s", squares[tempRank][tempFile].hasChecker() ? "has" : "doesn't have"));
+      System.out.flush();
+      if(squares[tempRank][tempFile].hasChecker())
+        return (false);
+      else
         return (true);
     }
     return (false);
