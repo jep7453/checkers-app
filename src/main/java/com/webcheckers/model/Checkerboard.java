@@ -5,6 +5,7 @@ public class Checkerboard {
   /** Represents a checkerboard entity.
    *
    * @author Scott Court <sxc4981@rit.edu>
+   * @author Chris Tremblay <cst1465@rit.edu>
    */
 
   private final int NUM_RANKS = 8;
@@ -19,7 +20,7 @@ public class Checkerboard {
     for(int rank = 0; rank < NUM_RANKS; rank++) {
       for(int file = 0; file < NUM_FILES; file++) {
         Square square = new Square(
-            (rank + file) % 2 == 0 ? Square.Color.LIGHT : Square.Color.DARK
+                ((rank + file) % 2 == 0 ? Square.Color.LIGHT : Square.Color.DARK), rank, file
             );
         if( square.getColor() == Square.Color.DARK && rank < 3 )
           square.setChecker(new Checker(Checker.Color.RED));
@@ -46,6 +47,25 @@ public class Checkerboard {
       return null;
     else
       return squares[rank][file];
+  }
+
+  /**
+   *
+   * @param square
+   * @return
+   */
+  public boolean pieceCanMove(Square square){
+    // make sure there is a piece on the square
+    if( !square.hasChecker() )
+      return (false);
+
+    // check if piece is a king or not
+    Checker checker = square.getChecker();
+    boolean isKing = checker.getType().equals(Checker.Type.KING);
+
+
+
+    return (true);
   }
 
 }

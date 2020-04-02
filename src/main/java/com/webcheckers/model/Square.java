@@ -9,13 +9,17 @@ public class Square {
 
   private Color color;      /** The color of this square. */
   private Checker checker;  /** The Checker piece on this square, if any. */
+  private int rank; /** the rank where it is located */
+  private  int file; /** the file where it is located */
 
   /** Creates a new Square object with no Checker piece on it.
    * @param color       The color of the Square.
    */
-  public Square(Color color) {
+  public Square(Color color, int rank, int file) {
     this.color = color;
     this.checker = null;
+    this.rank = rank;
+    this.file = file;
   }
 
   /** Creates a new Square object with a Checker piece on it.
