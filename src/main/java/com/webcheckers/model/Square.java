@@ -1,16 +1,36 @@
 package com.webcheckers.model;
 
+/** Represents a single checker square entity.
+ *
+ * @author Scott Court <sxc4981@rit.edu>
+ * @author Chris Tremblay <cst1465@rit.edu>
+ */
 public class Square {
 
-  /** Represents a single checker square entity.
-   *
-   * @author Scott Court <sxc4981@rit.edu>
-   */
+  /** The color of this square. */
+  private Color color;
+  /** The Checker piece on this square, if any. */
+  private Checker checker;
+  /** the rank where it is located */
+  private int rank;
+  /** the file where it is located */
+  private  int file;
 
-  private Color color;      /** The color of this square. */
-  private Checker checker;  /** The Checker piece on this square, if any. */
-  private int rank; /** the rank where it is located */
-  private  int file; /** the file where it is located */
+  /**
+   * Get the rank
+   * @return the rank
+   */
+  public int getRank() {
+    return rank;
+  }
+
+  /**
+   * Get the file
+   * @return file
+   */
+  public int getFile() {
+    return file;
+  }
 
   /** Creates a new Square object with no Checker piece on it.
    * @param color       The color of the Square.
@@ -49,7 +69,7 @@ public class Square {
    * @return True if this Square has a Checker on it, otherwise false.
    */
   public boolean hasChecker() {
-    return this.checker == null ? false : true;
+    return this.checker != null;
   }
 
   /** Puts the Checker piece on this Square. If this Square is already
