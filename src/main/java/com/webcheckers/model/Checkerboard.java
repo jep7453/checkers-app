@@ -36,7 +36,9 @@ public class Checkerboard {
   private void populateBoard(String fp){
     Scanner in;
     try{
-      in = new Scanner(new File(fp));
+      String current = new java.io.File(".").getCanonicalPath();
+      String path = current + "/src/main/resources/testboards/";
+      in = new Scanner(new File(path + fp));
       for(int rank = 0; rank < NUM_RANKS; rank++){
         String line = in.nextLine();
         String[] pieces = line.split(",");
@@ -84,6 +86,11 @@ public class Checkerboard {
     populateBoard();
   }
 
+  /**
+   * If you need a custom board you can create a file with the pieces you need
+   * See src/main/resources/testboard for more
+   * @param fp the file to test in resources file
+   */
   public Checkerboard(String fp){populateBoard(fp);}
 
   /** Gets the Square at a rank and file.
