@@ -51,7 +51,7 @@ public class PostSignInRouteTest {
 		engine = mock(TemplateEngine.class);
         response = mock(Response.class);
         gameCenter = new GameCenter();
-		playerLobby = mock(PlayerLobby.class);
+		PlayerLobby playerLobby = mock(PlayerLobby.class);
 		player1 = new Player(PLAYER1_NAME);
 		when(request.session()).thenReturn(session);
 		CuT = new PostSignInNameRoute(gameCenter, engine);
