@@ -1,8 +1,6 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.model.Checkerboard;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
+import com.webcheckers.model.*;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -189,8 +187,54 @@ public class NoMovesTest {
 
         Game game = new Game(new Player("hajs"), new Player("ahdsf"));
         Checkerboard checkerboard = new Checkerboard("noRedPieces.txt");
-        game
+        game.setBoard(checkerboard);
 
         assertFalse( game.playerCanMove(game.getRedPlayer()));
+    }
+
+    /**
+     * Test that no moves works
+     */
+    @Test
+    public void noMovesRed(){
+        Game game = new Game(new Player("hajs"), new Player("ahdsf"));
+        Checkerboard checkerboard = new Checkerboard("noMovesRed.txt");
+        game.setBoard(checkerboard);
+
+        printBoard(checkerboard.reverseBoard());
+        assertFalse( game.playerCanMove(game.getRedPlayer()));
+    }
+
+    /**
+     * Test that no moves works
+     */
+    @Test
+    public void noMovesRedKing(){
+        Game game = new Game(new Player("hajs"), new Player("ahdsf"));
+        Checkerboard checkerboard = new Checkerboard("noMovesRedKing.txt");
+        game.setBoard(checkerboard);
+
+        assertFalse( game.playerCanMove(game.getRedPlayer()));
+    }
+
+    public static void printBoard(Checkerboard board) {
+        Square square;
+        String col;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                square = board.getSquare(i, j);
+                if(square.hasChecker())
+                    if(square.getChecker().getColor() == Checker.Color.RED)
+                        col = "R";
+                    else
+                        col = "W";
+                else
+                    col = " ";
+
+                System.out.print(String.format("| %s ", col));
+
+            }
+            System.out.println("|");
+        }
     }
 }

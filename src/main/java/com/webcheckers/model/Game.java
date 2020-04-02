@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.google.gson.internal.$Gson$Preconditions;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -99,23 +101,17 @@ public class Game {
       for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
         for(int j = 0; j < Checkerboard.NUM_FILES; j++){
           // get square
-          tempSquare = board.getSquare(i,j);
+          tempSquare = flippedBoard.getSquare(i,j);
           // if the squares exists and has a white checker
           if(tempSquare.hasChecker() && tempSquare.getChecker().getColor() == Checker.Color.RED){
-            pieceCount++;
-            canMove &= board.pieceCanMove(tempSquare);
+            pieceCount++;System.out.println(tempSquare.getRank() + " " + tempSquare.getFile() + " " + flippedBoard.pieceCanMove(tempSquare));
+            canMove &= flippedBoard.pieceCanMove(tempSquare);
           }
         }
       }
     }
 
-    // make sure we aren't falsely returning true
-    if(pieceCount == 0){
-      return (false);
-    }
-
-    return (canMove);
-
+    return (pieceCount > 0 && canMove);
   }
 
 }
