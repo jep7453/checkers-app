@@ -108,6 +108,7 @@ public class Game {
             canMove &= flippedBoard.pieceCanMove(tempSquare);
           }
         }
+        flippedBoard = null;
       }
     }
 

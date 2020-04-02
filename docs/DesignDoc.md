@@ -139,9 +139,11 @@ with the WebCheckers application.
 
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+> The Game classes offers a way for checking if a player has
+> and legal turns by doing this process
+> - Check if it is the red or white player we are checking
+> - if white player: go through each piece and see if there is a valid move for it to make
+> - if red player: flip board and do the same thing. algorithm only works one way
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
