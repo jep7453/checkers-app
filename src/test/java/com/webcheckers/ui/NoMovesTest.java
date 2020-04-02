@@ -6,6 +6,7 @@ import com.webcheckers.model.Player;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.booleanThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -185,10 +186,10 @@ public class NoMovesTest {
      */
     @Test
     public void noRedPieces(){
-        Player player = new Player("asfd");
 
-        Game game = new Game(player, new Player("ahj"));
-        when(game.getBoard()).thenReturn(new Checkerboard("noRedPieces.txt"));
+        Game game = new Game(new Player("hajs"), new Player("ahdsf"));
+        Checkerboard checkerboard = new Checkerboard("noRedPieces.txt");
+        game
 
         assertFalse( game.playerCanMove(game.getRedPlayer()));
     }

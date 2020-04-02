@@ -56,6 +56,14 @@ public class Game {
   }
 
   /**
+   * Setter for checkerbaord
+   * @param board
+   */
+  public void setBoard(Checkerboard board) {
+    this.board = board;
+  }
+
+  /**
    * Check if a player can moce
    * @param player the player to check for
    * @return true if the can false if no
