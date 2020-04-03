@@ -108,8 +108,8 @@ public class Game {
             canMove &= flippedBoard.pieceCanMove(tempSquare);
           }
         }
-        flippedBoard = null;
       }
+      flippedBoard = null;
     }
 
     return (pieceCount > 0 && canMove);
