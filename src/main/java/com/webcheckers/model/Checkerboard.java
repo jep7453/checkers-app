@@ -72,7 +72,7 @@ public class Checkerboard {
     if(startChecker.getChecker() != null && endChecker.getChecker() == null){
 
       //check if checker color is RED and current player is RED
-      if(getSquare(rowS,colS).getColor().equals(Checker.Color.RED)){
+      if(startChecker.getChecker().getColor().equals(Checker.Color.RED)){
 
         //checker is SINGLE
         if(startChecker.getChecker().getType() == Checker.Type.SINGLE){
@@ -119,7 +119,7 @@ public class Checkerboard {
         }
       }
       //check if checker color is WHITE and current player is WHITE
-      else if(startChecker.getChecker().getColor() == Checker.Color.WHITE){
+      else if(startChecker.getChecker().getColor().equals(Checker.Color.WHITE)){
 
         //checker is SINGLE
         if(startChecker.getChecker().getType() == Checker.Type.SINGLE){
