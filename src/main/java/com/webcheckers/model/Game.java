@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
 
   /** Represents a checker Game.
@@ -10,6 +13,7 @@ public class Game {
   private Player redPlayer;     /** The RED Player of this game. */
   private Player whitePlayer;   /** The WHITE Player of this game. */
   private Checkerboard board;   /** The Checkerboard this game is played on. */
+  private List<Move> moves = new ArrayList<>(); /** A list of moves made, to backup */
 
   Player currentPlayer;         /** The Player whose turn it currently is. */
 
@@ -59,13 +63,20 @@ public class Game {
 
   public void makeMove(Move move) {
     board.makeMove(move);
+    moves.add(move);
   }
 
   public Player currentPlayer() {
     return currentPlayer;
   }
 
+  public void backUpMove() {
+    board.backUpMove(moves.get(moves.size()-1));
+    moves.remove(moves.size()-1);
+  }
+
   public void switchPlayer() {
+    moves.clear();
     if(currentPlayer==whitePlayer) {
       currentPlayer=redPlayer;
     }

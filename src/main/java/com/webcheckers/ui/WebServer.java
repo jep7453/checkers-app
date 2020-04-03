@@ -74,6 +74,9 @@ public class WebServer {
 
   public static final String CHECK_URL = "/checkTurn";
 
+  public static final String BACK_URL = "/backupMove";
+
+
 
   // Attributes
   //
@@ -170,6 +173,8 @@ public class WebServer {
     post(SUBMIT_URL, new PostSubmitTurnRoute(gson));
     //Post check Turn
     post(CHECK_URL, new PostCheckTurnRoute(gson));
+    //Post backup Turn
+    post(BACK_URL, new PostBackUpMoveRoute(gson));
 
 
     get(GAME_URL, new GetGameRoute(templateEngine,  gamecenter));
