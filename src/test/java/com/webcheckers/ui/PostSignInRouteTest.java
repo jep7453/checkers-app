@@ -24,8 +24,8 @@ import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Player;
 
 /**
- * This is a test suite for the @Link GetSignInRoute class
- * @author Jonathan Pofcher
+ * This is a test suite for the @Link postSigninRoutetest class
+ * @author sree jupudy
  */
 @Tag("UI-tier")
 public class PostSignInRouteTest {
