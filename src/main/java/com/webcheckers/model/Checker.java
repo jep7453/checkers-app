@@ -41,6 +41,10 @@ public class Checker {
     return this.type;
   }
 
+  public boolean canMove(){
+    return (false);
+  }
+
   /** The color of a Checker piece. */
   public enum Color {
     RED,

@@ -52,5 +52,27 @@ public class Game {
     return this.board;
   }
 
+  public Move.Type isValidMove(Move move) {
+    return board.isValidMove(move);
+
+  }
+
+  public void makeMove(Move move) {
+    board.makeMove(move);
+  }
+
+  public Player currentPlayer() {
+    return currentPlayer;
+  }
+
+  public void switchPlayer() {
+    if(currentPlayer==whitePlayer) {
+      currentPlayer=redPlayer;
+    }
+    else {
+      currentPlayer=whitePlayer;
+    }
+  }
+
 }
 
