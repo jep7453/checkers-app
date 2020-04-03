@@ -61,5 +61,18 @@ public class Game {
     board.makeMove(move);
   }
 
+  public Player currentPlayer() {
+    return currentPlayer;
+  }
+
+  public void switchPlayer() {
+    if(currentPlayer==whitePlayer) {
+      currentPlayer=redPlayer;
+    }
+    else {
+      currentPlayer=whitePlayer;
+    }
+  }
+
 }
 

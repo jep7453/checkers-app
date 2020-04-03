@@ -52,7 +52,6 @@ public class PostValidateMoveRoute implements Route {
     public Object handle(Request request, Response response) {
       LOG.finer("PostValidateMoveRoute is invoked.");
       Message moveMessage;
-      System.out.println(request.contentType());
 
       final Move move = gson.fromJson(request.queryParams("actionData"),Move.class);
 
