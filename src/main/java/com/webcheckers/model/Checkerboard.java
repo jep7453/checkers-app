@@ -453,4 +453,21 @@ public class Checkerboard {
     }
     return (new Checkerboard(array));
   }
-}
+
+  //All pieces captured!!
+  public boolean hasGameWon(){
+
+    //if all checkers of a team are captured
+    int countRed = 0;
+    int countWhite = 0;
+    for(int r = 0 ; r < 8 ; r++){
+      for(int c = 0 ; c < 8 ; c++){
+        Checker checker = getSquare(r,c).getChecker();
+        if(checker != null && checker.getColor() == RED) countRed++;
+        if(checker != null && checker.getColor() == WHITE) countWhite++;
+      }
+    }
+    if(countRed == 0 || countWhite == 0) return true;
+    return false;
+
+}}
