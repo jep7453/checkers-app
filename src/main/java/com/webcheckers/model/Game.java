@@ -3,6 +3,11 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.internal.$Gson$Preconditions;
+
+import javax.swing.*;
+import java.awt.*;
+
 public class Game {
 
   /** Represents a checker Game.
@@ -83,6 +88,64 @@ public class Game {
     else {
       currentPlayer=whitePlayer;
     }
+  }
+
+  /**
+   * Setter for checkerbaord
+   * @param board
+   */
+  public void setBoard(Checkerboard board) {
+    this.board = board;
+  }
+
+  /**
+   * Check if a player can moce
+   * @param player the player to check for
+   * @return true if the can false if no
+   */
+  public boolean playerCanMove(Player player){
+    // assume player can move
+    boolean canMove = true;
+    Square tempSquare;
+    int pieceCount = 0; // make sure we aren't saying we can move with zero peices
+    Checkerboard checkerboard = getBoard();
+
+    // player is white player
+    if(player.equals(whitePlayer)){
+
+      // iterate through board
+      for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
+        for(int j = 0; j < Checkerboard.NUM_FILES; j++){
+          // get square
+          tempSquare = checkerboard.getSquare(i,j);
+          // if the squares exists and has a white checker
+          if(tempSquare.hasChecker() && tempSquare.getChecker().getColor() == Checker.Color.WHITE){
+            pieceCount++;
+            canMove &= checkerboard.pieceCanMove(tempSquare);
+          }
+        }
+      }
+    }
+
+    // else the red player so flip the board
+    else{
+      Checkerboard flippedBoard = checkerboard.reverseBoard();
+      // iterate through board
+      for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
+        for(int j = 0; j < Checkerboard.NUM_FILES; j++){
+          // get square
+          tempSquare = flippedBoard.getSquare(i,j);
+          // if the squares exists and has a white checker
+          if(tempSquare.hasChecker() && tempSquare.getChecker().getColor() == Checker.Color.RED){
+            pieceCount++;System.out.println(tempSquare.getRank() + " " + tempSquare.getFile() + " " + flippedBoard.pieceCanMove(tempSquare));
+            canMove &= flippedBoard.pieceCanMove(tempSquare);
+          }
+        }
+      }
+      flippedBoard = null;
+    }
+
+    return (pieceCount > 0 && canMove);
   }
 
 }

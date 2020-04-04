@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerServices;
+import com.webcheckers.model.Checkerboard;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
@@ -64,6 +65,24 @@ public class GetGameRoute implements Route {
                 LOG.config("GetGameRoute is initialized.");
         }
 
+        /**
+         * Checks the board to see if there are any legal moves for the checkerboard
+         *
+         * @param board the current gameboard
+         * @param color the color to check for moves
+         * @return true if there are valid moves, false if not
+         */
+        private boolean hasNoMoves(Checkerboard board, Piece.Color color){
+                /*
+                 * for each piece on board:
+                 *      if piece == color:
+                 *              if singleJumpMove(piece) || multipleJumpMove(piece) || simpleMove(piece)
+                 *                      return (false)
+                 * return(true)
+                 */
+                return (false);
+        }
+
 
         @Override
         public Object handle(Request request, Response response) {
@@ -95,7 +114,7 @@ public class GetGameRoute implements Route {
                 //modeOptionsAsJSON
                 boolean gameHasEnded = false; //todo: initialise gameHasEnded
                 if(gameHasEnded){
-                        Map<String,Object> modeOptionsAsJSON = new HashMap<String, Object>();
+                        Map<String,Object> modeOptionsAsJSON = new HashMap<>();
                         modeOptionsAsJSON.put("isGameOver",true);
                         modeOptionsAsJSON.put("gameOverMessage","A String representing how the game ended. Such as: Bryan has captured all of the pieces.");
                         vm.put(MODE_OPTIONS_AS_JSON,modeOptionsAsJSON);
@@ -148,11 +167,12 @@ public class GetGameRoute implements Route {
 
                 //activeColor
                 boolean idRedPlayerTurn;
-                if(game.getCurrentPlayer().equals(redPlayer)){
-                        idRedPlayerTurn = true;
-                } else{
-                        idRedPlayerTurn = false;
-                }
+                idRedPlayerTurn = game.getCurrentPlayer().equals(redPlayer);
+
+                // check for no moves on board
+                /*if(playerServices.getThisPlayer().equals(game.getCurrentPlayer())){
+
+                }*/
 
                 if(idRedPlayerTurn){
                         vm.put(ACTIVE_COLOR,ActiveColor.RED);
