@@ -226,16 +226,20 @@ public class Checkerboard {
   }
 
 
-  private boolean hasGameWon(Checker.Color winingTeam){
+  public boolean hasGameWon(){
 
-    //check for other player's checker on the board
+    //if all checkers of a team are captured
+    int countRed = 0;
+    int countWhite = 0;
     for(int r = 0 ; r < 8 ; r++){
       for(int c = 0 ; c < 8 ; c++){
         Checker checker = getSquare(r,c).getChecker();
-        if(checker != null && checker.getColor() != winingTeam) return false;
+        if(checker != null && checker.getColor() == RED) countRed++;
+        if(checker != null && checker.getColor() == WHITE) countWhite++;
       }
     }
-    return true;
+    if(countRed == 0 || countWhite == 0) return true;
+    return false;
   }
 
 }

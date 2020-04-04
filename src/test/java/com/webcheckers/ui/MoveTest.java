@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/***
+ * This is unit test for Move Logic from CheckerBoard Class.
+ * @author Kesa Abbas Lnu <kl3468rit.edu>
+ */
 class MoveTest {
 
 
