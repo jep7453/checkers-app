@@ -103,40 +103,55 @@ public class Game {
 
 
   public boolean isValidTurn() {
-    //Checks if multiple simple moves are made
-    if (moves.size() > 1 && moves.get(0).getType().equals(Move.Type.SINGLE)) {
-      return false;
+
+    Move lastMove = moves.get(moves.size()-1);
+    if(moves.get(0).getType()==Move.Type.JUMP) {
+      return jumpValidation(lastMove);
     }
+    else {
+      return singleValidation(lastMove);
+    }
+  }
+
+  public boolean jumpValidation(Move lastMove) {
     // Checks if a simple move is made in the same turn as a jump move
-    if (moves.get(0).getType().equals(Move.Type.JUMP)) {
       for (Move move : moves) {
         if (move.getType().equals(Move.Type.SINGLE)) {
-
           return false;
         }
       }
-    }
-    Move lastMove = moves.get(moves.size()-1);
-    Square lastSquare = board.getSquare(lastMove.getEnd().getRow(),lastMove.getEnd().getCell());
-    if(lastMove.getType().equals(Move.Type.JUMP)) {
+    // Checks to make sure you make a multiple move if you can
+
+      Square lastSquare = board.getSquare(lastMove.getEnd().getRow(),lastMove.getEnd().getCell());
       Checkerboard newBoard = board;
       if(currentPlayer.equals(redPlayer)) {
+        lastSquare = board.getSquare(lastMove.getEnd().getCell(),lastMove.getEnd().getRow());
         newBoard=board.reverseBoard();
       }
       if(newBoard.pieceCanJump(lastSquare)) {
-        System.out.println("Make a multiple jump move");
         return false;
       }
+      return true;
+  }
+
+  public boolean singleValidation(Move lastMove) {
+    //Checks if multiple simple moves are made
+    if (moves.size() > 1) {
+      return false;
     }
+    // Checks that a jump wasn't a possible move
     Move reverseMove = new Move(lastMove.getEnd(),lastMove.getStart());
     board.makeMove(reverseMove);
-    if(playerCanJump(currentPlayer)&&!lastMove.getType().equals(Move.Type.JUMP)) {
+    if(playerCanJump(currentPlayer)) {
       board.makeMove(lastMove);
       System.out.println("Jump available somewhere");
       return false;
     }
     board.makeMove(lastMove);
     return true;
+
+
+
   }
 
   /**
