@@ -213,6 +213,79 @@ public class Checkerboard {
     }
     return (false);
   }
+
+  /**
+   * @param square the square to jump
+   * @return true if it can move, false if not
+   */
+  public boolean pieceCanJump(Square square) {
+    // make sure there is a piece on the square
+    if (!square.hasChecker())
+      return (false);
+
+    // boolean can move
+
+    // check if piece is a king or not
+    Checker checker = square.getChecker();
+    boolean isKing = checker.getType() == Checker.Type.KING;
+
+    // get rank and file
+    int rank = square.getRank();
+    int file = square.getFile();
+
+    // define temporary ranks and file to edit
+    int tempRank, tempFile;
+
+    /*
+    X -> the space jumping to
+    C -> the piece being moved
+    J -> the square being jumped
+
+    This algorithm first checks for a simple jump move, in either direction. And if it is a
+    king then it it checks behind as well
+    |   |   |   |   |   |
+    |   | X |   | X |   |
+    |   |   | C |   |   |
+    |   | X |   | X |   |
+    |   |   |   |   |   |
+
+    It then checks to see if a jump move is possible by going two spaces diagonally
+    and checking the space being jumped isn't the same color as the current checker
+    | X |   |   |   | X |
+    |   | J |   | J |   |
+    |   |   | C |   |   |
+    |   | J |   | J |   |
+    | X |   |   |   | X |
+     */
+    for (int i = 2; i < 3; i++) {
+      // calculate space being jumped to
+      tempRank = rank - i;
+      tempFile = file + i;
+
+      // move diagonally upwards and to the right
+      if (canMoveHelper(tempRank, tempFile, rank - 1, file + 1,
+              (i == 2), checker.getColor()))
+        return (true);
+
+      // move diagonally upwards and to the left
+      if (canMoveHelper(tempRank, tempFile - (2 * i), rank - 1, file - 1,
+              (i == 2), checker.getColor()))
+        return (true);
+
+      // move diagonally DOWNWARDS and to the right
+      if (isKing && canMoveHelper(tempRank + (2 * i), tempFile, rank + 1, file + 1,
+              (i == 2), checker.getColor()))
+        return (true);
+
+      // move diagonally DOWNWARDS and to the left
+      if (isKing && canMoveHelper(tempRank + (2 * i), tempFile - (2 * i), rank + 1, file - 1,
+              (i == 2), checker.getColor()))
+        return (true);
+    }
+    return (false);
+  }
+
+
   public Move.Type isValidMove(Move move) {
     //returns true if move is made and updates the checkers position in the checkerboard.
     //if game is won then winner is updated.
@@ -418,6 +491,9 @@ public class Checkerboard {
         // get the checker that is getting jumped over
         Checker checker = squares[jumpRank][jumpFile].getChecker();
 
+        //check if it is null
+        if(checker==null)
+          return (false);
         // if it is the same color as the current checker
         if (checker.getColor() == col)
           return (false);

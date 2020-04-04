@@ -115,38 +115,101 @@ public class Game {
         }
       }
     }
+    Move lastMove = moves.get(moves.size()-1);
+    Square lastSquare = board.getSquare(lastMove.getEnd().getRow(),lastMove.getEnd().getCell());
+    if(lastMove.getType().equals(Move.Type.JUMP)) {
+      System.out.println(lastSquare.hasChecker());
+      if(board.pieceCanJump(lastSquare)) {
+        return false;
+      }
+    }
+    if(playerCanJump(currentPlayer)) {
+      return false;
+    }
     return true;
   }
 
   /**
-   * Check if a player can move
+   * Check if a player can jump
    * @param player the player to check for
    * @return true if the can false if no
    */
-  public boolean playerCanMove(Player player){
+  public boolean playerCanJump(Player player) {
     // assume player can move
-    boolean canMove = true;
+    boolean canMove = false;
     Square tempSquare;
     Checkerboard checkerboard = getBoard();
 
     // player is white player
-    if(player.equals(whitePlayer)){
-      if(checkerboard.allPiecesCaptured(Checker.Color.WHITE)){
+    if (player.equals(whitePlayer)) {
+      if (checkerboard.allPiecesCaptured(Checker.Color.WHITE)) {
         return (false);
       }
 
       // iterate through board
-      for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
-        for(int j = 0; j < Checkerboard.NUM_FILES; j++){
+      for (int i = 0; i < Checkerboard.NUM_RANKS; i++) {
+        for (int j = 0; j < Checkerboard.NUM_FILES; j++) {
           // get square
-          tempSquare = checkerboard.getSquare(i,j);
+          tempSquare = checkerboard.getSquare(i, j);
           // if the squares exists and has a white checker
-          if(tempSquare.hasChecker() && tempSquare.getChecker().getColor() == Checker.Color.WHITE){
-            canMove &= checkerboard.pieceCanMove(tempSquare);
+          if (tempSquare.hasChecker() && tempSquare.getChecker().getColor() == Checker.Color.WHITE) {
+            canMove |= checkerboard.pieceCanJump(tempSquare);
           }
         }
       }
     }
+    // else the red player so flip the board
+    else{
+      if(checkerboard.allPiecesCaptured(Checker.Color.WHITE)){
+        return (false);
+      }
+      Checkerboard flippedBoard = checkerboard.reverseBoard();
+      // iterate through board
+      for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
+        for(int j = 0; j < Checkerboard.NUM_FILES; j++){
+          // get square
+          tempSquare = flippedBoard.getSquare(i,j);
+          // if the squares exists and has a white checker
+          if(tempSquare.hasChecker() && tempSquare.getChecker().getColor() == Checker.Color.RED){
+            canMove |= flippedBoard.pieceCanJump(tempSquare);
+          }
+        }
+      }
+      flippedBoard = null;
+    }
+
+    return (canMove);
+  }
+
+    /**
+     * Check if a player can move
+     * @param player the player to check for
+     * @return true if the can false if no
+     */
+    public boolean playerCanMove(Player player){
+      // assume player can move
+      boolean canMove = false;
+      Square tempSquare;
+      Checkerboard checkerboard = getBoard();
+
+      // player is white player
+      if(player.equals(whitePlayer)){
+        if(checkerboard.allPiecesCaptured(Checker.Color.WHITE)){
+          return (false);
+        }
+
+        // iterate through board
+        for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
+          for(int j = 0; j < Checkerboard.NUM_FILES; j++){
+            // get square
+            tempSquare = checkerboard.getSquare(i,j);
+            // if the squares exists and has a white checker
+            if(tempSquare.hasChecker() && tempSquare.getChecker().getColor() == Checker.Color.WHITE){
+              canMove |= checkerboard.pieceCanMove(tempSquare);
+            }
+          }
+        }
+      }
 
     // else the red player so flip the board
     else{
@@ -161,7 +224,7 @@ public class Game {
           tempSquare = flippedBoard.getSquare(i,j);
           // if the squares exists and has a white checker
           if(tempSquare.hasChecker() && tempSquare.getChecker().getColor() == Checker.Color.RED){
-            canMove &= flippedBoard.pieceCanMove(tempSquare);
+            canMove |= flippedBoard.pieceCanMove(tempSquare);
           }
         }
       }
