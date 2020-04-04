@@ -168,4 +168,24 @@ public class PlayerServicesTest {
         playerGame = gameCenter.findActiveGame(opp);
         assertNotNull(opp);
     }
+
+    @Test
+    public void finishedGame(){
+        Player opp = new Player(oppID);
+        gameCenter.signIn(opp);
+        CuT.signIn(uid);
+        CuT.setOpponent(oppID);
+        CuT.currentGame();
+        CuT.finishedGame();
+
+        assertNull(CuT.getOpponent());
+    }
+
+    @Test
+    public void getAGameButNotSignedIn(){
+        Player opp = new Player(oppID);
+        CuT.currentGame();
+
+        assertNull(CuT.currentGame());
+    }
 }
