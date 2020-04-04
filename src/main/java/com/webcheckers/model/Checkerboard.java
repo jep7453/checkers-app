@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 
 import static com.webcheckers.model.Checker.Color.*;
+import static com.webcheckers.model.Checker.Type.KING;
 import static com.webcheckers.model.Checker.Type.SINGLE;
 
 public class Checkerboard {
@@ -54,8 +55,7 @@ public class Checkerboard {
       return squares[rank][file];
   }
 
-  public Move.Type isValidMove(Move move)
-  {
+  public Move.Type isValidMove(Move move) {
     //returns true if move is made and updates the checkers position in the checkerboard.
     //if game is won then winner is updated.
     //returns false if move cannot be made or the game is already over
@@ -64,29 +64,29 @@ public class Checkerboard {
     int rowS = Start.getRow();
     int colS = Start.getCell();
     int rowD = End.getRow();
-    int colD= End.getCell();
+    int colD = End.getCell();
 
-    Square startChecker = getSquare(rowS,colS);
-    Square endChecker = getSquare(rowD,colD);
+    Square startChecker = getSquare(rowS, colS);
+    Square endChecker = getSquare(rowD, colD);
 
 
     //check if start and dest are diagonally located
-    if(Math.abs(rowS-rowD) != Math.abs(colS-colD)) return Move.Type.INVALID;
+    if (Math.abs(rowS - rowD) != Math.abs(colS - colD)) return Move.Type.INVALID;
 
     //check if start has checkers and dest is vacant
-    if(startChecker.getChecker() != null && endChecker.getChecker() == null){
+    if (startChecker.getChecker() != null && endChecker.getChecker() == null) {
 
       //check if checker color is RED and current player is RED
-      if(startChecker.getChecker().getColor().equals(RED)){
+      if (startChecker.getChecker().getColor().equals(RED)) {
 
         //checker is SINGLE
-        if(startChecker.getChecker().getType() == SINGLE){
+        if (startChecker.getChecker().getType() == SINGLE) {
 
           //check if dest is away from player
-          if(rowS < rowD){
+          if (rowS < rowD) {
 
             //check if we are jumping over one square
-            if(rowD - rowS == 2) {
+            if (rowD - rowS == 2) {
               //get the square jumped
               Square squareJumped = getSquare((rowS + rowD) / 2, (colS + colD) / 2);
 
@@ -96,86 +96,87 @@ public class Checkerboard {
               }
             }
             //check if we are not jumping over squares{
-            else if(rowD - rowS == 1){
-                return Move.Type.SINGLE;
-              }
-            } else return Move.Type.INVALID;
-
+            else if (rowD - rowS == 1) {
+              return Move.Type.SINGLE;
+            }
           } else return Move.Type.INVALID;
+
         }
+
         //checker is KING
         else {
 
           //check if we are jumping over one square
-          if(Math.abs(rowD - rowS) == 2){
+          if (Math.abs(rowD - rowS) == 2) {
             //get the square jumped
-            Square squareJumped = getSquare((rowS+rowD)/2,(colS+colD)/2);
+            Square squareJumped = getSquare((rowS + rowD) / 2, (colS + colD) / 2);
 
             //square jumped must have checker of other player
-            if(squareJumped != null && squareJumped.getChecker()!= null && squareJumped.getChecker().getColor() == WHITE){
+            if (squareJumped != null && squareJumped.getChecker() != null && squareJumped.getChecker().getColor() == WHITE) {
               return Move.Type.JUMP;
             }
           }
           //check if we are not jumping over squares{
-          else if(Math.abs(rowD - rowS) == 1){
+          else if (Math.abs(rowD - rowS) == 1) {
             return Move.Type.SINGLE;
-          }else return Move.Type.INVALID;
+          } else return Move.Type.INVALID;
 
         }
       }
-    //check if checker color is WHITE and current player is WHITE
-    if(startChecker.getChecker().getColor().equals(WHITE)){
+      //check if checker color is WHITE and current player is WHITE
+      if (startChecker.getChecker().getColor().equals(WHITE)) {
 
-      //checker is SINGLE
-      if(startChecker.getChecker().getType() == SINGLE){
+        //checker is SINGLE
+        if (startChecker.getChecker().getType() == SINGLE) {
 
-        //check if dest is away from player
-        if(rowS > rowD){
+          //check if dest is away from player
+          if (rowS > rowD) {
+
+            //check if we are jumping over one square
+            if (rowD - rowS == -2) {
+              //get the square jumped
+              Square squareJumped = getSquare((rowS + rowD) / 2, (colS + colD) / 2);
+
+              //square jumped must have checker of other player
+              if (squareJumped != null && squareJumped.getChecker() != null && squareJumped.getChecker().getColor() == RED) {
+                return Move.Type.JUMP;
+
+              }
+            }
+            //check if we are not jumping over squares{
+            else if (rowD - rowS == -1) {
+              return Move.Type.SINGLE;
+            }
+          } else return Move.Type.INVALID;
+
+        }
+
+        //checker is KING
+        else {
 
           //check if we are jumping over one square
-          if(rowD - rowS == -2) {
+          if (Math.abs(rowD - rowS) == 2) {
             //get the square jumped
+
             Square squareJumped = getSquare((rowS + rowD) / 2, (colS + colD) / 2);
 
             //square jumped must have checker of other player
             if (squareJumped != null && squareJumped.getChecker() != null && squareJumped.getChecker().getColor() == RED) {
               return Move.Type.JUMP;
-
             }
           }
           //check if we are not jumping over squares{
-          else if(rowD - rowS == -1){
+          else if (Math.abs(rowD - rowS) == 1) {
             return Move.Type.SINGLE;
-          }
-        } else return Move.Type.INVALID;
+          } else return Move.Type.INVALID;
 
-      }
-
-    //checker is KING
-    else {
-
-      //check if we are jumping over one square
-      if(Math.abs(rowD - rowS) == 2){
-        //get the square jumped
-
-        Square squareJumped = getSquare((rowS+rowD)/2,(colS+colD)/2);
-
-        //square jumped must have checker of other player
-        if(squareJumped != null && squareJumped.getChecker()!= null && squareJumped.getChecker().getColor() == RED){
-          return Move.Type.JUMP;
         }
-      }
-      //check if we are not jumping over squares{
-      else if(Math.abs(rowD - rowS) == 1){
-        return Move.Type.SINGLE;
-      }else return Move.Type.INVALID;
-
-    } return Move.Type.INVALID;
+        return Move.Type.INVALID;
+      } else return Move.Type.INVALID;
+    } else return Move.Type.INVALID;
   }
 
 
-    return Move.Type.INVALID;
-  }
 
   public void makeMove(Move move) {
 
@@ -188,6 +189,10 @@ public class Checkerboard {
 
     Square startChecker = getSquare(rowS,colS);
     Square endChecker = getSquare(rowD,colD);
+
+    if(rowD==7&&startChecker.getChecker().getColor().equals(RED)||rowD==0&&startChecker.getChecker().getColor().equals(WHITE)) {
+      startChecker.getChecker().setType(KING);
+    }
 
     if(move.getType().equals(Move.Type.JUMP)) {
       Square squareJumped = getSquare((rowS+rowD)/2,(colS+colD)/2);

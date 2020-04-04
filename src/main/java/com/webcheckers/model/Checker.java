@@ -41,6 +41,8 @@ public class Checker {
     return this.type;
   }
 
+  public void setType(Type type) { this.type = type;}
+
   public boolean canMove(){
     return (false);
   }
