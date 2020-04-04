@@ -64,6 +64,10 @@ public class WebServer {
    * The URL pattern to post a username.
    */
   public static final String SIGN_IN_NAME_URL = "/signinname";
+  /**
+   * The URL pattern to post a resignation.
+   */
+  public static final String RESIGN_URL = "/resignGame";
   //
 
   public static final String GAME_URL = "/game";
@@ -156,6 +160,8 @@ public class WebServer {
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
     // Post a Sign in.
     post(SIGN_IN_NAME_URL, new PostSignInNameRoute(gamecenter,templateEngine));
+    // Post a Resignation.
+    post(RESIGN_URL, new PostResignRoute(gamecenter,templateEngine));
 
     get(GAME_URL, new GetGameRoute(templateEngine,  gamecenter));
     LOG.config("WebServer is initialized.");
