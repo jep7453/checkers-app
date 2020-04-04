@@ -119,7 +119,11 @@ public class Game {
     Move lastMove = moves.get(moves.size()-1);
     Square lastSquare = board.getSquare(lastMove.getEnd().getRow(),lastMove.getEnd().getCell());
     if(lastMove.getType().equals(Move.Type.JUMP)) {
-      if(board.pieceCanJump(lastSquare)) {
+      Checkerboard newBoard = board;
+      if(currentPlayer.equals(redPlayer)) {
+        newBoard=board.reverseBoard();
+      }
+      if(newBoard.pieceCanJump(lastSquare)) {
         System.out.println("Make a multiple jump move");
         return false;
       }
