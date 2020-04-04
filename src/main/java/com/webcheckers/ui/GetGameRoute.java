@@ -112,15 +112,6 @@ public class GetGameRoute implements Route {
                 vm.put(VIEW_MODE,ViewMode.PLAY);
 
 
-                //modeOptionsAsJSON
-                boolean gameHasEnded = false; //todo: initialise gameHasEnded
-                if(gameHasEnded){
-                        Map<String,Object> modeOptionsAsJSON = new HashMap<>();
-                        modeOptionsAsJSON.put("isGameOver",true);
-//                        modeOptionsAsJSON.put("gameOverMessage",);
-                        Gson gson = new Gson();
-                        vm.put(MODE_OPTIONS_AS_JSON,gson.toJson(modeOptionsAsJSON));
-                }
 
                 // Initialize player and game objects
                 Player redPlayer;
@@ -189,6 +180,16 @@ public class GetGameRoute implements Route {
                 //NOTE: I have changed BoardView Class because I think this is correct
                 vm.put(BOARD_VIEW_KEY,new BoardView(game.getBoard()));
 
+
+                //modeOptionsAsJSON
+                boolean gameHasEnded = false; //todo: initialise gameHasEnded
+                if(gameHasEnded){
+                        Map<String,Object> modeOptionsAsJSON = new HashMap<>();
+                        modeOptionsAsJSON.put("isGameOver",true);
+//                        modeOptionsAsJSON.put("gameOverMessage",);
+                        Gson gson = new Gson();
+                        vm.put(MODE_OPTIONS_AS_JSON,gson.toJson(modeOptionsAsJSON));
+                }
 
                 //message
                 vm.put("message", WELCOME_MSG);
