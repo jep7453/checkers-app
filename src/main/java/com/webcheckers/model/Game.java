@@ -32,7 +32,7 @@ public class Game {
   public Game(Player redPlayer, Player whitePlayer) {
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
-    this.board = new Checkerboard();
+    this.board = new Checkerboard("weird.txt");
     this.currentPlayer = redPlayer;
   }
 
@@ -85,7 +85,7 @@ public class Game {
 
   public void switchPlayer() {
     moves.clear();
-    if(currentPlayer==whitePlayer) {
+    if(currentPlayer.equals(whitePlayer)) {
       currentPlayer=redPlayer;
     }
     else {
@@ -132,6 +132,28 @@ public class Game {
         return false;
       }
       return true;
+  }
+
+  public static void printBoard(Checkerboard board) {
+    Square square;
+    String col;
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
+        square = board.getSquare(i, j);
+        if(square.hasChecker())
+          if(square.getChecker().getColor() == Checker.Color.RED)
+            col = "R";
+          else
+            col = "W";
+        else
+          col = " ";
+
+        System.out.print(String.format("| %s ", col));
+
+      }
+      System.out.println("|");
+    }
+    System.out.println();
   }
 
   public boolean singleValidation(Move lastMove) {
@@ -188,7 +210,9 @@ public class Game {
       if(checkerboard.allPiecesCaptured(Checker.Color.WHITE)){
         return (false);
       }
+      printBoard(checkerboard);
       Checkerboard flippedBoard = checkerboard.reverseBoard();
+      printBoard(flippedBoard);
       // iterate through board
       for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
         for(int j = 0; j < Checkerboard.NUM_FILES; j++){

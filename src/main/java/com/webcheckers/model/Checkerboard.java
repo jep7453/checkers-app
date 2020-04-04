@@ -486,6 +486,7 @@ public class Checkerboard {
     // check that piece attempting to move to is in bounds
     if (0 <= tempRank && tempRank < NUM_RANKS && 0 <= tempFile && tempFile < NUM_FILES) {
 
+
       // is this a jump move?
       if (jumpMove) {
         // get the checker that is getting jumped over
@@ -521,8 +522,8 @@ public class Checkerboard {
     Square array[][] = new Square[rows][cols];
     for (int i = rows - 1; i >= 0; i--) {
       for (int j = cols - 1; j >= 0; j--) {
-        int tempRank = squares[i][j].getRank();
-        int tempFile = squares[i][j].getFile();
+        int tempRank = 7-(squares[i][j].getFile());
+        int tempFile = 7-(squares[i][j].getRank());
         array[rows - 1 - i][cols - 1 - j] = new Square(squares[i][j].getColor(), tempFile, tempRank);
         if (squares[i][j].hasChecker()) {
           array[rows - 1 - i][cols - 1 - j].setChecker(squares[i][j].getChecker());
