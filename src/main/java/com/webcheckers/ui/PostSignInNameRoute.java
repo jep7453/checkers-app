@@ -134,7 +134,7 @@ public class PostSignInNameRoute implements Route {
             vm.put("message", Message.info("Error: This username is already taken"));
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
-
+        httpSession.attribute("gameWon",false);
         playerServices.signIn(player.getName());
         // render the View
         response.redirect(WebServer.HOME_URL);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.internal.$Gson$Preconditions;
+import com.webcheckers.util.Message;
 
 import javax.swing.*;
 import java.awt.*;
@@ -98,8 +99,25 @@ public class Game {
     this.board = board;
   }
 
+
+  public boolean isValidTurn() {
+    //Checks if multiple simple moves are made
+    if (moves.size() > 1 && moves.get(0).getType().equals(Move.Type.SINGLE)) {
+      return false;
+    }
+    // Checks if a simple move is made in the same turn as a jump move
+    if (moves.get(0).getType().equals(Move.Type.JUMP)) {
+      for (Move move : moves) {
+        if (move.getType().equals(Move.Type.SINGLE)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   /**
-   * Check if a player can moce
+   * Check if a player can move
    * @param player the player to check for
    * @return true if the can false if no
    */

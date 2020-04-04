@@ -12,6 +12,8 @@ import spark.Session;
 import spark.Route;
 
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -56,7 +58,11 @@ public class PostSubmitTurnRoute implements Route {
     Session httpSession =request.session();
     PlayerServices playerServices = httpSession.attribute("playerServices");
     Game game = playerServices.currentGame();
-    game.switchPlayer();
+    if(!game.isValidTurn())
+    {
+      turnMessage = Message.error("Move Invalid");
+      return gson.toJson(turnMessage,Message.class);
+    }
     turnMessage = Message.info("Move Valid");
 
     return gson.toJson(turnMessage,Message.class);

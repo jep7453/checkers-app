@@ -209,6 +209,8 @@ public class Checkerboard {
               (i == 2), checker.getColor()))
         return (true);
     }
+    return (false);
+  }
   public Move.Type isValidMove(Move move) {
     //returns true if move is made and updates the checkers position in the checkerboard.
     //if game is won then winner is updated.
@@ -383,10 +385,9 @@ public class Checkerboard {
     startChecker.setChecker(endChecker.getChecker());
     endChecker.setChecker(null);
   }
-}
 
-    return (false);
-  }
+
+
 
   /**
    * This algorithm checks to see if a piece can move to a certain spot.
