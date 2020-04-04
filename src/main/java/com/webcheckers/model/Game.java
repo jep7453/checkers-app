@@ -111,6 +111,7 @@ public class Game {
     if (moves.get(0).getType().equals(Move.Type.JUMP)) {
       for (Move move : moves) {
         if (move.getType().equals(Move.Type.SINGLE)) {
+
           return false;
         }
       }
@@ -118,14 +119,19 @@ public class Game {
     Move lastMove = moves.get(moves.size()-1);
     Square lastSquare = board.getSquare(lastMove.getEnd().getRow(),lastMove.getEnd().getCell());
     if(lastMove.getType().equals(Move.Type.JUMP)) {
-      System.out.println(lastSquare.hasChecker());
       if(board.pieceCanJump(lastSquare)) {
+        System.out.println("Make a multiple jump move");
         return false;
       }
     }
-    if(playerCanJump(currentPlayer)) {
+    Move reverseMove = new Move(lastMove.getEnd(),lastMove.getStart());
+    board.makeMove(reverseMove);
+    if(playerCanJump(currentPlayer)&&!lastMove.getType().equals(Move.Type.JUMP)) {
+      board.makeMove(lastMove);
+      System.out.println("Jump available somewhere");
       return false;
     }
+    board.makeMove(lastMove);
     return true;
   }
 
