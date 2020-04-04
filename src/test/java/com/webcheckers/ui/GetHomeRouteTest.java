@@ -5,15 +5,17 @@ import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.endsWith;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import spark.*;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -64,6 +66,11 @@ public class GetHomeRouteTest {
     private static final String ERR = "error";
 
     /**
+     * helper engine
+     */
+    private TemplateEngineTester testHelper;
+
+    /**
      * Creates a player tag like the one that would redirect you when you click a
      * name to start a game
      *
@@ -89,11 +96,12 @@ public class GetHomeRouteTest {
     @BeforeEach
     public void setup(){
         // Set up mock objects
+        testHelper = new TemplateEngineTester();
         request = mock(Request.class);
         session = mock(Session.class);
         response = mock(Response.class);
         when(request.session()).thenReturn(session);
-        engine = new FreeMarkerEngine();
+        engine = mock(FreeMarkerEngine.class);
 
         // initialize game center
         gameCenter = new GameCenter();
@@ -111,25 +119,22 @@ public class GetHomeRouteTest {
     @Test
     public void renderHomeNoSignIn(){
         // initialize template engine tester
-        final TemplateEngineTester testHelper = new TemplateEngineTester();
 
         final Map<String, Object> vm = new HashMap<>();
         final ModelAndView modelAndView = new ModelAndView(vm, GetHomeRoute.VIEW_NAME);
+
+        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
         CuT.handle(request, response);
 
         // load attributes
-        PlayerLobby lobby = gameCenter.getLobby();
-        vm.put(GetHomeRoute.TOTAL_PLAYERS, lobby.getTotalPlayers()); // should be zero
-        vm.put(GetHomeRoute.MESSAGE, GetHomeRoute.WELCOME_MSG);
-        vm.put(GetHomeRoute.TITLE, GetHomeRoute.TITLE_MSG);
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+        testHelper.assertViewName(GetHomeRoute.VIEW_NAME);
+        testHelper.assertViewModelAttribute(GetHomeRoute.TITLE, GetHomeRoute.TITLE_MSG);
+        testHelper.assertViewModelAttribute(GetHomeRoute.TOTAL_PLAYERS, 0);
 
         // render page
-        final String html = engine.render(modelAndView);
 
-        // check that there are no players signed in and there is a sign in link
-        assertTrue(html.contains(SIGN_IN_TAG));
-        assertTrue(html.contains("Users Playing: 0"));
-        assertTrue(html.contains(TITLE_TAG));
     }
 
     /**
@@ -143,19 +148,18 @@ public class GetHomeRouteTest {
         final Map<String, Object> vm = new HashMap<>();
         final ModelAndView modelAndView = new ModelAndView(vm, GetHomeRoute.VIEW_NAME);
 
+        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        CuT.handle(request, response);
+
         // load attributes
-        PlayerLobby lobby = gameCenter.getLobby();
-        vm.put(GetHomeRoute.TOTAL_PLAYERS, lobby.getTotalPlayers()); // should be zero
-        vm.put(GetHomeRoute.MESSAGE, GetHomeRoute.WELCOME_MSG);
-        vm.put(GetHomeRoute.TITLE, GetHomeRoute.TITLE_MSG);
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+        testHelper.assertViewModelAttribute(GetHomeRoute.TOTAL_PLAYERS, 1);
 
         // render page
-        final String html = engine.render(modelAndView);
+
 
         // check that there are no players signed in and there is a sign in link
-        assertTrue(html.contains(SIGN_IN_TAG));
-        assertTrue(html.contains("Users Playing: 1"));
-        assertTrue(html.contains(TITLE_TAG));
     }
 
     /**
@@ -168,54 +172,56 @@ public class GetHomeRouteTest {
         playerServices.signIn(pid);
         PlayerLobby lobby = gameCenter.getLobby();
         when(session.attribute("playerServices")).thenReturn(playerServices);
+        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
         CuT.handle(request, response);
 
-
-        final Map<String, Object> vm = new HashMap<>();
-        final ModelAndView modelAndView = new ModelAndView(vm, GetHomeRoute.VIEW_NAME);
-
-
-        // load attributes
-        vm.put(GetHomeRoute.TITLE, GetHomeRoute.TITLE_MSG);
-        vm.put(GetHomeRoute.MESSAGE, GetHomeRoute.WELCOME_MSG);
-        vm.put(GetHomeRoute.CURRENT_USER, pid);
-        vm.put(GetHomeRoute.PLAYER_LIST, lobby.getPlayersNames());
-
-        // render html
-        final String html = engine.render(modelAndView);
-
-        // tests
-        assertTrue(html.contains(makeSignOutTag(pid)));
-        assertTrue(html.contains(TITLE_TAG));
-        assertTrue(html.contains("Users Playing:"));
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+        testHelper.assertViewModelAttribute(GetHomeRoute.PLAYER_LIST, gameCenter.getLobby().getPlayersNames(playerServices.getThisPlayer()) );
     }
 
     @Test
     public void playerSignedInWithOtherPlayers(){
         // mock sign in player
         Player opponent = new Player(oid);
-        Player player = new Player(pid);
-        gameCenter.signIn(player);
+        playerServices.signIn(pid);
         gameCenter.signIn(opponent);
         PlayerLobby lobby = gameCenter.getLobby();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        when(session.attribute("playerServices")).thenReturn(playerServices);
+        CuT.handle(request, response);
 
-        final Map<String, Object> vm = new HashMap<>();
-        final ModelAndView modelAndView = new ModelAndView(vm, GetHomeRoute.VIEW_NAME);
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+        testHelper.assertViewModelAttribute(GetHomeRoute.PLAYER_LIST, lobby.getPlayersNames(playerServices.getThisPlayer()));
 
 
-        // load attributes
-        vm.put(GetHomeRoute.TITLE, GetHomeRoute.TITLE_MSG);
-        vm.put(GetHomeRoute.MESSAGE, GetHomeRoute.WELCOME_MSG);
-        vm.put(GetHomeRoute.CURRENT_USER, pid);
-        vm.put(GetHomeRoute.PLAYER_LIST, lobby.getPlayersNames(player));
+    }
 
-        // render html
-        final String html = engine.render(modelAndView);
+    @Test
+    public void thereIsAnErrorInSession(){
+        String ERROR_MSG = "Error";
+        when(session.attribute("error")).thenReturn(ERROR_MSG);
+        when(engine.render(any(ModelAndView.class))).then(testHelper.makeAnswer());
 
-        // tests
-        assertTrue(html.contains(makeSignOutTag(pid)));
-        assertTrue(html.contains(TITLE_TAG));
-        assertTrue(html.contains("Users Playing:"));
-        assertTrue(html.contains(makePlayerListTag(opponent.getName())));
+        CuT.handle(request, response);
+
+        // make sure the view model has an error in it
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+        //testHelper.assertViewModelAttribute("message", Message.info(ERROR_MSG));
+    }
+
+    @Test
+    public void alreadyPlayingGame(){
+        when(session.attribute("playerServices")).thenReturn(playerServices);
+        playerServices.signIn(pid);
+        gameCenter.playerStartedPlayingGame(playerServices.getThisPlayer());
+
+
+        CuT.handle(request, response);
+
+        verify(response, times(1)).redirect(anyString());
+
     }
 }
