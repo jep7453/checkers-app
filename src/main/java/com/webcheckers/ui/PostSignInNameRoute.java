@@ -122,7 +122,7 @@ public class PostSignInNameRoute implements Route {
 
         //error check username
         if( !userNameValid(userName) ) {
-            vm.put("message", HELP_MSG);
+            vm.put("message", Message.info(HELP_MSG));
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
 
@@ -131,7 +131,7 @@ public class PostSignInNameRoute implements Route {
 
         //error check playerlobby
         if(gameCenter.isSignedIn(player)) {
-            vm.put("message", "Error: This username has already been taken");
+            vm.put("message", Message.info("Error: This username is already taken"));
             return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
         }
 

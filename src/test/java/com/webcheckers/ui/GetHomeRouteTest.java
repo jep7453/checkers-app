@@ -115,6 +115,7 @@ public class GetHomeRouteTest {
 
         final Map<String, Object> vm = new HashMap<>();
         final ModelAndView modelAndView = new ModelAndView(vm, GetHomeRoute.VIEW_NAME);
+        CuT.handle(request, response);
 
         // load attributes
         PlayerLobby lobby = gameCenter.getLobby();
@@ -164,9 +165,11 @@ public class GetHomeRouteTest {
     @Test
     public void playerSignedIn(){
         // mock sign in player
-        Player p = new Player(pid);
-        gameCenter.signIn(p);
+        playerServices.signIn(pid);
         PlayerLobby lobby = gameCenter.getLobby();
+        when(session.attribute("playerServices")).thenReturn(playerServices);
+        CuT.handle(request, response);
+
 
         final Map<String, Object> vm = new HashMap<>();
         final ModelAndView modelAndView = new ModelAndView(vm, GetHomeRoute.VIEW_NAME);
@@ -176,7 +179,7 @@ public class GetHomeRouteTest {
         vm.put(GetHomeRoute.TITLE, GetHomeRoute.TITLE_MSG);
         vm.put(GetHomeRoute.MESSAGE, GetHomeRoute.WELCOME_MSG);
         vm.put(GetHomeRoute.CURRENT_USER, pid);
-        vm.put(GetHomeRoute.PLAYER_LIST, lobby.getPlayersNames(p));
+        vm.put(GetHomeRoute.PLAYER_LIST, lobby.getPlayersNames());
 
         // render html
         final String html = engine.render(modelAndView);
