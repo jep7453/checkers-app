@@ -224,5 +224,22 @@ public class Checkerboard {
     startChecker.setChecker(endChecker.getChecker());
     endChecker.setChecker(null);
   }
+
+
+  private boolean hasGameWon(Checker.Color winingTeam){
+
+    //check for other player's checker on the board
+    for(int r = 0 ; r < 8 ; r++){
+      for(int c = 0 ; c < 8 ; c++){
+        Checker checker = getSquare(r,c).getChecker();
+        if(checker != null && checker.getColor() != winingTeam) return false;
+      }
+    }
+    return true;
+  }
+
 }
+
+
+
 
