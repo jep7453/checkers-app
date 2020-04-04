@@ -66,8 +66,14 @@ public class GameCenter {
      *
      * @param player user name to sign out
      */
-    public synchronized void signOut( String player  ) {
-        // todo - eventually
+    public synchronized void signOut( Player player  ) {
+        // remove from game list incase
+        if(isCurrentlyPlaying(player)){
+            playerFinishedPlayingGame(player);
+        }
+
+        // remove from lobby
+        lobby.removePlayer(player);
     }
 
     /**
