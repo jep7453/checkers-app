@@ -63,6 +63,7 @@ public class PostSubmitTurnRoute implements Route {
       turnMessage = Message.error("Move Invalid");
       return gson.toJson(turnMessage,Message.class);
     }
+    game.switchPlayer();
     turnMessage = Message.info("Move Valid");
 
     return gson.toJson(turnMessage,Message.class);
