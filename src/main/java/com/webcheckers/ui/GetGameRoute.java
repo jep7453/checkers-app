@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import java.util.logging.Logger;
 
+import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerServices;
@@ -116,8 +117,9 @@ public class GetGameRoute implements Route {
                 if(gameHasEnded){
                         Map<String,Object> modeOptionsAsJSON = new HashMap<>();
                         modeOptionsAsJSON.put("isGameOver",true);
-                        modeOptionsAsJSON.put("gameOverMessage","A String representing how the game ended. Such as: Bryan has captured all of the pieces.");
-                        vm.put(MODE_OPTIONS_AS_JSON,modeOptionsAsJSON);
+//                        modeOptionsAsJSON.put("gameOverMessage",);
+                        Gson gson = new Gson();
+                        vm.put(MODE_OPTIONS_AS_JSON,gson.toJson(modeOptionsAsJSON));
                 }
 
                 // Initialize player and game objects

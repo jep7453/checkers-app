@@ -4,6 +4,8 @@ package com.webcheckers.model;
 import static com.webcheckers.model.Checker.Color.*;
 import static com.webcheckers.model.Checker.Type.KING;
 import static com.webcheckers.model.Checker.Type.SINGLE;
+
+import java.awt.*;
 import java.io.File;
 import java.util.Scanner;
 
@@ -455,7 +457,7 @@ public class Checkerboard {
   }
 
   //All pieces captured!!
-  public boolean hasGameWon(){
+  public boolean allPiecesCaptured(Checker.Color color){
 
     //if all checkers of a team are captured
     int countRed = 0;
@@ -467,7 +469,11 @@ public class Checkerboard {
         if(checker != null && checker.getColor() == WHITE) countWhite++;
       }
     }
-    if(countRed == 0 || countWhite == 0) return true;
-    return false;
+
+    // Check if a color got all pieces captured
+    if(color == RED)
+      return(countRed == 0);
+    else
+      return(countWhite==0);
 
 }}

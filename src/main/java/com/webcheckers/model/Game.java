@@ -23,6 +23,8 @@ public class Game {
 
   Player currentPlayer;         /** The Player whose turn it currently is. */
 
+  private Player winner;
+
   /** Creates a new Game object with the specified players.
    * @param redPlayer   The Player to play as red.
    * @param whitePlayer The Player to play as white.
@@ -125,11 +127,13 @@ public class Game {
     // assume player can move
     boolean canMove = true;
     Square tempSquare;
-    int pieceCount = 0; // make sure we aren't saying we can move with zero peices
     Checkerboard checkerboard = getBoard();
 
     // player is white player
     if(player.equals(whitePlayer)){
+      if(checkerboard.allPiecesCaptured(Checker.Color.WHITE)){
+        return (false);
+      }
 
       // iterate through board
       for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
@@ -138,7 +142,6 @@ public class Game {
           tempSquare = checkerboard.getSquare(i,j);
           // if the squares exists and has a white checker
           if(tempSquare.hasChecker() && tempSquare.getChecker().getColor() == Checker.Color.WHITE){
-            pieceCount++;
             canMove &= checkerboard.pieceCanMove(tempSquare);
           }
         }
@@ -147,6 +150,9 @@ public class Game {
 
     // else the red player so flip the board
     else{
+      if(checkerboard.allPiecesCaptured(Checker.Color.WHITE)){
+        return (false);
+      }
       Checkerboard flippedBoard = checkerboard.reverseBoard();
       // iterate through board
       for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
@@ -155,7 +161,6 @@ public class Game {
           tempSquare = flippedBoard.getSquare(i,j);
           // if the squares exists and has a white checker
           if(tempSquare.hasChecker() && tempSquare.getChecker().getColor() == Checker.Color.RED){
-            pieceCount++;System.out.println(tempSquare.getRank() + " " + tempSquare.getFile() + " " + flippedBoard.pieceCanMove(tempSquare));
             canMove &= flippedBoard.pieceCanMove(tempSquare);
           }
         }
@@ -163,7 +168,33 @@ public class Game {
       flippedBoard = null;
     }
 
-    return (pieceCount > 0 && canMove);
+    return (canMove);
+  }
+
+  /**
+   * Check if the game has been won by pieces captured
+   * or no moves
+   * @return true if won, false if not
+   */
+  public boolean isGameWon(){
+    boolean won = false;
+    if(board.allPiecesCaptured(Checker.Color.RED)) {
+      winner = whitePlayer;
+      won = true;
+    }
+    if(board.allPiecesCaptured(Checker.Color.WHITE)) {
+      winner = redPlayer;
+      won = true;
+    }
+    if(!playerCanMove(redPlayer)) {
+      winner = whitePlayer;
+      won = true;
+    }
+    if(!playerCanMove(whitePlayer)) {
+      winner = redPlayer;
+      won = true;
+    }
+    return (won);
   }
 
 }
