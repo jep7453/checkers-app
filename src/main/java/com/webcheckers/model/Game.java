@@ -3,12 +3,18 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Represents a checker Game.
- *
- * @author Scott Court <sxc4981@rit.edu>
- */
+import com.google.gson.internal.$Gson$Preconditions;
+import com.webcheckers.util.Message;
+
+import javax.swing.*;
+import java.awt.*;
+
 public class Game {
 
+  /** Represents a checker Game.
+   *
+   * @author Scott Court <sxc4981@rit.edu>
+   */
 
   private Player redPlayer;     /** The RED Player of this game. */
   private Player whitePlayer;   /** The WHITE Player of this game. */
@@ -98,21 +104,14 @@ public class Game {
 
   public boolean isValidTurn() {
 
-    Move lastMove = moves.get(moves.size() - 1);
-    switch (lastMove.getType()) {
-      case JUMP:
-        return jumpValidation(lastMove);
-
-      case SINGLE:
-        return singleValidation(lastMove);
-
-      case INVALID:
-        return false;
+    Move lastMove = moves.get(moves.size()-1);
+    if(moves.get(0).getType()==Move.Type.JUMP) {
+      return jumpValidation(lastMove);
     }
-
-    return false;
+    else {
+      return singleValidation(lastMove);
+    }
   }
-
 
   public boolean jumpValidation(Move lastMove) {
     // Checks if a simple move is made in the same turn as a jump move
@@ -165,7 +164,6 @@ public class Game {
     // Checks that a jump wasn't a possible move
     Move reverseMove = new Move(lastMove.getEnd(),lastMove.getStart());
     board.makeMove(reverseMove);
-
     if(playerCanJump(currentPlayer)) {
       board.makeMove(lastMove);
       System.out.println("Jump available somewhere");
@@ -173,6 +171,9 @@ public class Game {
     }
     board.makeMove(lastMove);
     return true;
+
+
+
   }
 
   /**
@@ -265,7 +266,6 @@ public class Game {
         return (false);
       }
       Checkerboard flippedBoard = checkerboard.reverseBoard();
-
       // iterate through board
       for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
         for(int j = 0; j < Checkerboard.NUM_FILES; j++){
