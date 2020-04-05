@@ -29,8 +29,8 @@ geometry: margin=1in
 | Term | Definition |
 |------|------------|
 | VO | Value Object |
-
-
+|MVP|Minimum-Viable Product|
+|UI|User Interface|
 ## Requirements
 > As a player I want to be able to sign in and see other people I can play checkers against. 
 > Once I have selected and opponent I want to be able to play a game of checkers by the American
@@ -112,30 +112,40 @@ with the WebCheckers application.
 > - It must contain at least 1 number
 > - The first character cannot be a number
 > - Cannot already be taken
-> - Can contain spaces betwen words
+> - Can contain spaces between words
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class structure or object diagrams) with some
-> details such as critical attributes and methods._
+> The UI Tier allows the player to sign-in, sign-out, make moves and sign out.
+> GET Routes in the UI Tier handle the redirection to the appropriate route. 
+> The routes and their specific functions:
+>- GetGameRoute: It returns the current state of the game to the one of the players. 
+>  It aides in the display of the correct orientation of the board for the player.
+>- GetHomeRoute: It displays the messages to the user.
+>- GetSignInRoute:It redirects user to the sign in page of the game.
+>- PostBackUpMoveRoute: It asks the server to remove the last move made taht was validated.
+>- PostCheckTurnRoute: After a valid move is done by the player, this route submits it to the server for validation.
+>- PostResignRoute:It informs the server that the player is resigning the game, and when the action is successful,
+>it redirects the user to homepage.
+>- PostSignInNameRoute: It posts the sign in page for the player, and 
+>- PostSignOutRoute: It post the dign out page to the player after the player signs out.
+>- PostSubmitTurnRoute: Utilizing this action, it submits the user's turns.
+>- PostValidateMoveRoute: It submits a single move made by the player to the server to check if that action is valid or not.
 
-> _You must also provide any dynamic models, such as statechart and
-> sequence diagrams, as is relevant to a particular aspect of the design
-> that you are describing.  For example, in WebCheckers you might create
-> a sequence diagram of the `POST /validateMove` HTTP request processing
-> or you might show a statechart diagram if the Game component uses a
-> state machine to manage the game._
-
-> _If a dynamic model, such as a statechart describes a feature that is
-> not mostly in this tier and cuts across multiple tiers, you can
-> consider placing the narrative description of that feature in a
-> separate section for describing significant features. Place this after
-> you describe the design of the three tiers._
+>The server responsible for handling the POST and GET routes is the Jetty WebServer in the WebServer Class.
 
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+
+>The Application tier validates the player objects and manages the games and the players for the checker game.
+>The Application tier is the main source of player and game creation logic.
+>The functionality of Application tier includes:
+>- It checks for the validity of the user name.
+>- It keeps a list of users currently playing the game.  
+>- It checks if the user name is on the list of the current players.
+>- It adds the new player to the list of current players and 
+>- It checks to see if a new player signed in and faciliates the converstaion between the tiers that a new player joined in.
+>- It checks to see if the player is playing a game or not, it ends that session of game which has no players in it.
+>- It also keeps track of the number of games that is being currently played, and tells the server to start
+>a new game when the players are signed in and ready to play.
 
 
 ### Model Tier
@@ -145,6 +155,16 @@ with the WebCheckers application.
 > - if white player: go through each piece and see if there is a valid move for it to make
 > - if red player: flip board and do the same thing. algorithm only works one way
 
+>
+>The Model Tier is responsible for the domain enitites and the logic of the game. It communicates with the UI Tier 
+>and check if the game rules are being correctly adhered. It has CheckerBoard, Checker, Game, Move, Player, Position 
+>and Square classes.
+>The CheckerBoard class creates a checkerboard for the players, and utilizes the checker and square to present a fully
+>functional checker board. The move class is a place holder for the position and players of the Model Tier classes.
+>The Checkerboard class contains the logic for the simple move, single jump, multiple jump moves and promotion to king.
+>The game class starts the game for the player after the checkerboard is set, and when a move is made acroos the board,
+>the move class checks for the validity of the move made by the user. If the move is right, depending on the
+>type of move then the captured piece was removed from the checkerboard.
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
 > to continue. These improvement should be based on your direct
