@@ -165,6 +165,12 @@ with the WebCheckers application.
 >The game class starts the game for the player after the checkerboard is set, and when a move is made across the board,
 >the move class checks for the validity of the move made by the user. If the move is right, depending on the
 >type of move then the captured piece was removed from the checkerboard.
+>The checkerboard class populates the board with the squares and checkers to present a fully functional checker board 
+>for the players to play game. It decides the color of the square and the checker piece on the board. It also checks for
+>the move made by the user and if it is valid or not. The class also takes in account if the all the pieces were captured
+>or if there were any moves left on the board. It passes this information to the wrapper classes which would then 
+>communicate it with the UI Tier classes and javascript for further implementation.
+>
 ### Design Improvements
 > The improvement would be to remove the duplicate classes from the UI Tier such as Row, Spaces, Pieces, and Boardview 
 >since it violates the Object Oriented Design Principles. Since these classes have already been implemented
