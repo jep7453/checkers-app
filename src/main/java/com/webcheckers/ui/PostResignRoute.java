@@ -1,19 +1,14 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.PlayerServices;
+import com.webcheckers.util.Message;
+import spark.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-import com.google.gson.Gson;
-
-import com.webcheckers.application.GameCenter;
-import com.webcheckers.application.PlayerServices;
-import com.webcheckers.model.Player;
-import spark.*;
-
-import com.webcheckers.util.Message;
-
-import static spark.Spark.halt;
 
 /**
  * The UI Controller to POST the Resign page.
@@ -69,7 +64,6 @@ public class PostResignRoute implements Route {
         //retrieve playerServices
         final PlayerServices playerServices = httpSession.attribute("playerServices");
 
-        // render the View
-        return vm.put(gson.toJson(options));
+        return null;
     }
 }

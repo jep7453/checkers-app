@@ -105,6 +105,7 @@ public class PlayerServices {
         this.opponent = new Player(opponent);
     }
 
+
     /**
      * Get the current game or a new game, or nothing if there is no opponent
      * @return a new game, or null if there is not an opponent stored or not signed in
