@@ -65,6 +65,7 @@ public class PostSignOutTest {
     /**
      * player is already signed out
      */
+    @Test
     public void playerServicesAlreadySignedOut(){
         when(session.attribute("playerServices")).thenReturn(playerServices);
         when(playerServices.isSignedIn()).thenReturn(false);

@@ -11,6 +11,7 @@ import spark.Response;
 import spark.Session;
 import spark.TemplateEngine;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -58,7 +59,8 @@ public class PostSubmitTurnTest {
     @Test
     public void moveIsValid(){
         when(game.isValidTurn()).thenReturn(true);
-        CuT.handle(request, response);
+        Object json = CuT.handle(request, response);
+        assertTrue(((String)json).contains("Move Valid"));
     }
 
     /**
@@ -67,6 +69,7 @@ public class PostSubmitTurnTest {
     @Test
     public void moveIsntValid(){
         when(game.isValidTurn()).thenReturn(false);
-        CuT.handle(request, response);
+        Object json = CuT.handle(request, response);
+        assertTrue(((String)json).contains("Move Invalid"));
     }
 }
