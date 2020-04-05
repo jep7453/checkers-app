@@ -24,6 +24,8 @@ public class PlayerServices {
     /** Is this player signed in? */
     private boolean signedIn;
 
+    private boolean gameOver;
+
     /**
      * Create a new PlayerServices
      * @param gameCenter the game center for the whole game
@@ -33,6 +35,7 @@ public class PlayerServices {
         this.game = null;
         this.signedIn = false;
         this.thisPlayer= null;
+        this.gameOver=false;
 
     }
 
@@ -65,6 +68,17 @@ public class PlayerServices {
             return (true);
         }
         return (false);
+    }
+
+    public void setGameOver(boolean over) {
+        gameOver=over;
+        if(gameOver==true) {
+            gameCenter.gameFinished(game);
+        }
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
     }
 
     /**
@@ -116,12 +130,18 @@ public class PlayerServices {
         if(this.opponent == null)
             return (null);
         if(this.game == null) {
-            gameCenter.playerStartedPlayingGame(thisPlayer);
-            gameCenter.playerStartedPlayingGame(opponent);
+
             // Let game center know player is starting a new game and create a new game
             Game temp = gameCenter.findActiveGame(thisPlayer);
-            if(temp == null)
+            if(temp == null) {
+                if(!gameCenter.isCurrentlyPlaying(thisPlayer)) {
+                    gameCenter.playerStartedPlayingGame(thisPlayer);
+                }
+                if(!gameCenter.isCurrentlyPlaying(opponent)) {
+                    gameCenter.playerStartedPlayingGame(opponent);
+                }
                 game = gameCenter.getGame(thisPlayer, opponent);
+            }
             else
                 game = temp;
         }

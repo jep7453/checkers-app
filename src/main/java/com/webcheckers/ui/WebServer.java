@@ -178,7 +178,7 @@ public class WebServer {
     //Post Validate Move
     post(VALIDATE_URL, new PostValidateMoveRoute(gson));
     //Post Submit Turn
-    post(SUBMIT_URL, new PostSubmitTurnRoute(gson));
+    post(SUBMIT_URL, new PostSubmitTurnRoute(gson,gamecenter));
     //Post check Turn
     post(CHECK_URL, new PostCheckTurnRoute(gson));
     //Post backup Turn

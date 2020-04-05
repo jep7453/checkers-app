@@ -40,6 +40,8 @@ public class GameCenter {
      * @return true if signed in, false if not
      */
     public synchronized boolean isSignedIn(Player player){
+        if(player==null)
+            return false;
         return (lobby.lobbyContains(player));
     }
 
@@ -80,15 +82,17 @@ public class GameCenter {
      * @param player player playing game
      */
     public synchronized void playerStartedPlayingGame( Player player ){
-        currentlyPlaying.add(player);
-        LOG.fine("Player '" + player.getName() + "' started player a game" );
-    }
+                currentlyPlaying.add(player);
+                LOG.fine("Player '" + player.getName() + "' started player a game");
+            }
+
 
     /**
      * Allow GameCenter to know that a player is not currently playing a game
      * @param player the name of player who finished a game
      */
     public synchronized void playerFinishedPlayingGame( Player player ){
+        currentlyPlaying.remove(player);
         currentlyPlaying.remove(player);
         LOG.fine("Player '" + player + "' finished playing a game");
     }

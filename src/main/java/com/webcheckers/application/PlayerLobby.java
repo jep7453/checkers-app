@@ -103,6 +103,8 @@ public class PlayerLobby {
      *      a boolean if the player is on the list, false if
      */
     public synchronized boolean lobbyContains(Player player) {
+        if(player==null)
+            return false;
         return players.contains(player);
     }
 }

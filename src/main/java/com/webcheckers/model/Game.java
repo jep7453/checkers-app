@@ -286,7 +286,7 @@ public class Game {
         winner=redPlayer;
       }
     if(currentPlayer==redPlayer) {
-      winner=whitePlayer;
+      winner = whitePlayer;
     }
   }
 

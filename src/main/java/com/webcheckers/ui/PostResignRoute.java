@@ -65,6 +65,9 @@ public class PostResignRoute implements Route {
 
         Game game = playerServices.currentGame();
         game.resigned();
+        playerServices.setGameOver(true);
+        gameCenter.gameFinished(game);
+        playerServices.finishedGame();
 
         return gson.toJson(resignMessage,Message.class);
     }
