@@ -162,13 +162,19 @@ with the WebCheckers application.
 >The CheckerBoard class creates a checkerboard for the players, and utilizes the checker and square to present a fully
 >functional checker board. The move class is a place holder for the position and players of the Model Tier classes.
 >The Checkerboard class contains the logic for the simple move, single jump, multiple jump moves and promotion to king.
->The game class starts the game for the player after the checkerboard is set, and when a move is made acroos the board,
+>The game class starts the game for the player after the checkerboard is set, and when a move is made across the board,
 >the move class checks for the validity of the move made by the user. If the move is right, depending on the
 >type of move then the captured piece was removed from the checkerboard.
 ### Design Improvements
-> Remove the duplicate classes from the UI Tier such as Row, Spaces, Pieces, and Boardview 
+> The improvement would be to remove the duplicate classes from the UI Tier such as Row, Spaces, Pieces, and Boardview 
 >since it violates the Object Oriented Design Principles. Since these classes have already been implemented
->in Model Tier classes.     
+>in Model Tier classes. Most of the classes could be cleaned up and have small helper classes to have low coupling. 
+>The checkerboard class has the most of the logic of the game. This class can be decomposed into smaller helper classes 
+> such as single, single jump and multiple jump move classes. This would result in low coupling and high cohesion
+>since the checker class would have only access to the object of the move classes. The design could be more efficient 
+>if the king logic would be broken into smaller helper classes such as promotion to king. The smaller classes
+>would allow easier debugging when a fault arises.
+>
 
 
 ## Testing
