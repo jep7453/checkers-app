@@ -187,7 +187,8 @@ public class GetGameRoute implements Route {
 //                        modeOptionsAsJSON.put("gameOverMessage",);
                         Gson gson = new Gson();
                         vm.put(MODE_OPTIONS_AS_JSON,gson.toJson(modeOptionsAsJSON));
-
+                        gameCenter.gameFinished(playerServices.currentGame());
+                        playerServices.finishedGame();
                 }
 
                 //message

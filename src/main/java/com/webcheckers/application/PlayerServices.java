@@ -95,7 +95,6 @@ public class PlayerServices {
         this.game = null;
         this.opponent = null;
         // let game center know player finished game
-        gameCenter.playerFinishedPlayingGame(thisPlayer);
     }
 
     /**
