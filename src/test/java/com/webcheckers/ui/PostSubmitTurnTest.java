@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Game;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +35,7 @@ public class PostSubmitTurnTest {
     private Session session;
     private Game game;
     private Gson gson;
+    private GameCenter gameCenter;
 
     /**
      * Set up enviro
@@ -44,9 +46,10 @@ public class PostSubmitTurnTest {
         this.request = mock(Request.class);
         this.session = mock(Session.class);
         this.game = mock(Game.class);
+        this.gameCenter = mock(GameCenter.class);
         this.playerServices = mock(PlayerServices.class);
         gson = new Gson();
-        CuT = new PostSubmitTurnRoute(gson);
+        CuT = new PostSubmitTurnRoute(gson, gameCenter);
 
         when(request.session()).thenReturn(session);
         when(session.attribute("playerServices")).thenReturn(playerServices);
