@@ -163,7 +163,6 @@ public class Game {
     board.makeMove(reverseMove);
     if(playerCanJump(currentPlayer)) {
       board.makeMove(lastMove);
-      System.out.println("Jump available somewhere");
       return false;
     }
     board.makeMove(lastMove);
@@ -207,9 +206,8 @@ public class Game {
       if(checkerboard.allPiecesCaptured(Checker.Color.WHITE)){
         return (false);
       }
-      printBoard(checkerboard);
       Checkerboard flippedBoard = checkerboard.reverseBoard();
-      printBoard(flippedBoard);
+
       // iterate through board
       for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
         for(int j = 0; j < Checkerboard.NUM_FILES; j++){

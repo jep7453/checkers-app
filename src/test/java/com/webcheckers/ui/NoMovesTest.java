@@ -34,6 +34,7 @@ public class NoMovesTest {
     public void cantMoveSingle(){
         checkerboard = new Checkerboard("noMovesSingle.txt");
         assertFalse(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
+        assertFalse(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -43,6 +44,10 @@ public class NoMovesTest {
     public void simpleMoveLeft(){
         checkerboard = new Checkerboard("simpleMoveLeft.txt");
         assertTrue(checkerboard.pieceCanMove(checkerboard.getSquare(RANK, FILE)));
+        assertFalse(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
+        assertFalse(checkerboard.pieceCanJump(checkerboard.getSquare(3,0)));
+        assertFalse(checkerboard.pieceCanMove(checkerboard.getSquare(3,0)));
+
     }
 
     /**
@@ -52,6 +57,7 @@ public class NoMovesTest {
     public void simpleMoveRight(){
         checkerboard = new Checkerboard("simpleMoveRight.txt");
         assertTrue(checkerboard.pieceCanMove(checkerboard.getSquare(RANK, FILE)));
+        assertFalse(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -61,6 +67,8 @@ public class NoMovesTest {
     public void singleJumpLeft(){
         checkerboard = new Checkerboard("singleJumpLeft.txt");
         assertTrue(checkerboard.pieceCanMove(checkerboard.getSquare(RANK, FILE)));
+        assertTrue(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
+        assertTrue(checkerboard.isValidMove(new Move(new Position(2,5),new Position(4,3))).equals(Move.Type.JUMP));
     }
 
     /**
@@ -70,6 +78,7 @@ public class NoMovesTest {
     public void singleJumpRight(){
         checkerboard = new Checkerboard("singleJumpRight.txt");
         assertTrue(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
+        assertTrue(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -79,6 +88,7 @@ public class NoMovesTest {
     public void jumpSameColorLeft(){
         checkerboard = new Checkerboard("jumpSameColorLeft.txt");
         assertFalse(checkerboard.pieceCanMove(checkerboard.getSquare(RANK, FILE)));
+        assertFalse(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -88,6 +98,7 @@ public class NoMovesTest {
     public void jumpSameColorRight(){
         checkerboard = new Checkerboard("jumpSameColorRight.txt");
         assertFalse(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
+        assertFalse(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -96,6 +107,7 @@ public class NoMovesTest {
     @Test
     public void jumpDiffColorRight(){
         checkerboard = new Checkerboard("jumpDiffColorRight.txt");
+        assertTrue(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
         assertTrue(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
     }
 
@@ -106,6 +118,7 @@ public class NoMovesTest {
     public void jumpDiffColorLeft(){
         checkerboard = new Checkerboard("jumpDiffColorLeft.txt");
         assertTrue(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
+        assertTrue(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -115,6 +128,7 @@ public class NoMovesTest {
     public void noMovesking(){
         checkerboard = new Checkerboard("noMovesKing.txt");
         assertFalse(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
+        assertFalse(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -124,6 +138,7 @@ public class NoMovesTest {
     public void simpleMoveKingLeft(){
         checkerboard = new Checkerboard("simpleMoveKingLeft.txt");
         assertTrue(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
+        assertFalse(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -133,6 +148,7 @@ public class NoMovesTest {
     public void simpleMoveKingRight(){
         checkerboard = new Checkerboard("simpleMoveKingRight.txt");
         assertTrue(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
+        assertFalse(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -142,6 +158,7 @@ public class NoMovesTest {
     public void jumpSameColorLeftKing(){
         checkerboard = new Checkerboard("jumpSameColorLeftKing.txt");
         assertFalse(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
+        assertFalse(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -151,6 +168,7 @@ public class NoMovesTest {
     public void jumpSameColorRightKing(){
         checkerboard = new Checkerboard("jumpSameColorRightKing.txt");
         assertFalse(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
+        assertFalse(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -160,6 +178,7 @@ public class NoMovesTest {
     public void jumpDiffColorRightKing(){
         checkerboard = new Checkerboard("jumpDiffColorRightKing.txt");
         assertTrue(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
+        assertTrue(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -169,6 +188,7 @@ public class NoMovesTest {
     public void jumpDiffColorLeftKing(){
         checkerboard = new Checkerboard("jumpDiffColorLeftKing.txt");
         assertTrue(checkerboard.pieceCanMove(checkerboard.getSquare(RANK,FILE)));
+        assertTrue(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -177,6 +197,7 @@ public class NoMovesTest {
     @Test
     public void cantMoveEdge(){checkerboard = new Checkerboard("edgeMove.txt");
         assertFalse(checkerboard.pieceCanMove(checkerboard.getSquare(0,1)));
+        assertFalse(checkerboard.pieceCanJump(checkerboard.getSquare(RANK,FILE)));
     }
 
     /**
@@ -191,6 +212,7 @@ public class NoMovesTest {
 
         assertFalse( game.playerCanMove(game.getRedPlayer()));
     }
+
 
     /**
      * Test that no moves works
