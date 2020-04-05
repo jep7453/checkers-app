@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.model.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,12 +15,25 @@ import java.io.IOException;
 @Tag("model")
 public class KingPromotionTest {
     private Game game;
-    private Checkerboard checkerboard;
+    private Checkerboard board;
+
+    @BeforeEach
+    void setup() {
+        game = new Game(new Player("Red"), new Player("White"));
+        board = game.getBoard();
+    }
 
     @Test
-    public void kingPromoTest(){
-        game = KingPromotion.game;
-        Square KingSpace = game.getBoard().getSquare(7,1);
-        assertTrue(KingPromotion.shouldBeKinged(KingSpace.getChecker()));
+    public void kingPromoTestForWhite(){
+        KingPromotion KP = new KingPromotion(game);
+        Square KingSpace = board.getSquare(7, 0);
+        assertTrue(KP.shouldBeKinged(KingSpace.getChecker()));
+    }
+
+    @Test
+    public void kingPromoTestForRed(){
+        KingPromotion KP = new KingPromotion(game);
+        Square KingSpace = board.getSquare(0, 1);
+        assertTrue(KP.shouldBeKinged(KingSpace.getChecker()));
     }
 }

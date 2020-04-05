@@ -1,24 +1,26 @@
 package com.webcheckers.model;
 
 public class KingPromotion {
-    public static Game game;
+    public Game game;
 
     public KingPromotion(Game game) {
         this.game = game;
     }
 
-    public static boolean shouldBeKinged(Checker checker){
-        for(int i = 0; i < 8; i++){
-            Square redSide = game.getBoard().getSquare(7,i);
-            Square whiteSide = game.getBoard().getSquare(0,i);
-            if(redSide.hasChecker() && redSide.getChecker().getType() != Checker.Type.KING){
-                Checker kingPiece = new Checker(redSide.getChecker().getColor(), Checker.Type.KING);
-                redSide.setChecker(kingPiece);
+    public boolean shouldBeKinged(Checker checker){
+        for(int i = 1; i < 8; i+=2){
+            Square whiteGettingKingedSide = game.getBoard().getSquare(7,i-1);
+            Square redGettingKingedSide = game.getBoard().getSquare(0,i);
+            if(checker == whiteGettingKingedSide.getChecker() && checker.getColor() == Checker.Color.WHITE
+            && checker.getType() != Checker.Type.KING){
+                checker = new Checker(checker.getColor(), Checker.Type.KING);
+                whiteGettingKingedSide.setChecker(checker);
                 return true;
             }
-            if(whiteSide.hasChecker() && whiteSide.getChecker().getType() != Checker.Type.KING){
-                Checker kingPiece = new Checker(whiteSide.getChecker().getColor(), Checker.Type.KING);
-                whiteSide.setChecker(kingPiece);
+            if(checker == redGettingKingedSide.getChecker() && checker.getColor() == Checker.Color.RED
+            && checker.getType() != Checker.Type.KING){
+                checker = new Checker(checker.getColor(), Checker.Type.KING);
+                whiteGettingKingedSide.setChecker(checker);
                 return true;
             }
         }
