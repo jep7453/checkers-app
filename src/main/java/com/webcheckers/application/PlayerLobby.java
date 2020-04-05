@@ -40,6 +40,15 @@ public class PlayerLobby {
     }
 
     /**
+     * Remove a player from the lobby
+     * @param player the player to remove
+     */
+    public synchronized void removePlayer(Player player){
+        players.remove(player);
+        totalPlayers--;
+    }
+
+    /**
      * Get the number of players signed in.
      *
      * @return
@@ -94,6 +103,8 @@ public class PlayerLobby {
      *      a boolean if the player is on the list, false if
      */
     public synchronized boolean lobbyContains(Player player) {
+        if(player==null)
+            return false;
         return players.contains(player);
     }
 }

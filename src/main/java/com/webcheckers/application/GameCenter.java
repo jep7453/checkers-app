@@ -3,7 +3,6 @@ package com.webcheckers.application;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
-import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -41,6 +40,8 @@ public class GameCenter {
      * @return true if signed in, false if not
      */
     public synchronized boolean isSignedIn(Player player){
+        if(player==null)
+            return false;
         return (lobby.lobbyContains(player));
     }
 
@@ -66,8 +67,14 @@ public class GameCenter {
      *
      * @param player user name to sign out
      */
-    public synchronized void signOut( String player  ) {
-        // todo - eventually
+    public synchronized void signOut( Player player  ) {
+        // remove from game list incase
+        if(isCurrentlyPlaying(player)){
+            playerFinishedPlayingGame(player);
+        }
+
+        // remove from lobby
+        lobby.removePlayer(player);
     }
 
     /**
@@ -75,9 +82,10 @@ public class GameCenter {
      * @param player player playing game
      */
     public synchronized void playerStartedPlayingGame( Player player ){
-        currentlyPlaying.add(player);
-        LOG.fine("Player '" + player.getName() + "' started player a game" );
-    }
+                currentlyPlaying.add(player);
+                LOG.fine("Player '" + player.getName() + "' started player a game");
+            }
+
 
     /**
      * Allow GameCenter to know that a player is not currently playing a game
@@ -85,7 +93,21 @@ public class GameCenter {
      */
     public synchronized void playerFinishedPlayingGame( Player player ){
         currentlyPlaying.remove(player);
+        currentlyPlaying.remove(player);
         LOG.fine("Player '" + player + "' finished playing a game");
+    }
+
+    /**
+     * Tells game center that player isn't player and removes game
+     * @param game the game to remove
+     */
+    public void gameFinished(Game game){
+        if(games.contains(game)){
+            playerFinishedPlayingGame(game.getRedPlayer());
+            playerFinishedPlayingGame(game.getWhitePlayer());
+            games.remove(game);
+
+        }
     }
 
     /**

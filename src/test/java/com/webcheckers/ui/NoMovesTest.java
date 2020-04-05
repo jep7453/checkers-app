@@ -200,8 +200,6 @@ public class NoMovesTest {
         Game game = new Game(new Player("hajs"), new Player("ahdsf"));
         Checkerboard checkerboard = new Checkerboard("noMovesRed.txt");
         game.setBoard(checkerboard);
-
-        printBoard(checkerboard.reverseBoard());
         assertFalse( game.playerCanMove(game.getRedPlayer()));
     }
 
