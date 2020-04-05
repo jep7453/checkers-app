@@ -185,7 +185,7 @@ public class WebServer {
     post(BACK_URL, new PostBackUpMoveRoute(gson));
 
     // Post a Resignation.
-    post(RESIGN_URL, new PostResignRoute(gamecenter,templateEngine));
+    post(RESIGN_URL, new PostResignRoute(gamecenter,gson));
 
     get(GAME_URL, new GetGameRoute(templateEngine,  gamecenter));
 

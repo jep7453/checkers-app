@@ -1,7 +1,9 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerServices;
+import com.webcheckers.model.Game;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -21,7 +23,7 @@ public class PostResignRoute implements Route {
     private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
     private final GameCenter gameCenter;
-    private final TemplateEngine templateEngine;
+    private final Gson gson;
 
     private static final String USER_NAME = "userName";
     private static final String USER_PARAM = "myUserName";
@@ -29,11 +31,11 @@ public class PostResignRoute implements Route {
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
-     * @param templateEngine
+     * @param gson
      *   the HTML template rendering engine
      */
-    public PostResignRoute(final GameCenter gameCenter, final TemplateEngine templateEngine) {
-        this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+    public PostResignRoute(final GameCenter gameCenter, final Gson gson) {
+        this.gson = Objects.requireNonNull(gson, "gson is required");
         //
         LOG.config("PostResignRoute is initialized.");
         this.gameCenter=gameCenter;
@@ -54,16 +56,16 @@ public class PostResignRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("PostResign is invoked.");
         //
-        Map<String, Object> vm = new HashMap<>();
-        Map<String, Object> options = new HashMap<>();
-        options.put("isGameOver", true);
-        options.put("gameOverMessage", "test");
+        Message resignMessage= Message.info("Resigned");
 
         final Session httpSession = request.session();
 
         //retrieve playerServices
         final PlayerServices playerServices = httpSession.attribute("playerServices");
 
-        return null;
+        Game game = playerServices.currentGame();
+        game.resigned();
+
+        return gson.toJson(resignMessage,Message.class);
     }
 }
