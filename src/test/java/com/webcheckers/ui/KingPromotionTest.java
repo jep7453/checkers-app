@@ -1,16 +1,11 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.model.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.booleanThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("model")
 public class KingPromotionTest {
@@ -27,6 +22,7 @@ public class KingPromotionTest {
     public void kingPromoTestForWhite(){
         KingPromotion KP = new KingPromotion(game);
         Square KingSpace = board.getSquare(7, 0);
+        KingSpace.setChecker(new Checker(Checker.Color.WHITE));
         assertTrue(KP.shouldBeKinged(KingSpace.getChecker()));
     }
 
@@ -34,6 +30,7 @@ public class KingPromotionTest {
     public void kingPromoTestForRed(){
         KingPromotion KP = new KingPromotion(game);
         Square KingSpace = board.getSquare(0, 1);
+        KingSpace.setChecker(new Checker(Checker.Color.RED));
         assertTrue(KP.shouldBeKinged(KingSpace.getChecker()));
     }
 }
