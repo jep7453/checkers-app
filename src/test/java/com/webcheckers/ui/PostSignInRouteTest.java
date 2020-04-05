@@ -1,30 +1,18 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.util.Message;
-import org.junit.jupiter.api.BeforeEach;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-import spark.*;
-import spark.template.freemarker.FreeMarkerEngine;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Player;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import spark.*;
 
-import javax.servlet.http.HttpServletResponse;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * This is a test suite for the @Link GetSignInRoute class
@@ -175,7 +163,7 @@ public class PostSignInRouteTest {
         Player player = new Player(name);
         gameCenter.signIn(player);
         TemplateEngineTester testHelper = new TemplateEngineTester();
-        when(request.queryParams(PostSignInNameRoute.USER_PARAM)).thenReturn(name);
+        when(request.queryParams(PostSignInNameRoute.USER_PARAM)).thenReturn("");
         when(engine.render(any(ModelAndView.class))).then(testHelper.makeAnswer());
         when(session.attribute("playerServices")).thenReturn(playerServices);
 
@@ -189,5 +177,27 @@ public class PostSignInRouteTest {
         // see if the sign in page is there with the correct error message
         testHelper.assertViewName("signin.ftl");
         //testHelper.assertViewModelAttribute(PostSignInNameRoute.MESSAGE_TYPE_ATTR, Message.info("Error: This username has already been taken"));
+    }
+
+    @Test
+    public void emptyString(){
+        // Set up mocks
+        String name = "";
+        Player player = new Player(name);
+        gameCenter.signIn(player);
+        TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(request.queryParams(PostSignInNameRoute.USER_PARAM)).thenReturn(name);
+        when(engine.render(any(ModelAndView.class))).then(testHelper.makeAnswer());
+        when(session.attribute("playerServices")).thenReturn(playerServices);
+
+        // do the thing
+        CuT.handle(request, response );
+
+        // make sure view model exists and is a map
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+
+        // see if the sign in page is there with the correct error message
+        testHelper.assertViewName("signin.ftl");
     }
 }

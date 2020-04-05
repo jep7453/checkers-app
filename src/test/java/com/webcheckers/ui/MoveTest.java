@@ -1,11 +1,11 @@
 package com.webcheckers.ui;
 
-import org.junit.jupiter.api.BeforeAll;
 import com.webcheckers.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /***
  * This is unit test for Move Logic from CheckerBoard Class.
@@ -83,16 +83,16 @@ class MoveTest {
         assertTrue(move.isValidMove(new Move(new Position(3, 2), new Position(2, 3))) == Move.Type.INVALID);
     }
 
-    @Test
+    /*@Test
     void singleCheckerMovingFront() {
         assertTrue(move.isValidMove(new Move(new Position(2, 3), new Position(3, 2))) == Move.Type.SINGLE);
         move.makeMove(new Move(new Position(2, 3), new Position(3, 2)));
         assertTrue(move.getSquare(3,2).hasChecker());//added one
         assertTrue(move.isValidMove(new Move(new Position(5, 6), new Position(4, 7))) == Move.Type.SINGLE);
         move.makeMove(new Move(new Position(5, 6), new Position(4, 7)));
-    }
+    }*/
 
-    @Test
+    /*@Test
     void singleCheckerJumping() {
 
         //setup
@@ -106,7 +106,7 @@ class MoveTest {
         move.makeMove(new Move(new Position(5, 4), new Position(3, 2)));
         //checker eliminated
    //        assertFalse(game.getBoard().getSquare(4, 3).hasChecker());
-    }
+    }*/
 
     @Test
     void singleCheckerReachingEnd() {

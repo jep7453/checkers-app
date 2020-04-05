@@ -106,7 +106,6 @@ public class GameCenter {
             playerFinishedPlayingGame(game.getRedPlayer());
             playerFinishedPlayingGame(game.getWhitePlayer());
             games.remove(game);
-
         }
     }
 

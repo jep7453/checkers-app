@@ -1,15 +1,18 @@
 package com.webcheckers.ui;
-import static org.junit.jupiter.api.Assertions.*;
 
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.application.PlayerServices;
+import com.webcheckers.model.Game;
+import com.webcheckers.model.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.webcheckers.application.GameCenter;
-import com.webcheckers.application.PlayerLobby;
-import com.webcheckers.model.Player;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This is a test suite for the @Link GameCenterTest class
@@ -17,14 +20,21 @@ import com.webcheckers.model.Player;
  */
 @Tag("Application")
 public class GameCenterTest {
-    private final Player player1 =new Player("Player 1");
-    private final Player player2 =new Player("Player 2");
+    private Player player1;
+    private Player player2;
     private List<Player> CurPlaying = new ArrayList<>();
+    private GameCenter CuT;
+
+    @BeforeEach
+    public void setup(){
+        CuT = new GameCenter();
+        player1 = new Player("player1");
+        player2 = new Player("player2");
+    }
 
     @Test
     public void isSignedInTest(){
         //Game game = new Game(player1, player2);
-        final GameCenter CuT = new GameCenter();
         assertEquals(CuT.isSignedIn(player1),false);
 
         PlayerLobby lobby = new PlayerLobby();
@@ -35,7 +45,6 @@ public class GameCenterTest {
     @Test
     public void signInTest(){
         //Game game = new Game(player1, player2);
-        final GameCenter CuT = new GameCenter();
         assertEquals(CuT.signIn(player1),true);
 
         CuT.signIn(player2);
@@ -48,9 +57,63 @@ public class GameCenterTest {
 
     @Test
     public void isCurrentlyPlaying(){
-        final GameCenter CuT = new GameCenter();
         CuT.playerStartedPlayingGame(player2);
         assertEquals(CuT.isCurrentlyPlaying(player2),true);
         assertEquals(CuT.isCurrentlyPlaying(player1),false);
+    }
+
+    /**
+     * Test that this funcctino works
+     */
+    @Test
+    public void playerFinishedGame(){
+        CuT.playerStartedPlayingGame(player1);
+        assertTrue(CuT.isCurrentlyPlaying(player1));
+        CuT.playerFinishedPlayingGame(player1);
+        assertFalse(CuT.isCurrentlyPlaying(player1));
+    }
+
+    /**
+     * make sure game finished removes game from list
+     */
+    @Test
+    public void gameFinished(){
+        CuT.signIn(player1);
+        CuT.signIn(player2);
+        Game game = CuT.getGame(player1, player2);
+        assertNotNull(CuT.findActiveGame(player1));
+        CuT.gameFinished(game);
+        assertNull(CuT.findActiveGame(player1));
+    }
+
+    /**
+     * make sure game finished removes game from list
+     */
+    @Test
+    public void getGameNoSignIn(){
+        CuT.signIn(player1);
+        Game game = CuT.getGame(player1, player2);
+        assertNull(CuT.findActiveGame(player1));
+    }
+
+    /**
+     * make sure sign out logic works
+     */
+    @Test
+    public void signOut(){
+        CuT.signIn(player1);
+        assertTrue(CuT.isSignedIn(player1));
+        assertFalse(CuT.isSignedIn(player2));
+        CuT.signOut(player1);
+        assertFalse(CuT.isSignedIn(player1));
+    }
+
+    /**
+     * New player services returns a new players services
+     */
+    @Test
+    public void playerServicesGet(){
+        PlayerServices test =  CuT.newPlayerServices();
+        assertSame(test.getClass(), PlayerServices.class);
     }
 }

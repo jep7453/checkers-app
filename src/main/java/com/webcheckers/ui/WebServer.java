@@ -1,15 +1,13 @@
 package com.webcheckers.ui;
 
-import static spark.Spark.*;
+import com.google.gson.Gson;
+import com.webcheckers.application.GameCenter;
+import spark.TemplateEngine;
 
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
-
-import com.webcheckers.application.GameCenter;
-import com.webcheckers.application.PlayerLobby;
-import spark.TemplateEngine;
+import static spark.Spark.*;
 
 
 /**
@@ -185,7 +183,7 @@ public class WebServer {
     post(BACK_URL, new PostBackUpMoveRoute(gson));
 
     // Post a Resignation.
-    post(RESIGN_URL, new PostResignRoute(gamecenter,gson));
+    post(RESIGN_URL, new PostResignRoute(gamecenter, gson));
 
     get(GAME_URL, new GetGameRoute(templateEngine,  gamecenter));
 

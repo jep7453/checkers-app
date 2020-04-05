@@ -43,10 +43,10 @@ public class Space {
         return piece;
     }
 
-    public void setPiece(Piece piece) {
+    /*public void setPiece(Piece piece) {
 
         this.piece = piece;
-    }
+    }*/
 
     public int getRowIdx() {
         return rowIdx;
