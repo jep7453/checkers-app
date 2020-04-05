@@ -182,6 +182,8 @@ public class GetGameRoute implements Route {
                 //modeOptionsAsJSON
                 boolean gameHasEnded = game.isGameWon();
                 if(gameHasEnded){
+                        gameCenter.playerFinishedPlayingGame(redPlayer);
+                        gameCenter.playerFinishedPlayingGame(whitePlayer);
                         Map<String,Object> modeOptionsAsJSON = new HashMap<>();
                         modeOptionsAsJSON.put("isGameOver",true);
 //                        modeOptionsAsJSON.put("gameOverMessage",);
