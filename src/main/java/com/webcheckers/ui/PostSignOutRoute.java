@@ -30,7 +30,7 @@ public class PostSignOutRoute implements Route {
      * @return hopefully nothing
      */
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response)  {
         LOG.finer("PostSignOutRouteInvoked");
         // Get the session
         Session session = request.session();
