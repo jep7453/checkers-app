@@ -178,14 +178,14 @@ public class WebServer {
     //Post Validate Move
     post(VALIDATE_URL, new PostValidateMoveRoute(gson));
     //Post Submit Turn
-    post(SUBMIT_URL, new PostSubmitTurnRoute(gson));
+    post(SUBMIT_URL, new PostSubmitTurnRoute(gson,gamecenter));
     //Post check Turn
     post(CHECK_URL, new PostCheckTurnRoute(gson));
     //Post backup Turn
     post(BACK_URL, new PostBackUpMoveRoute(gson));
 
     // Post a Resignation.
-    post(RESIGN_URL, new PostResignRoute(gamecenter,templateEngine));
+    post(RESIGN_URL, new PostResignRoute(gamecenter,gson));
 
     get(GAME_URL, new GetGameRoute(templateEngine,  gamecenter));
 

@@ -28,14 +28,16 @@ public class PostSubmitTurnRoute implements Route {
 
   private static final Logger LOG = Logger.getLogger(com.webcheckers.ui.PostSubmitTurnRoute.class.getName());
   private Gson gson;
+  private GameCenter gameCenter;
 
   /**
    * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
    *
    * @param gson
    */
-  public PostSubmitTurnRoute(Gson gson) {
+  public PostSubmitTurnRoute(Gson gson,GameCenter gameCenter) {
     this.gson=gson;
+    this.gameCenter=gameCenter;
     LOG.config("PostSubmitTurnRoute is initialized.");
   }
 
@@ -65,6 +67,12 @@ public class PostSubmitTurnRoute implements Route {
     }
     game.switchPlayer();
     turnMessage = Message.info("Move Valid");
+    if(!gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())) {
+      game.resigned();
+      playerServices.setGameOver(true);
+      gameCenter.gameFinished(game);
+      playerServices.finishedGame();
+    }
 
     return gson.toJson(turnMessage,Message.class);
   }

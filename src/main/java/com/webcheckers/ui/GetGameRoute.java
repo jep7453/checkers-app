@@ -116,7 +116,13 @@ public class GetGameRoute implements Route {
                 Player whitePlayer;
                 Game game;
 
-
+                if(playerServices.isGameOver()) {
+                        httpSession.attribute("error", "Game Over!");
+                        playerServices.finishedGame();
+                        response.redirect(WebServer.HOME_URL);
+                        halt();
+                        return null;
+                }
 
                 // Check to see if there is currently a game
                 if(gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
@@ -182,8 +188,7 @@ public class GetGameRoute implements Route {
                 //modeOptionsAsJSON
                 boolean gameHasEnded = game.isGameWon();
                 if(gameHasEnded){
-                        gameCenter.playerFinishedPlayingGame(redPlayer);
-                        gameCenter.playerFinishedPlayingGame(whitePlayer);
+                        gameCenter.gameFinished(game);
                         Map<String,Object> modeOptionsAsJSON = new HashMap<>();
                         modeOptionsAsJSON.put("isGameOver",true);
 //                        modeOptionsAsJSON.put("gameOverMessage",);

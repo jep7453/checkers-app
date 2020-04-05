@@ -18,6 +18,7 @@ public class Game {
   Player currentPlayer;         /** The Player whose turn it currently is. */
 
   private Player winner;
+  private boolean resigned;
 
   /** Creates a new Game object with the specified players.
    * @param redPlayer   The Player to play as red.
@@ -26,8 +27,9 @@ public class Game {
   public Game(Player redPlayer, Player whitePlayer) {
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
-    this.board = new Checkerboard("noMovesRed.txt");
+    this.board = new Checkerboard();
     this.currentPlayer = redPlayer;
+    this.resigned=false;
   }
 
   /** Gets the Player whose turn it currently is.
@@ -278,6 +280,16 @@ public class Game {
     return (canMove);
   }
 
+  public void resigned() {
+      resigned = true;
+      if(currentPlayer==whitePlayer) {
+        winner=redPlayer;
+      }
+    if(currentPlayer==redPlayer) {
+      winner = whitePlayer;
+    }
+  }
+
   /**
    * Check if the game has been won by pieces captured
    * or no moves
@@ -285,6 +297,9 @@ public class Game {
    */
   public boolean isGameWon(){
     boolean won = false;
+    if(resigned) {
+      won = true;
+    }
     if(board.allPiecesCaptured(Checker.Color.RED)) {
       winner = whitePlayer;
       won = true;

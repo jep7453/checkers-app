@@ -55,7 +55,12 @@ public class PostCheckTurnRoute implements Route {
     Session httpSession =request.session();
     PlayerServices playerServices = httpSession.attribute("playerServices");
     Game game = playerServices.currentGame();
-    if(game.currentPlayer().equals(playerServices.getThisPlayer())) {
+    if(game.currentPlayer().equals(playerServices.getThisPlayer())||game.isGameWon()) {
+      if(game.isGameWon()) {
+        playerServices.setGameOver(true);
+        game.resigned();
+        playerServices.finishedGame();
+      }
       turnMessage= Message.info("true");
     }
     else {
