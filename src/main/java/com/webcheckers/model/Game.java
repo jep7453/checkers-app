@@ -125,7 +125,7 @@ public class Game {
       Square lastSquare = board.getSquare(lastMove.getEnd().getRow(),lastMove.getEnd().getCell());
       Checkerboard newBoard = board;
       if(currentPlayer.equals(redPlayer)) {
-        lastSquare = board.getSquare(lastMove.getEnd().getCell(),lastMove.getEnd().getRow());
+        lastSquare = board.getSquare(7-lastMove.getEnd().getCell(),7-lastMove.getEnd().getRow());
         newBoard=board.reverseBoard();
       }
       if(newBoard.pieceCanJump(lastSquare)) {
