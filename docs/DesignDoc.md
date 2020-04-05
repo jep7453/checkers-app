@@ -169,14 +169,7 @@ with the WebCheckers application.
 > Remove the duplicate classes from the UI Tier such as Row, Spaces, Pieces, and Boardview 
 >since it violates the Object Oriented Design Principles. Since these classes have already been implemented
 >in Model Tier classes.     
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements.  Indicate the
-> hot spots the metrics identified in your code base, and your
-> suggested design improvements to address those hot spots._
+
 
 ## Testing
 > _This section will provide information about the testing performed
