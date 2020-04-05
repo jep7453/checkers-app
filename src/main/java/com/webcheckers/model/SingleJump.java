@@ -16,21 +16,31 @@ public class SingleJump {
         if (!currentPos.hasChecker() || finalPos.hasChecker()) return false;
 
         Square middleSquarePiece = game.getBoard().getSquare(curRow+1,curCol+1);
+        if(middleSquarePiece == null) return false;
 
         if(currentPos.getChecker().getType() == Checker.Type.KING){
             if(game.currentPlayer == game.getRedPlayer()){
                 if(Math.abs(curRow-finRow) == 2 && Math.abs(curRow-finRow) == 2 && 
                     middleSquarePiece.getChecker().getColor() != currentPos.getChecker().getColor()){
-                    return true;
+                        middleSquarePiece = new Square(middleSquarePiece.getColor(), null);
+                        return true;
                 }
             }
         }
-
         //this is for non king
         if(game.currentPlayer == game.getRedPlayer()){
             if(finRow-curRow == 2 && finCol-curCol == 2 && 
                 middleSquarePiece.getChecker().getColor() != currentPos.getChecker().getColor()){
-                return true;
+                    middleSquarePiece = new Square(middleSquarePiece.getColor(), null);
+                    return true;
+            }
+        }
+
+        if(game.currentPlayer == game.getWhitePlayer()){
+            if(finRow-curRow == -2 && finCol-curCol == -2 && 
+                middleSquarePiece.getChecker().getColor() != currentPos.getChecker().getColor()){
+                    middleSquarePiece = new Square(middleSquarePiece.getColor(), null);
+                    return true;
             }
         }
         
