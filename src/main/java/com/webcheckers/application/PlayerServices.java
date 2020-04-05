@@ -71,8 +71,10 @@ public class PlayerServices {
      * Sign out this player from the game center
      */
     public void signOut(){
-        /*gameCenter.signOut(thisPlayer);
-        signedIn = false;*/
+        gameCenter.signOut(thisPlayer);
+        thisPlayer = null;
+        opponent = null;
+        game = null;
     }
 
     /**

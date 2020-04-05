@@ -40,6 +40,15 @@ public class PlayerLobby {
     }
 
     /**
+     * Remove a player from the lobby
+     * @param player the player to remove
+     */
+    public synchronized void removePlayer(Player player){
+        players.remove(player);
+        totalPlayers--;
+    }
+
+    /**
      * Get the number of players signed in.
      *
      * @return
