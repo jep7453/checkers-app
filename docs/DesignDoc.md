@@ -166,6 +166,9 @@ with the WebCheckers application.
 >the move class checks for the validity of the move made by the user. If the move is right, depending on the
 >type of move then the captured piece was removed from the checkerboard.
 ### Design Improvements
+> Remove the duplicate classes from the UI Tier such as Row, Spaces, Pieces, and Boardview 
+>since it violates the Object Oriented Design Principles. Since these classes have already been implemented
+>in Model Tier classes.     
 > _Discuss design improvements that you would make if the project were
 > to continue. These improvement should be based on your direct
 > analysis of where there are problems in the code base which could be
