@@ -3,12 +3,6 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.internal.$Gson$Preconditions;
-import com.webcheckers.util.Message;
-
-import javax.swing.*;
-import java.awt.*;
-
 public class Game {
 
   /** Represents a checker Game.
@@ -32,7 +26,7 @@ public class Game {
   public Game(Player redPlayer, Player whitePlayer) {
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
-    this.board = new Checkerboard("weird.txt");
+    this.board = new Checkerboard("noMovesRed.txt");
     this.currentPlayer = redPlayer;
   }
 
@@ -95,6 +89,7 @@ public class Game {
 
   /**
    * Setter for checkerbaord
+   *
    * @param board
    */
   public void setBoard(Checkerboard board) {

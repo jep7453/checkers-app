@@ -3,7 +3,6 @@ package com.webcheckers.application;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
-import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -92,6 +91,19 @@ public class GameCenter {
     public synchronized void playerFinishedPlayingGame( Player player ){
         currentlyPlaying.remove(player);
         LOG.fine("Player '" + player + "' finished playing a game");
+    }
+
+    /**
+     * Tells game center that player isn't player and removes game
+     * @param game the game to remove
+     */
+    public void gameFinished(Game game){
+        if(games.contains(game)){
+            playerFinishedPlayingGame(game.getRedPlayer());
+            playerFinishedPlayingGame(game.getWhitePlayer());
+            games.remove(game);
+
+        }
     }
 
     /**

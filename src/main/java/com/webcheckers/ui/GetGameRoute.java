@@ -1,22 +1,20 @@
 package com.webcheckers.ui;
 
-import static spark.Spark.halt;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-import java.util.logging.Logger;
-
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Checkerboard;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.logging.Logger;
+
+import static spark.Spark.halt;
 
 
 public class GetGameRoute implements Route {
@@ -182,13 +180,14 @@ public class GetGameRoute implements Route {
 
 
                 //modeOptionsAsJSON
-                boolean gameHasEnded = game.isGameWon(); //todo: initialise gameHasEnded
+                boolean gameHasEnded = game.isGameWon();
                 if(gameHasEnded){
                         Map<String,Object> modeOptionsAsJSON = new HashMap<>();
                         modeOptionsAsJSON.put("isGameOver",true);
 //                        modeOptionsAsJSON.put("gameOverMessage",);
                         Gson gson = new Gson();
                         vm.put(MODE_OPTIONS_AS_JSON,gson.toJson(modeOptionsAsJSON));
+
                 }
 
                 //message
