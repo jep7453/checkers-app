@@ -1,20 +1,20 @@
 package com.webcheckers.model;
 
 
-import static com.webcheckers.model.Checker.Color.*;
-import static com.webcheckers.model.Checker.Type.KING;
-import static com.webcheckers.model.Checker.Type.SINGLE;
-
-import java.awt.*;
 import java.io.File;
 import java.util.Scanner;
+
+import static com.webcheckers.model.Checker.Color.RED;
+import static com.webcheckers.model.Checker.Color.WHITE;
+import static com.webcheckers.model.Checker.Type.KING;
+import static com.webcheckers.model.Checker.Type.SINGLE;
 
 /** Represents a checkerboard entity.
  *
  * @author Scott Court <sxc4981@rit.edu>
  * @author Chris Tremblay <cst1465@rit.edu>
  * @author Jonathan Pofcher <jep7453rit.edu>
- * @auhor Kesa Abbas Lnu <kl3468@rit.edu>
+ * @author Kesa Abbas Lnu <kl3468@rit.edu>
  */
 public class Checkerboard {
 
@@ -552,4 +552,5 @@ public class Checkerboard {
     else
       return(countWhite==0);
 
-}}
+  }
+}

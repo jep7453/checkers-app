@@ -3,18 +3,12 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.internal.$Gson$Preconditions;
-import com.webcheckers.util.Message;
-
-import javax.swing.*;
-import java.awt.*;
-
+/** Represents a checker Game.
+ *
+ * @author Scott Court <sxc4981@rit.edu>
+ */
 public class Game {
 
-  /** Represents a checker Game.
-   *
-   * @author Scott Court <sxc4981@rit.edu>
-   */
 
   private Player redPlayer;     /** The RED Player of this game. */
   private Player whitePlayer;   /** The WHITE Player of this game. */
@@ -32,7 +26,7 @@ public class Game {
   public Game(Player redPlayer, Player whitePlayer) {
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
-    this.board = new Checkerboard();
+    this.board = new Checkerboard("weird.txt");
     this.currentPlayer = redPlayer;
   }
 
@@ -85,7 +79,7 @@ public class Game {
 
   public void switchPlayer() {
     moves.clear();
-    if(currentPlayer==whitePlayer) {
+    if(currentPlayer.equals(whitePlayer)) {
       currentPlayer=redPlayer;
     }
     else {
@@ -103,29 +97,81 @@ public class Game {
 
 
   public boolean isValidTurn() {
-    //Checks if multiple simple moves are made
-    if (moves.size() > 1 && moves.get(0).getType().equals(Move.Type.SINGLE)) {
-      return false;
+
+    Move lastMove = moves.get(moves.size() - 1);
+    switch (lastMove.getType()) {
+      case JUMP:
+        return jumpValidation(lastMove);
+
+      case SINGLE:
+        return singleValidation(lastMove);
+
+      case INVALID:
+        return false;
     }
+
+    return false;
+  }
+
+
+  public boolean jumpValidation(Move lastMove) {
     // Checks if a simple move is made in the same turn as a jump move
-    if (moves.get(0).getType().equals(Move.Type.JUMP)) {
       for (Move move : moves) {
         if (move.getType().equals(Move.Type.SINGLE)) {
           return false;
         }
       }
-    }
-    Move lastMove = moves.get(moves.size()-1);
-    Square lastSquare = board.getSquare(lastMove.getEnd().getRow(),lastMove.getEnd().getCell());
-    if(lastMove.getType().equals(Move.Type.JUMP)) {
-      System.out.println(lastSquare.hasChecker());
-      if(board.pieceCanJump(lastSquare)) {
+    // Checks to make sure you make a multiple move if you can
+
+      Square lastSquare = board.getSquare(lastMove.getEnd().getRow(),lastMove.getEnd().getCell());
+      Checkerboard newBoard = board;
+      if(currentPlayer.equals(redPlayer)) {
+        lastSquare = board.getSquare(7-lastMove.getEnd().getCell(),7-lastMove.getEnd().getRow());
+        newBoard=board.reverseBoard();
+      }
+      if(newBoard.pieceCanJump(lastSquare)) {
         return false;
       }
+      return true;
+  }
+
+  public static void printBoard(Checkerboard board) {
+    Square square;
+    String col;
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
+        square = board.getSquare(i, j);
+        if(square.hasChecker())
+          if(square.getChecker().getColor() == Checker.Color.RED)
+            col = "R";
+          else
+            col = "W";
+        else
+          col = " ";
+
+        System.out.print(String.format("| %s ", col));
+
+      }
+      System.out.println("|");
     }
-    if(playerCanJump(currentPlayer)) {
+    System.out.println();
+  }
+
+  public boolean singleValidation(Move lastMove) {
+    //Checks if multiple simple moves are made
+    if (moves.size() > 1) {
       return false;
     }
+    // Checks that a jump wasn't a possible move
+    Move reverseMove = new Move(lastMove.getEnd(),lastMove.getStart());
+    board.makeMove(reverseMove);
+
+    if(playerCanJump(currentPlayer)) {
+      board.makeMove(lastMove);
+      System.out.println("Jump available somewhere");
+      return false;
+    }
+    board.makeMove(lastMove);
     return true;
   }
 
@@ -163,7 +209,9 @@ public class Game {
       if(checkerboard.allPiecesCaptured(Checker.Color.WHITE)){
         return (false);
       }
+      printBoard(checkerboard);
       Checkerboard flippedBoard = checkerboard.reverseBoard();
+      printBoard(flippedBoard);
       // iterate through board
       for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
         for(int j = 0; j < Checkerboard.NUM_FILES; j++){
@@ -217,6 +265,7 @@ public class Game {
         return (false);
       }
       Checkerboard flippedBoard = checkerboard.reverseBoard();
+
       // iterate through board
       for(int i = 0; i < Checkerboard.NUM_RANKS; i++){
         for(int j = 0; j < Checkerboard.NUM_FILES; j++){
