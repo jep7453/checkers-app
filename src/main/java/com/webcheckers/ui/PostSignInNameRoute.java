@@ -1,16 +1,15 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.PlayerServices;
+import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
+import spark.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import com.webcheckers.application.GameCenter;
-import com.webcheckers.application.PlayerServices;
-import com.webcheckers.model.Player;
-import spark.*;
-
-import com.webcheckers.util.Message;
 
 import static spark.Spark.halt;
 
@@ -66,6 +65,10 @@ public class PostSignInNameRoute implements Route {
 
 //        if(username == null)
   //          return (false);
+
+        if(username.equals("")){
+            return (false);
+        }
 
         // check length requirements. 6 <= len <= 25 chars
         if (username.length() < 6 || username.length() > 25)

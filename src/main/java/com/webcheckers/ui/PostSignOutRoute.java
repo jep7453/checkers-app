@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerServices;
+import com.webcheckers.model.Game;
 import spark.*;
 
 import java.util.logging.Logger;
@@ -48,6 +49,14 @@ public class PostSignOutRoute implements Route {
             response.redirect(WebServer.HOME_URL);
             halt();
             return (null);
+        }
+
+        if(gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
+            Game game = playerServices.currentGame();
+            game.resigned();
+            playerServices.setGameOver(true);
+            gameCenter.gameFinished(game);
+            playerServices.finishedGame();
         }
 
         // else there is a player services object that exists

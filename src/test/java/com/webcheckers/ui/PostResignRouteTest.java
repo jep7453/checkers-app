@@ -61,4 +61,19 @@ public class PostResignRouteTest {
         Object json = CuT.handle(request, response);
         assertTrue(((String)json).contains("Resigned"));
     }
+
+    /**
+     * Make sure that player is not currently playing a game
+     */
+    @Test
+    public void playerCurrentlyPlaying(){
+        when(gameCenter.isCurrentlyPlaying(any())).thenReturn(true);
+        when(request.session()).thenReturn(session);
+        when(session.attribute("playerServices")).thenReturn(playerServices);
+        when(playerServices.currentGame()).thenReturn(game);
+        doNothing().when(gameCenter).gameFinished(any());
+
+        Object json = CuT.handle(request, response);
+        assertTrue(((String)json).contains("Resigned"));
+    }
 }

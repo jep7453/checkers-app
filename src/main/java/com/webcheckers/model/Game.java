@@ -27,7 +27,7 @@ public class Game {
   public Game(Player redPlayer, Player whitePlayer) {
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
-    this.board = new Checkerboard();
+    this.board = new Checkerboard("kingPromotion.txt");
     this.currentPlayer = redPlayer;
     this.resigned=false;
   }
