@@ -27,7 +27,7 @@ public class Game {
   public Game(Player redPlayer, Player whitePlayer) {
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
-    this.board = new Checkerboard();
+    this.board = new Checkerboard("KingPromotion.txt");
     this.currentPlayer = redPlayer;
     this.resigned=false;
   }
@@ -114,6 +114,7 @@ public class Game {
     // Checks if a simple move is made in the same turn as a jump move
       for (Move move : moves) {
         if (move.getType().equals(Move.Type.SINGLE)) {
+          System.out.println("cant do dat");
           return false;
         }
       }
@@ -122,10 +123,12 @@ public class Game {
       Square lastSquare = board.getSquare(lastMove.getEnd().getRow(),lastMove.getEnd().getCell());
       Checkerboard newBoard = board;
       if(currentPlayer.equals(redPlayer)) {
-        lastSquare = board.getSquare(7-lastMove.getEnd().getCell(),7-lastMove.getEnd().getRow());
-        newBoard=board.reverseBoard();
+
+        newBoard=board.reverseBoardJump();
+        lastSquare = newBoard.getSquare(7-(lastMove.getEnd().getCell()),7-(lastMove.getEnd().getRow()));
       }
       if(newBoard.pieceCanJump(lastSquare)) {
+        System.out.println("Need to jump twice");
         return false;
       }
       return true;
@@ -160,12 +163,13 @@ public class Game {
     }
     // Checks that a jump wasn't a possible move
     Move reverseMove = new Move(lastMove.getEnd(),lastMove.getStart());
-    board.makeMove(reverseMove);
+    backUpMove();
     if(playerCanJump(currentPlayer)) {
-      board.makeMove(lastMove);
+      System.out.println("Need to jump");
+      makeMove(lastMove);
       return false;
     }
-    board.makeMove(lastMove);
+    makeMove(lastMove);
     return true;
 
 
