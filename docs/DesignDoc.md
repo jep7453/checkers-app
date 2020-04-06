@@ -131,7 +131,13 @@ with the WebCheckers application.
 >- PostValidateMoveRoute: It submits a single move made by the player to the server to check if that action is valid or not.
 
 >The server responsible for handling the POST and GET routes is the Jetty WebServer in the WebServer Class.
-
+>
+>>
+ > **How a turn works**
+ > ![Performing a move](ui_move.png)
+ >
+ > **How Resigning works**
+ > ![Resignation Sequence Diagram](resign_sequence_diagram.png)
 
 ### Application Tier
 
@@ -155,8 +161,6 @@ with the WebCheckers application.
 > - Check if it is the red or white player we are checking
 > - if white player: go through each piece and see if there is a valid move for it to make
 > - if red player: flip board and do the same thing. algorithm only works one way
->
-> 
 
 >The Model Tier is responsible for the domain enitites and the logic of the game. It communicates with the UI Tier 
 >and check if the game rules are being correctly adhered. It has CheckerBoard, Checker, Game, Move, Player, Position 
@@ -174,7 +178,7 @@ with the WebCheckers application.
 >communicate it with the UI Tier classes and javascript for further implementation.
 >
 > **Creating a Game object with a custom board**
-> ![Creating a Game Object](model_sequence_diageam.png)
+> ![Creating a Game Object](model_sequence_diagram.png)
 
 ### Design Improvements
 > The improvement would be to remove the duplicate classes from the UI Tier such as Row, Spaces, Pieces, and Boardview 
