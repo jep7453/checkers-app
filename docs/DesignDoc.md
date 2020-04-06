@@ -200,3 +200,15 @@ with the WebCheckers application.
 > *Applicatiion*. Our strategy was to really hammer down on the model 
 > and ui for testing since that's where a lot of the 
 > where most of the logic is happening in the program.
+>
+> **Total Coverage**
+> ![The WebCheckers Web Interface Statechart](OverallCoverage.JPG)
+>
+> **Model Coverage**
+> ![The WebCheckers Web Interface Statechart](ModelCoverage.JPG)
+>
+>**Application Coverage**
+>![The WebCheckers Web Interface Statechart](ApplCoverage.JPG)
+>
+> **UI Coverage**
+> ![The WebCheckers Web Interface Statechart](UICoverage.JPG)
