@@ -146,7 +146,8 @@ with the WebCheckers application.
 >- It checks to see if the player is playing a game or not, it ends that session of game which has no players in it.
 >- It also keeps track of the number of games that is being currently played, and tells the server to start
 >a new game when the players are signed in and ready to play.
-
+> 
+> ![Application Class Diagram](ApplicationClassDiagram.png)
 
 ### Model Tier
 > The Game classes offers a way for checking if a player has
@@ -154,8 +155,9 @@ with the WebCheckers application.
 > - Check if it is the red or white player we are checking
 > - if white player: go through each piece and see if there is a valid move for it to make
 > - if red player: flip board and do the same thing. algorithm only works one way
-
 >
+> 
+
 >The Model Tier is responsible for the domain enitites and the logic of the game. It communicates with the UI Tier 
 >and check if the game rules are being correctly adhered. It has CheckerBoard, Checker, Game, Move, Player, Position 
 >and Square classes.
@@ -171,6 +173,9 @@ with the WebCheckers application.
 >or if there were any moves left on the board. It passes this information to the wrapper classes which would then 
 >communicate it with the UI Tier classes and javascript for further implementation.
 >
+> **Creating a Game object with a custom board**
+> ![Creating a Game Object](model_sequence_diageam.png)
+
 ### Design Improvements
 > The improvement would be to remove the duplicate classes from the UI Tier such as Row, Spaces, Pieces, and Boardview 
 >since it violates the Object Oriented Design Principles. Since these classes have already been implemented
@@ -180,8 +185,6 @@ with the WebCheckers application.
 >since the checker class would have only access to the object of the move classes. The design could be more efficient 
 >if the king logic would be broken into smaller helper classes such as promotion to king. The smaller classes
 >would allow easier debugging when a fault arises.
->
-
 
 ## Testing
 
