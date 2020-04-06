@@ -145,7 +145,7 @@ public class Game {
         else
           col = " ";
 
-        System.out.print(String.format("| %s ", col));
+        System.out.print(String.format("| %s (%d,%d) ", col, i, j));
 
       }
       System.out.println("|");

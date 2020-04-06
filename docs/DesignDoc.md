@@ -184,19 +184,19 @@ with the WebCheckers application.
 
 
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
 
 ### Acceptance Testing
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+> **13** Stories have passed acceptance testing. A lot of the issues we 
+> found when test were signing in a out a lot could get annoying 
+> and slow down testing. Potential changes for auto sign in 
+> for testing might come. 
+> - current issue of validating king moves properly
 
 ### Unit Testing and Code Coverage
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+> **90%** of our code is covered. Anywhere from 90%-95% will be 
+> good for the team because there are lines of 
+> code, classes, or functions that cannot be reached by unit testing
+> or wouldn't benefit from testing. For example *WebServer* and 
+> *Applicatiion*. Our strategy was to really hammer down on the model 
+> and ui for testing since that's where a lot of the 
+> where most of the logic is happening in the program.
