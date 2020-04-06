@@ -15,8 +15,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * This is a test suite for the @Link GetSignInRoute class
- * @author Jonathan Pofcher
+ * This is a test suite for the @Link postSigninRoutetest class
+ * @author sree jupudy
  */
 @Tag("UI-tier")
 public class PostSignInRouteTest {
