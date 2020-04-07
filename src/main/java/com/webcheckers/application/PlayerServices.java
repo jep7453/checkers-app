@@ -87,6 +87,10 @@ public class PlayerServices {
         return (game.getGameID());
     }
 
+    /**
+     * Is the game over
+     * @return
+     */
     public boolean isGameOver() {
         return gameOver;
     }
