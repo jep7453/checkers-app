@@ -1,4 +1,4 @@
-g<!DOCTYPE html>
+<!DOCTYPE html>
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -23,7 +23,7 @@ g<!DOCTYPE html>
       <#if currentUser??>
         <p>
             Users Playing:
-        <p>
+        </p>
         <#list playerList as player>
             <p>
                 <a href="/game?player=${player}">${player}</a>
@@ -33,6 +33,27 @@ g<!DOCTYPE html>
         <p>
             Users Playing: ${totalPlayers}
         </p>
+      </#if>
+      <#if gameList??>
+        <p>
+            Games Being Played:
+        </p>
+        <#list gameList as game>
+            <p>
+                <a href="/spectate/game?gameID=${game.gameID}">${game.title}</a>
+            </p>
+        </#list>
+      </#if>
+
+      <#if replayList??>
+        <p>
+            Replays:
+        </p>
+           <#list replayList as game>
+              <p>
+                   <a href="/replay/game?gameID=${game.gameID}">${game.title}</a>
+              </p>
+           </#list>
       </#if>
 
 

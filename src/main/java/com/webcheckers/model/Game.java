@@ -16,6 +16,7 @@ public class Game {
   private Checkerboard board;   /** The Checkerboard this game is played on. */
   private List<Move> moves = new ArrayList<>(); /** A list of moves made, to backup */
   private final String gameID;
+  private String title;
 
   Player currentPlayer;         /** The Player whose turn it currently is. */
 
@@ -33,6 +34,7 @@ public class Game {
     this.board = new Checkerboard();
     this.currentPlayer = redPlayer;
     this.resigned=false;
+    this.title = this.redPlayer.getName() + " & " +this.whitePlayer.getName();
   }
 
   /** Gets the Player whose turn it currently is.
@@ -70,6 +72,15 @@ public class Game {
   public String getGameID(){
     return (gameID);
   }
+
+  /**
+   * Get the title
+   * @return the title
+   */
+  public String getTitle(){
+    return (title);
+  }
+
 
   public Move.Type isValidMove(Move move) {
     return board.isValidMove(move);

@@ -142,7 +142,6 @@ public class GetGameRoute implements Route {
                 vm.put(WHITE_PLAYER, whitePlayer.getName());
 
                 game = playerServices.currentGame(); //incase we didn't already retreive it
-                vm.put(GAME_ID, playerServices.getGameID());
 
                 //activeColor
                 boolean idRedPlayerTurn;
