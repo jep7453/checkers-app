@@ -25,6 +25,11 @@ public class GameCenter {
     private ArrayList<Game> games;
 
     /**
+     * game id
+     */
+    private String gameID;
+
+    /**
      * Create a new GameCenter object
      */
     public GameCenter(){
@@ -172,5 +177,13 @@ public class GameCenter {
     public PlayerServices newPlayerServices(){
         LOG.fine("Creating new PlayerServices Object");
         return (new PlayerServices(this));
+    }
+
+    /**
+     * Set the game id
+     * @param gameID the game id
+     */
+    public void setGameID(String gameID){
+        this.gameID = gameID;
     }
 }

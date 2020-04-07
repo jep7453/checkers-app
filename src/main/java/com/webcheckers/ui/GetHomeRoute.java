@@ -98,9 +98,11 @@ public class GetHomeRoute implements Route {
     }
 
     if( gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
+
       response.redirect(WebServer.GAME_URL);
     }
     playerServices.setGameOver(false);
+
     // render the View
     return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
   }

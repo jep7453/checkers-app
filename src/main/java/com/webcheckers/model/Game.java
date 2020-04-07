@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Game {
 
@@ -14,6 +15,7 @@ public class Game {
   private Player whitePlayer;   /** The WHITE Player of this game. */
   private Checkerboard board;   /** The Checkerboard this game is played on. */
   private List<Move> moves = new ArrayList<>(); /** A list of moves made, to backup */
+  private final String gameID;
 
   Player currentPlayer;         /** The Player whose turn it currently is. */
 
@@ -25,6 +27,7 @@ public class Game {
    * @param whitePlayer The Player to play as white.
    */
   public Game(Player redPlayer, Player whitePlayer) {
+    this.gameID = UUID.randomUUID().toString();
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
     this.board = new Checkerboard();
@@ -58,6 +61,14 @@ public class Game {
    */
   public Checkerboard getBoard() {
     return this.board;
+  }
+
+  /**
+   * Get the unique game identifier
+   * @return the game id
+   */
+  public String getGameID(){
+    return (gameID);
   }
 
   public Move.Type isValidMove(Move move) {
