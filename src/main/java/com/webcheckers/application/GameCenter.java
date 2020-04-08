@@ -40,6 +40,7 @@ public class GameCenter {
         currentlyPlaying = new ArrayList<>();
         lobby = new PlayerLobby();
         games = new ArrayList<>();
+        replays = new ArrayList<>();
     }
 
     /**
@@ -204,7 +205,7 @@ public class GameCenter {
     /**
      * Returns list of current games
      */
-    public ArrayList<Game> getreplays(){
+    public ArrayList<Game> getReplays(){
         if(replays.isEmpty()) {
             return null;
         }
