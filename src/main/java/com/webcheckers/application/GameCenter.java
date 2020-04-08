@@ -117,7 +117,9 @@ public class GameCenter {
             playerFinishedPlayingGame(game.getWhitePlayer());
             games.remove(game);
         }
-        replays.add(game);
+        if(!replays.contains(game)) {
+            replays.add(game);
+        }
     }
 
     /**
