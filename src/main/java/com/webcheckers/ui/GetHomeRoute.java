@@ -28,6 +28,7 @@ public class GetHomeRoute implements Route {
   public static final String PLAYER_LIST="playerList";
   public static final String MESSAGE = "message";
   public static final String TITLE = "title";
+  public static final String GAME_ID = "gameID";
 
   public static final String VIEW_NAME = "home.ftl";
 
@@ -84,6 +85,8 @@ public class GetHomeRoute implements Route {
       Player currentUser = playerServices.getThisPlayer();
       vm.put("currentUser",currentUser.getName() );
       vm.put("playerList",playerLobby.getPlayersNames(currentUser));
+      vm.put("gameList",gameCenter.getGames());
+      vm.put("replayList",gameCenter.getReplays());
 
     }
     else {
@@ -98,9 +101,11 @@ public class GetHomeRoute implements Route {
     }
 
     if( gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
+
       response.redirect(WebServer.GAME_URL);
     }
     playerServices.setGameOver(false);
+
     // render the View
     return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
   }

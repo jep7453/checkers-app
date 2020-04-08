@@ -77,6 +77,20 @@ public class PlayerServices {
         }
     }
 
+    /**
+     * Get the game ID from the game
+     * @return the game ID
+     */
+    public String getGameID(){
+        if(game==null)
+            return null;
+        return (game.getGameID());
+    }
+
+    /**
+     * Is the game over
+     * @return
+     */
     public boolean isGameOver() {
         return gameOver;
     }

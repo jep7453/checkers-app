@@ -3,6 +3,7 @@ package com.webcheckers.application;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -24,6 +25,14 @@ public class GameCenter {
     /** list of all games in game center */
     private ArrayList<Game> games;
 
+    /** list of finished games in game center */
+    private ArrayList<Game> replays;
+
+    /**
+     * game id
+     */
+    private String gameID;
+
     /**
      * Create a new GameCenter object
      */
@@ -31,6 +40,7 @@ public class GameCenter {
         currentlyPlaying = new ArrayList<>();
         lobby = new PlayerLobby();
         games = new ArrayList<>();
+        replays = new ArrayList<>();
     }
 
     /**
@@ -107,6 +117,9 @@ public class GameCenter {
             playerFinishedPlayingGame(game.getWhitePlayer());
             games.remove(game);
         }
+        if(!replays.contains(game)) {
+            replays.add(game);
+        }
     }
 
     /**
@@ -173,4 +186,46 @@ public class GameCenter {
         LOG.fine("Creating new PlayerServices Object");
         return (new PlayerServices(this));
     }
+
+    /**
+     * Set the game id
+     * @param gameID the game id
+     */
+    public void setGameID(String gameID){
+        this.gameID = gameID;
+    }
+
+    /**
+     * Returns list of current games
+     */
+    public ArrayList<Game> getGames(){
+        if(games.isEmpty()) {
+            return null;
+        }
+        return games;
+    }
+    /**
+     * Returns list of current games
+     */
+    public ArrayList<Game> getReplays(){
+        if(replays.isEmpty()) {
+            return null;
+        }
+        return replays;
+    }
+
+
+
+    /**
+     * Get a game from the ID
+     * @param gameID the game id
+     */
+    public Game gameFromID(String gameID) {
+        for(Game g : games){
+            if(g.getGameID().equals(gameID))
+                return (g);
+            }
+        return (null);
+    }
 }
+
