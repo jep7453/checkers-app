@@ -32,7 +32,11 @@ public class GetGameRoute implements Route {
         static final String BOARD_VIEW_KEY = "board";
         private static final Message WELCOME_MSG = Message.info("Lets begin the game.");
         private final GameCenter gameCenter; // game center
-
+        public static final String CURRENT_USER = "currentUser";
+        public static final String TITLE = "title";
+        public static final String PLAYER_SERVICES_ATTR = "playerServices";
+        public static final String OPPONENT_PARAM = "player";
+        public static final String MSG = "message";
         public static final String HOME_URL = "/";
 
         /**
@@ -70,7 +74,7 @@ public class GetGameRoute implements Route {
 
                 //title
                 Map<String, Object> vm = new HashMap<>();
-                vm.put("title", "Welcome!");
+                vm.put(TITLE, "Welcome!");
 
 
                 //gameID
@@ -80,9 +84,9 @@ public class GetGameRoute implements Route {
 
                 //currentUser
                 final Session httpSession = request.session();
-                final PlayerServices playerServices = httpSession.attribute("playerServices");
-                vm.put("currentUser", playerServices.getThisPlayer().getName());
-                String opponentName = request.queryParams("player");
+                final PlayerServices playerServices = httpSession.attribute(PLAYER_SERVICES_ATTR);
+                vm.put(CURRENT_USER, playerServices.getThisPlayer().getName());
+                String opponentName = request.queryParams(OPPONENT_PARAM);
                 playerServices.setOpponent(opponentName);
 
 
@@ -180,9 +184,8 @@ public class GetGameRoute implements Route {
                 }
 
                 //message
-                vm.put("message", WELCOME_MSG);
+                vm.put(MSG, WELCOME_MSG);
 
-                //todo: use FreeMaker Template to fillup game.ftl
                 return templateEngine.render(new ModelAndView(vm , "game.ftl"));
                 //return gameCenter.getGame(redPlayer, whitePlayer);
         }
