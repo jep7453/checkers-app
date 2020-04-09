@@ -15,6 +15,7 @@ public class Game {
   private Player whitePlayer;   /** The WHITE Player of this game. */
   private Checkerboard board;   /** The Checkerboard this game is played on. */
   private List<Move> moves = new ArrayList<>(); /** A list of moves made, to backup */
+  private List<Move> replay = new ArrayList<>(); /** A list of moves, to replay the game. */
   private final String gameID;
   private String title;
 
@@ -102,6 +103,7 @@ public class Game {
   }
 
   public void switchPlayer() {
+    replay.addAll(moves);
     moves.clear();
     if(currentPlayer.equals(whitePlayer)) {
       currentPlayer=redPlayer;
