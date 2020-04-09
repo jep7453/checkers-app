@@ -29,7 +29,9 @@ public class GetHomeRoute implements Route {
   public static final String MESSAGE = "message";
   public static final String TITLE = "title";
   public static final String GAME_ID = "gameID";
-
+  public static final String GAME_LIST = "gameList";
+  public static final String REPLAY_List = "replayList";
+  public static final String PLAYER_SERVICES = "playerServices";
   public static final String VIEW_NAME = "home.ftl";
 
 
@@ -72,32 +74,32 @@ public class GetHomeRoute implements Route {
 
     final Session httpSession = request.session();
     //get playerServices from session
-    PlayerServices playerServices = httpSession.attribute("playerServices");
+    PlayerServices playerServices = httpSession.attribute(PLAYER_SERVICES);
     //if none exists, make PlayerSession
     if(playerServices==null) {
       playerServices = new PlayerServices(gameCenter);
-      httpSession.attribute("playerServices",playerServices);
+      httpSession.attribute(PLAYER_SERVICES, playerServices);
     }
 
 
     // Check if the player is signed in and populate the correct attributes
     if (playerServices.isSignedIn()) {
       Player currentUser = playerServices.getThisPlayer();
-      vm.put("currentUser",currentUser.getName() );
-      vm.put("playerList",playerLobby.getPlayersNames(currentUser));
-      vm.put("gameList",gameCenter.getGames());
-      vm.put("replayList",gameCenter.getReplays());
+      vm.put(CURRENT_USER,currentUser.getName() );
+      vm.put(PLAYER_LIST,playerLobby.getPlayersNames(currentUser));
+      vm.put(GAME_LIST,gameCenter.getGames());
+      vm.put(REPLAY_List,gameCenter.getReplays());
 
     }
     else {
-      vm.put("totalPlayers",playerLobby.getTotalPlayers());
+      vm.put(TOTAL_PLAYERS, playerLobby.getTotalPlayers());
     }
     // display a user message in the Home page
     if(httpSession.attribute("error")!=null) {
-      vm.put("message",Message.info(httpSession.attribute("error")));
+      vm.put(MESSAGE,Message.info(httpSession.attribute("error")));
     }
     else {
-      vm.put("message", WELCOME_MSG);
+      vm.put(MESSAGE, WELCOME_MSG);
     }
 
     if( gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
