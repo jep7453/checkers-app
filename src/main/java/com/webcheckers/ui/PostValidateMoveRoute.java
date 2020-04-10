@@ -27,6 +27,8 @@ public class PostValidateMoveRoute implements Route {
     private static final Logger LOG = Logger.getLogger(com.webcheckers.ui.PostValidateMoveRoute.class.getName());
     private Gson gson;
 
+
+
     /**
      * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
      *
