@@ -40,10 +40,10 @@
 |	|**Given** I am spectating a game **when** I select a player**then** I expect it to see the board in wchich that player sees it (red or white pieces down)||||
 |	|**Given** I am playing or spectating a game **when** I look at the view **then** I expect to see how many people are spectating the game||||
 |	| **Given** I am spectating a game **when** I want to see the perspective of the other player **then** I expect a means to flip the board view||||
+|	|**Given** I am playing a game **when** I leave to spectate game and come back to my game **then** I expect to be able to resume my game||||
+|	|**Given** I have played games **when** win or lose a game **then** I expect my player ranking to be determined by (total wins/ total games played)||||
 | As a player, I want to be able to replay the game so that I can see what moves I used in the previous game. |**Given** I have finished a game **when** I am about to exit **then** I expect to see a means to replay and/or store a game to replay later||||||  
 |   |**Given** I have stored a game **when** I want to view my list of games to repeat **then** I expect a means to show me a list of games I can replay|||||||  
 |   |**Given** I have stored a game and I see my list of games to repeat **when** I want to watch a game **then** I expect to watch a game when I select one|||||||  
 |   |**Given** I am watching a game **when** I am done watching **then** I expect to see a way to exit the replay|||||||
-|	|**Given** I am playing a game **when** I leave to spectate game and come back to my game **then** I expect to be able to resume my game||||
-|	|**Given** I have played games **when** win or lose a game **then** I expect my player ranking to be determined by (total wins/ total games played)||||
 
