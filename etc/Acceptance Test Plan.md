@@ -46,4 +46,12 @@
 |   |**Given** I have stored a game **when** I want to view my list of games to repeat **then** I expect a means to show me a list of games I can replay|||||||  
 |   |**Given** I have stored a game and I see my list of games to repeat **when** I want to watch a game **then** I expect to watch a game when I select one|||||||  
 |   |**Given** I am watching a game **when** I am done watching **then** I expect to see a way to exit the replay|||||||
+|   |**Given** I am watching a game **when** I press the next button **then** I will see one move forward|||||||
+|   |**Given** I am watching a game **when** I press the previous button **then** I will see one move backwards|||||||
+|   |**Given** I am watching a game **when** I press the play button **then** I will see it moving a move forward every few seconds|||||||
+|   |**Given** I stop watching a game **when** was in the middle of it **then** when I return i will be in the same stop|||||||
+|   |**Given** I am on the homepage **when** I look at the list of games to replay **then** I will see that they are sorted in the way of my choosing|||||||
+|   |**Given** I am want to replay a game **when** I select a specific player to replay **then** I will see their perspective|||||||
+|   |**Given** I am watching a game **when** I press the flip board button **then** I will see the board from the other perspective.|||||||
+|   |**Given** I am watching a game **when** enter a move into the replay **then** I will see the board at that move.|||||||
 
