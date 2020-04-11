@@ -342,6 +342,11 @@ public class Game {
     }
     return (won);
   }
+//getting the list of moves
+public List<Move> getMoves() {
+  return moves;
+}
+
 
 }
 
