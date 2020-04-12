@@ -43,20 +43,21 @@ public class GetSpectatorGameRoute implements Route {
      * @throws Exception
      */
     @Override
-    public Object handle(Request request, Response response) {
+    public Object handle(Request request, Response response) throws Exception {
 
         // get important stuff from session and query parameters
         Session session = request.session();
         PlayerServices playerServices = session.attribute("playerServices");
-        String gameID = request.queryParams("gameID");
+        String gameID = request.queryParams(GetGameRoute.GAME_ID);
 
         // get the game, make sure it isn't null
         Game game = gameCenter.gameFromID(gameID);
 
-        if(game == null){ // game doesn't exist
+
+        if(game == null){
             response.redirect(WebServer.HOME_URL);
             halt();
-            return (null);
+            return null;
         }
 
         // populate vm for game.ftl

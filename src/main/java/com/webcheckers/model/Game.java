@@ -117,7 +117,7 @@ public class Game implements Comparable {
    * @return the total number of spectators
    */
   public synchronized int getNumSpectators(){
-    return this.numSpectators;
+    return this.spectators.size();
   }
 
   public Player currentPlayer() {

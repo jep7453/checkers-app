@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 /**
@@ -64,6 +64,7 @@ public class GetSpectatorGameRouteTest {
 
         when(redplayer.getName()).thenReturn("red");
         when(whitePlayer.getName()).thenReturn("white");
+        when(spectator.getName()).thenReturn("spectator");
     }
 
     /**
@@ -72,20 +73,24 @@ public class GetSpectatorGameRouteTest {
     @Test
     public void gameNotNull(){
         when(playerServices.getThisPlayer()).thenReturn(spectator);
-        when(gameCenter.gameFromID(any(String.class))).thenReturn(game);
-        when(game.getRedPlayer()).thenReturn(redplayer);
-        when(game.getWhitePlayer()).thenReturn(game.getWhitePlayer());
+        Game testGame = new Game( redplayer, whitePlayer);
+        testGame.startedSpectating(new Player("player"));
+        when(gameCenter.gameFromID(anyString())).thenReturn(testGame);
 
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-        CuT.handle(request, response);
+        try {
+            CuT.handle(request, response);
+        } catch (Exception e){
+            // shouldn't go here
+            fail();
+        }
 
         verify(response, times(0)).redirect(any(String.class));
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
-        testHelper.assertViewModelAttribute(GetGameRoute.RED_PLAYER, redplayer);
-        testHelper.assertViewModelAttribute(GetGameRoute.WHITE_PLAYER, whitePlayer);
-        testHelper.assertViewModelAttribute(GetGameRoute.CURRENT_USER, spectator);
-        assertEquals(1, game.getNumSpectators());
+        testHelper.assertViewModelAttribute(GetGameRoute.RED_PLAYER, redplayer.getName());
+        testHelper.assertViewModelAttribute(GetGameRoute.WHITE_PLAYER, whitePlayer.getName());
+        testHelper.assertViewModelAttribute(GetGameRoute.CURRENT_USER, spectator.getName());
     }
 
     /**
@@ -94,12 +99,14 @@ public class GetSpectatorGameRouteTest {
     @Test
     public void gameNull(){
         when(playerServices.getThisPlayer()).thenReturn(spectator);
-        when(gameCenter.gameFromID(any(String.class))).thenReturn(game);
-        when(game.getRedPlayer()).thenReturn(redplayer);
-        when(game.getWhitePlayer()).thenReturn(game.getWhitePlayer());
+        when(gameCenter.gameFromID(any(String.class))).thenReturn(null);
 
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-        CuT.handle(request, response);
+        try {
+            CuT.handle(request, response);
+        } catch (Exception e){
+
+        }
 
         verify(response, times(1)).redirect(any(String.class));
     }

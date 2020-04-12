@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-import org.junit.jupiter.api.BeforeAll;
 import com.webcheckers.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -111,5 +110,12 @@ class GameTest {
     assertFalse(game.isGameWon());
   }
 
-
+  @Test
+  public void spectatorTest(){
+    Player spectator = new Player("Spectator");
+    game.startedSpectating(spectator);
+    assertEquals(1, game.getNumSpectators());
+    game.stoppedSpectating(spectator);
+    assertEquals(0, game.getNumSpectators());
+  }
 }
