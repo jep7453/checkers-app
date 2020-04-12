@@ -2,6 +2,7 @@ package com.webcheckers.application;
 
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Replay;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class GameCenter {
     /** list of finished games in game center */
     private ArrayList<Game> replays;
 
+    private ArrayList<Replay> replaysWatched;
     /**
      * game id
      */
@@ -203,6 +205,10 @@ public class GameCenter {
             return null;
         }
         return games;
+    }
+
+    public ArrayList<Replay> getReplaysWatched() {
+        return replaysWatched;
     }
     /**
      * Returns list of current games
