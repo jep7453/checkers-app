@@ -17,6 +17,7 @@ public class Game {
   private List<Move> moves = new ArrayList<>(); /** A list of moves made, to backup */
   private final String gameID;
   private String title;
+  private ArrayList<Player> spectators;
 
   Player currentPlayer;         /** The Player whose turn it currently is. */
 
@@ -31,6 +32,7 @@ public class Game {
     this.gameID = UUID.randomUUID().toString();
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
+    this.spectators = new ArrayList<>();
     this.board = new Checkerboard();
     this.currentPlayer = redPlayer;
     this.resigned=false;
@@ -90,6 +92,30 @@ public class Game {
   public void makeMove(Move move) {
     board.makeMove(move);
     moves.add(move);
+  }
+
+  /**
+   * Tell a game a player started spectating
+   * @param player the new spectator
+   */
+  public synchronized void startedSpectating(Player player){
+    spectators.add(player);
+  }
+
+  /**
+   * Tell the game a spectator left
+   * @param player the spectator leaving
+   */
+  public synchronized void stoppedSpectating(Player player){
+    spectators.remove(player);
+  }
+
+  /**
+   * Get the total number of spectators
+   * @return the total number of spectators
+   */
+  public synchronized int getNumberSpectators(){
+    return (spectators.size());
   }
 
   public Player currentPlayer() {
