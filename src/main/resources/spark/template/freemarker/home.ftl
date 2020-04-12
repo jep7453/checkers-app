@@ -40,20 +40,9 @@
         </p>
         <#list gameList as game>
             <p>
-                <a href="/spectate/game?gameID=${game.gameID}">${game.title}</a>
+                <a href="/spectator/game?gameID=${game.gameID}">${game.title}</a>
             </p>
         </#list>
-      </#if>
-
-      <#if spectatorList??>
-          <p>
-              Spectate a game:
-          </p>
-          <#list spectatorList as game>
-              <p>
-                  <a href="/spectator/game?gameID=${game.gameID}">${game.title}</a>
-              </p>
-          </#list>
       </#if>
 
       <#if replayList??>

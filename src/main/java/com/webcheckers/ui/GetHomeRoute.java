@@ -33,6 +33,7 @@ public class GetHomeRoute implements Route {
   public static final String REPLAY_List = "replayList";
   public static final String PLAYER_SERVICES = "playerServices";
   public static final String VIEW_NAME = "home.ftl";
+  public static final String SPECTATOR_LIST = "spectatorList";
 
 
   private final GameCenter gameCenter;
@@ -70,6 +71,7 @@ public class GetHomeRoute implements Route {
     vm.put(TITLE, TITLE_MSG);
 
 
+
     PlayerLobby playerLobby = gameCenter.getLobby();
 
     final Session httpSession = request.session();
@@ -89,6 +91,7 @@ public class GetHomeRoute implements Route {
       vm.put(PLAYER_LIST,playerLobby.getPlayersNames(currentUser));
       vm.put(GAME_LIST,gameCenter.getGames());
       vm.put(REPLAY_List,gameCenter.getReplays());
+      vm.put(SPECTATOR_LIST, gameCenter.getGames());
 
     }
     else {

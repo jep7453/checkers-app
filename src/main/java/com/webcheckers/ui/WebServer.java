@@ -78,6 +78,10 @@ public class WebServer {
 
   public static final String BACK_URL = "/backupMove";
 
+  public static final String SPECTATOR_GAME = "/spectator/game";
+
+  public static final String SPECTATOR_STOP_WATCHING = "/spectator/stopWatching";
+
 
 
 
@@ -188,6 +192,11 @@ public class WebServer {
     get(GAME_URL, new GetGameRoute(templateEngine,  gamecenter));
 
     post(SIGN_OUT_URL, new PostSignOutRoute(gamecenter, templateEngine));
+
+    get(SPECTATOR_GAME, new GetSpectatorGameRoute(gamecenter, templateEngine));
+
+    get(SPECTATOR_STOP_WATCHING, new GetSpectatorStopWatching(gamecenter));
+    
     LOG.config("WebServer is initialized.");
   }
 

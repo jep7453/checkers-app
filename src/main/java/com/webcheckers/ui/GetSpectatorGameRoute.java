@@ -52,6 +52,7 @@ public class GetSpectatorGameRoute implements Route {
 
         // get the game, make sure it isn't null
         Game game = gameCenter.gameFromID(gameID);
+
         if(game == null){ // game doesn't exist
             response.redirect(WebServer.HOME_URL);
             halt();
@@ -60,16 +61,16 @@ public class GetSpectatorGameRoute implements Route {
 
         // populate vm for game.ftl
         Map<String, Object> vm = new HashMap<>();
-        vm.put(GetGameRoute.TITLE_ATTR, MESSAGE);
+        vm.put(GetGameRoute.TITLE, MESSAGE);
         vm.put(GetGameRoute.VIEW_MODE, GetGameRoute.ViewMode.SPECTATOR);
-        vm.put(GetGameRoute.RED_PLAYER, game.getRedPlayer());
-        vm.put(GetGameRoute.WHITE_PLAYER, game.getWhitePlayer());
+        vm.put(GetGameRoute.RED_PLAYER, game.getRedPlayer().getName());
+        vm.put(GetGameRoute.WHITE_PLAYER, game.getWhitePlayer().getName());
         vm.put(GetGameRoute.CURRENT_USER, playerServices.getThisPlayer().getName());
         if(game.getRedPlayer().equals(game.getCurrentPlayer()))
             vm.put(GetGameRoute.ACTIVE_COLOR, GetGameRoute.ActiveColor.RED);
         else
             vm.put(GetGameRoute.ACTIVE_COLOR, GetGameRoute.ActiveColor.WHITE);
-        vm.put(GetGameRoute.BOARD_VIEW_KEY, game.getBoard());
+        vm.put(GetGameRoute.BOARD_VIEW_KEY, new BoardView(game.getBoard()));
 
         // render
         return engine.render(new ModelAndView(vm, GetGameRoute.VIEW_NAME));
