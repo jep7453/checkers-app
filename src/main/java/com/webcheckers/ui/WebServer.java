@@ -78,6 +78,14 @@ public class WebServer {
 
   public static final String BACK_URL = "/backupMove";
 
+  public static final String REPLAY_URL = "/replay/game";
+
+  public static final String REPLAY_STOP_URL = "/replay/stopWatching";
+
+  public static final String NEXT_URL = "/replay/nextTurn";
+
+  public static final String PREVIOUS_URL = "/replay/previousTurn";
+
 
 
 
@@ -181,13 +189,17 @@ public class WebServer {
     post(CHECK_URL, new PostCheckTurnRoute(gson));
     //Post backup Turn
     post(BACK_URL, new PostBackUpMoveRoute(gson));
-
     // Post a Resignation.
     post(RESIGN_URL, new PostResignRoute(gamecenter, gson));
-
+    //Get Game
     get(GAME_URL, new GetGameRoute(templateEngine,  gamecenter));
-
+    //Post Sign out
     post(SIGN_OUT_URL, new PostSignOutRoute(gamecenter, templateEngine));
+
+    post(NEXT_URL, new PostReplayNextTurnRoute(gamecenter, gson));
+    post(PREVIOUS_URL, new PostReplayPreviousTurnRoute(gamecenter, gson));
+    get(REPLAY_URL, new GetReplayGameRoute(templateEngine,gamecenter));
+    get(REPLAY_STOP_URL, new GetReplayStopWatchingRoute(gamecenter));
     LOG.config("WebServer is initialized.");
   }
 

@@ -30,10 +30,9 @@ public class PostReplayPreviousTurnRoute implements Route {
         //gameID
         final String gameID = request.queryParams(GAME_ID);
         Message message = Message.info("false");
-        for(Replay replayWatched : gameCenter.getReplaysWatched()){
-            if(replayWatched.getGameID() == gameID){
-                if(replayWatched.makePrevTurn()) message = Message.info("true");
-            }
+        Replay replay = gameCenter.replayFromID(gameID);
+        if(replay.makePrevTurn()) {
+            message = Message.info("true");
         }
         return gson.toJson(message,Message.class);
     }

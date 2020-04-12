@@ -83,6 +83,12 @@ public class Game {
   }
 
 
+  public List<Move> getReplay(){
+    return (replay);
+  }
+
+
+
   public Move.Type isValidMove(Move move) {
     return board.isValidMove(move);
 
@@ -103,7 +109,9 @@ public class Game {
   }
 
   public void switchPlayer() {
-    replay.addAll(moves);
+    for(Move move :moves) {
+      replay.add(move);
+    }
     moves.clear();
     if(currentPlayer.equals(whitePlayer)) {
       currentPlayer=redPlayer;

@@ -49,9 +49,9 @@
         <p>
             Replays:
         </p>
-           <#list replayList as game>
+           <#list replayList as replay>
               <p>
-                   <a href="/replay/game?gameID=${game.gameID}">${game.title}</a>
+                   <a href="/replay/game?gameID=${replay.gameID}">${replay.title}</a>
               </p>
            </#list>
       </#if>

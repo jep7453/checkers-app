@@ -22,6 +22,7 @@ public class PostReplayNextTurnRoute implements Route {
 
     public PostReplayNextTurnRoute(GameCenter gameCenter,Gson gson) {
         this.gameCenter = gameCenter;
+        this.gson = gson;
     }
 
     @Override
@@ -30,10 +31,9 @@ public class PostReplayNextTurnRoute implements Route {
         //gameID
         final String gameID = request.queryParams(GAME_ID);
         Message message = Message.info("false");
-        for(Replay replayWatched : gameCenter.getReplaysWatched()){
-            if(replayWatched.getGameID() == gameID){
-                if(replayWatched.makeNextTurn()) message = Message.info("true");
-            }
+        Replay replay = gameCenter.replayFromID(gameID);
+        if(replay.makeNextTurn()) {
+            message = Message.info("true");
         }
         return gson.toJson(message,Message.class);
     }

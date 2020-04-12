@@ -27,15 +27,10 @@ public class GetReplayStopWatchingRoute implements Route {
 
         //gameID
         final String gameID = request.queryParams(GAME_ID);
-        for(Replay replay : gameCenter.getReplaysWatched()){
-            if(replay.getGameID() == gameID){
-                gameCenter.getReplaysWatched().remove(replay);
+
                 response.redirect(WebServer.HOME_URL);
                 halt();
                 return null;
             }
         }
-        return null;
 
-    }
-}

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Replay;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class GetReplayGameRoute implements Route {
     static final String ACTIVE_COLOR = "activeColor";
     static final String BOARD_VIEW_KEY = "board";
     static final String MESSAGE_KEY = "message";
-    static final String MESSAGE = "Replay";
+    static final Message MESSAGE =Message.info("Replay");
     static final String MODE_OPTIONS_AS_JSON = "modeOptionsAsJSON";
     static final String HAS_NEXT = "hasNext";
     static final String HAS_PREVIOUS = "hasPrevious";
@@ -50,11 +51,12 @@ public class GetReplayGameRoute implements Route {
     public Object handle(Request request, Response response) throws Exception {
 
         Map<String, Object> vm = new HashMap<>();
+        vm.put("title", "Welcome!");
+
 
         //gameID
         final String gameID = request.queryParams(GAME_ID);
-        Replay replay = new Replay(gameCenter,gameID);
-        gameCenter.getReplaysWatched().add(replay);
+        Replay replay = gameCenter.replayFromID(gameID);
 
         //currentUser
         final Session httpSession = request.session();
@@ -84,7 +86,7 @@ public class GetReplayGameRoute implements Route {
         }
 
         //Board
-        vm.put(BOARD_VIEW_KEY,new BoardView(replay.getReplayGame().getBoard()));
+        vm.put(BOARD_VIEW_KEY,new BoardView(replay.getBoard()));
 
         //message
         vm.put(MESSAGE_KEY, MESSAGE);

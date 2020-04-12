@@ -27,7 +27,7 @@ public class GameCenter {
     private ArrayList<Game> games;
 
     /** list of finished games in game center */
-    private ArrayList<Game> replays;
+    private ArrayList<Replay> replays;
 
     private ArrayList<Replay> replaysWatched;
     /**
@@ -118,9 +118,7 @@ public class GameCenter {
             playerFinishedPlayingGame(game.getRedPlayer());
             playerFinishedPlayingGame(game.getWhitePlayer());
             games.remove(game);
-        }
-        if(!replays.contains(game)) {
-            replays.add(game);
+            replays.add(new Replay(game));
         }
     }
 
@@ -213,7 +211,7 @@ public class GameCenter {
     /**
      * Returns list of current games
      */
-    public ArrayList<Game> getReplays(){
+    public ArrayList<Replay> getReplays(){
         if(replays.isEmpty()) {
             return null;
         }
@@ -231,6 +229,18 @@ public class GameCenter {
             if(g.getGameID().equals(gameID))
                 return (g);
             }
+        return (null);
+    }
+
+    /**
+     * Get a replay from the ID
+     * @param gameID the game id
+     */
+    public Replay replayFromID(String gameID) {
+        for(Replay r : replays){
+            if(r.getGameID().equals(gameID))
+                return (r);
+        }
         return (null);
     }
 }

@@ -5,28 +5,28 @@ import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 
+import java.util.ArrayList;
 import java.util.List;
 /*
 * This class is a skeleton for the replay game.
 * @author Kesa Abbas Lnu <kl3468@rit.edu>*/
 public class Replay {
 
-    private Game completedGame;
-    private Game replayGame;
+    private Game game;
+    private List<Move> moves = new ArrayList<>();
     private int movesMade = 0;
-    public Replay(GameCenter gameCenter, String gameID) {
-        for(Game completedGame : gameCenter.getReplays()){
-            if(completedGame.getGameID() == gameID){
-                this.completedGame = completedGame;
-                replayGame = new Game(completedGame.getRedPlayer(),completedGame.getWhitePlayer());
-                return;
-            }
-        }
+    private Checkerboard board;
+    private String title;
+    public Replay(Game game) {
+        this.game = game;
+        this.moves = game.getReplay();
+        this.board=new Checkerboard();
+        this.title=game.getTitle();
     }
 
     //checks if next move is there or not
     public boolean hasNextMove(){
-        if(movesMade == completedGame.getMoves().size()) return false;
+        if(movesMade == moves.size()) return false;
         return true;
     }
 
@@ -36,15 +36,19 @@ public class Replay {
         return false;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     //returns upcomming move
     private Move getNextMove(){
-        if(hasNextMove()) return completedGame.getMoves().get(movesMade);
+        if(hasNextMove()) return moves.get(movesMade);
         return null;
     }
 
     //returns recent move
     private Move getPrevMove(){
-        if(hasPrevMove()) return completedGame.getMoves().get(movesMade-1);
+        if(hasPrevMove()) return moves.get(movesMade-1);
         return null;
     }
 
@@ -52,7 +56,8 @@ public class Replay {
     public boolean makeNextTurn(){
         Move next = getNextMove();
         if(next != null){
-            replayGame.makeMove(next);
+            board.makeMove(next);
+            movesMade++;
         }
         return false;
     }
@@ -61,7 +66,7 @@ public class Replay {
     public boolean makePrevTurn(){
         Move prev = getPrevMove();
         if(prev != null){
-            replayGame.backUpMove();
+            board.backUpMove(prev);
             movesMade--;
             return true;
         }
@@ -69,23 +74,27 @@ public class Replay {
     }
 
     public Player getRedPlayer(){
-        return completedGame.getRedPlayer();
+        return game.getRedPlayer();
     }
 
     public Player getWhitePlayer(){
-        return completedGame.getWhitePlayer();
+        return game.getWhitePlayer();
     }
 
     public boolean isRedPlayerTurn(){
-        return replayGame.getCurrentPlayer() == replayGame.getRedPlayer();
+        return game.getCurrentPlayer() == game.getRedPlayer();
     }
 
     public Game getReplayGame(){
-        return replayGame;
+        return game;
+    }
+
+    public Checkerboard getBoard(){
+        return board;
     }
 
     public String getGameID(){
-        return completedGame.getGameID();
+        return game.getGameID();
     }
 
 }
