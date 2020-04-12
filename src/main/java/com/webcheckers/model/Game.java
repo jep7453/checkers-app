@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Game {
+public class Game implements Comparable {
 
   /** Represents a checker Game.
    *
@@ -371,5 +371,35 @@ public class Game {
     return (won);
   }
 
+  /**
+   * Get the averate win rate of the player
+   * @return the average win rate
+   */
+  public int getAveragePlayerWinRate(){
+    return ((redPlayer.getWinRate() + whitePlayer.getWinRate())/2);
+  }
+
+  /**
+   * Get the winner of the game
+   * @return the winner
+   */
+  public Player getWinner(){
+    return this.winner;
+  }
+
+  /**
+   * Compare the win rates of the games
+   * @param o the game to compate too
+   * @return 0 if equal, -1 if this game is less, 1 if this game is greater
+   */
+  @Override
+  public int compareTo(Object o) {
+    Game tempgame = (Game) o;
+    if(tempgame.getAveragePlayerWinRate() < this.getAveragePlayerWinRate())
+      return 1;
+    if(tempgame.getAveragePlayerWinRate() == this.getAveragePlayerWinRate())
+      return 0;
+    return -1;
+  }
 }
 

@@ -3,8 +3,8 @@ package com.webcheckers.application;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.logging.Logger;
 
 /**
@@ -28,6 +28,9 @@ public class GameCenter {
     /** list of finished games in game center */
     private ArrayList<Game> replays;
 
+    /** The comparator to sort games by win rates */
+    private WinRateComparator winComparator;
+
     /**
      * game id
      */
@@ -41,6 +44,7 @@ public class GameCenter {
         lobby = new PlayerLobby();
         games = new ArrayList<>();
         replays = new ArrayList<>();
+        this.winComparator = new WinRateComparator();
     }
 
     /**
@@ -113,6 +117,14 @@ public class GameCenter {
      */
     public void gameFinished(Game game){
         if(games.contains(game)){
+            // adjust win rates of players
+            if(game.getWinner().equals(game.getRedPlayer())){
+                game.getRedPlayer().wonGame();
+                game.getWinner().lostGame();
+            } else {
+                game.getRedPlayer().lostGame();
+                game.getWhitePlayer().wonGame();
+            }
             playerFinishedPlayingGame(game.getRedPlayer());
             playerFinishedPlayingGame(game.getWhitePlayer());
             games.remove(game);
@@ -148,6 +160,7 @@ public class GameCenter {
                     "' and '" + player2.getName() + "'");
             playerStartedPlayingGame(player1);
             playerStartedPlayingGame(player2);
+            games.sort(winComparator);
             return (game);
         }
 
@@ -229,3 +242,11 @@ public class GameCenter {
     }
 }
 
+class WinRateComparator implements Comparator{
+    @Override
+    public int compare(Object o1, Object o2) {
+        if(o1 instanceof Game && o2 instanceof Game)
+            return ((Game) o1).compareTo(((Game) o2));
+        return -1;
+    }
+}

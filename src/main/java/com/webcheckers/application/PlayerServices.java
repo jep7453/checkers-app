@@ -122,6 +122,7 @@ public class PlayerServices {
     public void finishedGame(){
         this.game = null;
         this.opponent = null;
+
         // let game center know player finished game
     }
 
