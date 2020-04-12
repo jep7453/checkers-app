@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.WebServer;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Game;
@@ -14,9 +15,9 @@ import static spark.Spark.halt;
  * Stop watching a game and redirect to home
  * @author Chris Tremblay
  */
-public class GetSpectatorStopWatching implements Route {
+public class GetSpectatorStopWatchingRoute implements Route {
     /** GameID parameter */
-    private static final String GAME_ID = "gameID";
+    public static final String GAME_ID = "gameID";
 
     /** The game center */
     private GameCenter gameCenter;
@@ -25,7 +26,7 @@ public class GetSpectatorStopWatching implements Route {
      * Create a new route
      * @param gameCenter the game center
      */
-    public GetSpectatorStopWatching(GameCenter gameCenter){
+    public GetSpectatorStopWatchingRoute(GameCenter gameCenter){
         this.gameCenter = gameCenter;
     }
 

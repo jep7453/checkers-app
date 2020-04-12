@@ -1,7 +1,8 @@
-package com.webcheckers.ui;
+package com.webcheckers;
 
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.ui.*;
 import spark.TemplateEngine;
 
 import java.util.Objects;
@@ -195,7 +196,7 @@ public class WebServer {
 
     get(SPECTATOR_GAME, new GetSpectatorGameRoute(gamecenter, templateEngine));
 
-    get(SPECTATOR_STOP_WATCHING, new GetSpectatorStopWatching(gamecenter));
+    get(SPECTATOR_STOP_WATCHING, new GetSpectatorStopWatchingRoute(gamecenter));
     
     LOG.config("WebServer is initialized.");
   }
