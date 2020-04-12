@@ -43,7 +43,7 @@ public class GetSpectatorGameRoute implements Route {
      * @throws Exception
      */
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
 
         // get important stuff from session and query parameters
         Session session = request.session();

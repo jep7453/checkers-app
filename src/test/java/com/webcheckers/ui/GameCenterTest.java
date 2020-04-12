@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * This is a test suite for the @Link GameCenterTest class
@@ -80,8 +82,11 @@ public class GameCenterTest {
     public void gameFinished(){
         CuT.signIn(player1);
         CuT.signIn(player2);
-        Game game = CuT.getGame(player1, player2);
-        assertNotNull(CuT.findActiveGame(player1));
+        Game game = mock(Game.class);
+        when(game.isGameWon()).thenReturn(true);
+        when(game.getRedPlayer()).thenReturn(player1);
+        when(game.getWhitePlayer()).thenReturn(player1);
+
         CuT.gameFinished(game);
         assertNull(CuT.findActiveGame(player1));
     }
