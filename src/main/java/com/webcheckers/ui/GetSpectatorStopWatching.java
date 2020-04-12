@@ -10,6 +10,10 @@ import spark.Session;
 
 import static spark.Spark.halt;
 
+/**
+ * Stop watching a game and redirect to home
+ * @author Chris Tremblay
+ */
 public class GetSpectatorStopWatching implements Route {
     /** GameID parameter */
     private static final String GAME_ID = "gameID";

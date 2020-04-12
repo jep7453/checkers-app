@@ -17,6 +17,7 @@ public class Game {
   private List<Move> moves = new ArrayList<>(); /** A list of moves made, to backup */
   private final String gameID;
   private String title;
+  private int numSpectators;
   private ArrayList<Player> spectators;
 
   Player currentPlayer;         /** The Player whose turn it currently is. */
@@ -33,6 +34,7 @@ public class Game {
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
     this.spectators = new ArrayList<>();
+    this.numSpectators = 0;
     this.board = new Checkerboard();
     this.currentPlayer = redPlayer;
     this.resigned=false;
@@ -114,8 +116,8 @@ public class Game {
    * Get the total number of spectators
    * @return the total number of spectators
    */
-  public synchronized int getNumberSpectators(){
-    return (spectators.size());
+  public synchronized int getNumSpectators(){
+    return this.numSpectators;
   }
 
   public Player currentPlayer() {

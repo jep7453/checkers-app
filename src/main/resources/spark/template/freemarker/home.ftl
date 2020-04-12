@@ -38,9 +38,10 @@
         <p>
             Games Being Played:
         </p>
+
         <#list gameList as game>
             <p>
-                <a href="/spectator/game?gameID=${game.gameID}">${game.title}</a>
+                <a href="/spectator/game?gameID=${game.gameID}">${game.title}: ${game.numSpectators} Spectators</a>
             </p>
         </#list>
       </#if>
