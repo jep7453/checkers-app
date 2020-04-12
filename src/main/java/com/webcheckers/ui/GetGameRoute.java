@@ -1,7 +1,6 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.webcheckers.WebServer;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Game;

@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.WebServer;
 import spark.Request;
 import spark.Response;
 import spark.Route;

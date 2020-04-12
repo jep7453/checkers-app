@@ -1,7 +1,6 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.webcheckers.WebServer;
 import com.webcheckers.application.GameCenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;

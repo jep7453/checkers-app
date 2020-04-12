@@ -1,8 +1,7 @@
-package com.webcheckers;
+package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.ui.*;
 import spark.TemplateEngine;
 
 import java.util.Objects;
