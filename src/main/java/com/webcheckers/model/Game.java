@@ -372,34 +372,18 @@ public class Game implements Comparable {
   }
 
   /**
-   * Get the averate win rate of the player
-   * @return the average win rate
+   * Gets the ranking of the game or the average
+   * if the players ranks
+   *
+   * @return the average of the players ranks
    */
-  public int getAveragePlayerWinRate(){
-    return ((redPlayer.getWinRate() + whitePlayer.getWinRate())/2);
+  public int getGameRank(){
+    return (int)(0.5 * (double)(this.redPlayer.getWinRate() + this.whitePlayer.getWinRate()));
   }
 
-  /**
-   * Get the winner of the game
-   * @return the winner
-   */
-  public Player getWinner(){
-    return this.winner;
-  }
-
-  /**
-   * Compare the win rates of the games
-   * @param o the game to compate too
-   * @return 0 if equal, -1 if this game is less, 1 if this game is greater
-   */
   @Override
   public int compareTo(Object o) {
-    Game tempgame = (Game) o;
-    if(tempgame.getAveragePlayerWinRate() < this.getAveragePlayerWinRate())
-      return 1;
-    if(tempgame.getAveragePlayerWinRate() == this.getAveragePlayerWinRate())
-      return 0;
-    return -1;
+    return Integer.compare(this.getGameRank(), ((Game) o).getGameRank());
   }
 }
 
