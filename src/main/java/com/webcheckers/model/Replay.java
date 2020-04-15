@@ -17,6 +17,8 @@ public class Replay {
     private int movesMade = 0;
     private Checkerboard board;
     private String title;
+    private boolean play;
+
     public Replay(Game game) {
         this.game = game;
         this.moves = game.getReplay();
@@ -58,6 +60,7 @@ public class Replay {
         if(next != null){
             board.makeMove(next);
             movesMade++;
+            return true;
         }
         return false;
     }
@@ -71,6 +74,14 @@ public class Replay {
             return true;
         }
         return false;
+    }
+
+    public void updatePlayer() {
+        Move move = moves.get(movesMade);
+        int row = move.getStart().getRow();
+        int cell = move.getStart().getCell();
+        Checker checker = board.getSquare(row,cell).getChecker();
+        game.setCurrentPlayer(checker.getColor());
     }
 
     public Player getRedPlayer(){
@@ -91,6 +102,14 @@ public class Replay {
 
     public Checkerboard getBoard(){
         return board;
+    }
+
+    public boolean getPlay(){
+        return play;
+    }
+
+    public void setPlay(boolean play) {
+        this.play=play;
     }
 
     public String getGameID(){

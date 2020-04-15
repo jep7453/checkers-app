@@ -77,6 +77,8 @@ public class GetReplayGameRoute implements Route {
         vm.put(RED_PLAYER, replay.getRedPlayer().getName());
         vm.put(WHITE_PLAYER, replay.getWhitePlayer().getName());
 
+
+
         //Avtive Color
         if(replay.isRedPlayerTurn()){
             vm.put(ACTIVE_COLOR,ActiveColor.RED);
@@ -90,7 +92,14 @@ public class GetReplayGameRoute implements Route {
 
         //message
         vm.put(MESSAGE_KEY, MESSAGE);
+        vm.put(GAME_ID,gameID);
 
+        boolean play = Boolean.parseBoolean(request.queryParams("play"));
+        if(play&&replay.getPlay()) {
+            replay.makeNextTurn();
+            vm.put("play",true);
+        }
+        replay.setPlay(true);
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }

@@ -357,6 +357,15 @@ public List<Move> getMoves() {
   return moves;
 }
 
+  public void setCurrentPlayer(Checker.Color color) {
+    if(color== Checker.Color.RED) {
+      currentPlayer=redPlayer;
+    }
+    else {
+      currentPlayer=whitePlayer;
+    }
+  }
+
 
 }
 

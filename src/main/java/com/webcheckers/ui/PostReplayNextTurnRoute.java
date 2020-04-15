@@ -32,6 +32,7 @@ public class PostReplayNextTurnRoute implements Route {
         final String gameID = request.queryParams(GAME_ID);
         Message message = Message.info("false");
         Replay replay = gameCenter.replayFromID(gameID);
+        replay.setPlay(false);
         if(replay.makeNextTurn()) {
             message = Message.info("true");
         }
