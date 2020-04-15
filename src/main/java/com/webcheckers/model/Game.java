@@ -372,6 +372,14 @@ public class Game implements Comparable {
   }
 
   /**
+   * Gets the player who won
+   * @return the player who won
+   */
+  public Player getWinner(){
+    return (this.winner);
+  }
+
+  /**
    * Gets the ranking of the game or the average
    * if the players ranks
    *
