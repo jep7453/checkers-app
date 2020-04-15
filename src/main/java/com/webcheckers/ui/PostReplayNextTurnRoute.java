@@ -26,8 +26,8 @@ public class PostReplayNextTurnRoute implements Route {
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
-
+    public Object handle(Request request, Response response) //throws Exception {
+    {
         //gameID
         final String gameID = request.queryParams(GAME_ID);
         Message message = Message.info("false");
