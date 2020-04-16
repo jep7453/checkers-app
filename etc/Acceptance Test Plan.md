@@ -31,7 +31,7 @@
 | As a player, I want the game to end if all of one player's pieces have been captured so that the game can have a winner. | Given when I am in a game and no checker pieces are left on the checkerboard, then the winner should be declared and the game ends.|||PASS|JP 4-5-2020||  
 | As a player I want to leave the game so that the game can end early. |**Given** I am in a game and it is my turn, **when** I press the resign button **then** I expect the game to end.|||PASS|JP 4-5-2020||  
 |   |**Given** I have resigned, **when** the game ends **then** I expect my opponent to be declared the winner.|||PASS|JP 4-5-2020|||  
-| As a Player I want to spectate a game so that I can see the moves being made in real time. |**Given** I am signed in **when** I see player's currently playing a game on the homepage **then** I expect to see a button allowing me to spectate.||||PASS|KA, JP 4-16-2020|  
+| As a Player I want to spectate a game so that I can see the moves being made in real time. |**Given** I am signed in **when** I see player's currently playing a game on the homepage **then** I expect to see a button allowing me to spectate.|||||PASS | KA, JP 4-16-2020  
 |   |**Given**  that I click on the spectate button of a player **when** that player is currently in a game **then** I expect to see a visual of the game.||||||  
 |   |**Given** I am spectating a game **when** either player makes a move **then** I expect my visual of the game updated||||||  
 |   |**Given** I am spectating a game **when** I choose specific player to spectate **then** I expect to see the game from their orientation.|||||||  
