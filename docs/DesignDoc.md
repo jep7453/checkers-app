@@ -54,6 +54,10 @@ geometry: margin=1in
 
 ### Roadmap of Enhancements
 > - Spectate, As a Player I want to spectate a game so that I can see the moves being made in real time.
+>  - Active games are sorted by an aerage of the players rank
+>  - Player rank determined by percentage of games won to total games
+>  - Number of spectators is reported to everyone apart of the game
+>  - Abiliity to swap perspective of the game
 > - Replay, As a player, I want to be able to replay the game so that I can see what moves I used in the previous game.
 
 
@@ -129,9 +133,11 @@ with the WebCheckers application.
 >- PostSignOutRoute: It post the dign out page to the player after the player signs out.
 >- PostSubmitTurnRoute: Utilizing this action, it submits the user's turns.
 >- PostValidateMoveRoute: It submits a single move made by the player to the server to check if that action is valid or not.
-
->The server responsible for handling the POST and GET routes is the Jetty WebServer in the WebServer Class.
+> -GetSpectatorGameRoute: Finds game that a user would like to spectate and renders the game view for the spectator
+> -GetSpectatorStopWatchingRoute: tells the game the player has stopped spectating and redirects to the homepage
 >
+>The server responsible for handling the POST and GET routes is the Jetty WebServer in the WebServer Class.
+
 >>
  > **How a turn works**
  > ![Performing a move](ui_move.png)

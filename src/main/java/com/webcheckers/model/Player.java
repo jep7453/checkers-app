@@ -14,6 +14,9 @@ public class Player {
   /* total games on by player */
   private int gamesWon;
 
+  /** is the user playing */
+  private boolean isPlaying;
+
   /** Creates a new Player object with the specified name.
    * @param name        The name of the Player.
    */
@@ -36,6 +39,14 @@ public class Player {
     }
     that = (Player) o;
     return this.name.equals(that.name);
+  }
+
+  public boolean getIsPlaying() {
+    return isPlaying;
+  }
+
+  public void setIsPlaying(boolean playing) {
+    isPlaying = playing;
   }
 
   /**

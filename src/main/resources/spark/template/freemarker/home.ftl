@@ -41,7 +41,12 @@
 
         <#list gameList as game>
             <p>
-                <a href="/spectator/game?gameID=${game.gameID}">${game.title}: ${game.numSpectators} Spectators</a>
+                <#if game.redPlayer.name == currentUser || game.whitePlayer.name == currentUser>
+                    <a href="/game">${game.title}: ${game.numSpectators} Spectators (click to resume your game)</a>
+                    <#else >
+                    <a href="/spectator/game?gameID=${game.gameID}">${game.title}: ${game.numSpectators} Spectators</a>
+                </#if>
+
             </p>
         </#list>
       </#if>

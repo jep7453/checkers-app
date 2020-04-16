@@ -38,6 +38,7 @@ public class GetGameRoute implements Route {
         public static final String OPPONENT_PARAM = "player";
         public static final String MSG = "message";
         public static final String HOME_URL = "/";
+        public static final String IS_PLAYING = "isPlaying"; // to allow spectatorship during an active game
 
         /**
          * The URL pattern to request the Sign in Page.
@@ -133,6 +134,7 @@ public class GetGameRoute implements Route {
                         //whitePlayer
                         whitePlayer = playerServices.getOpponent();
                 }
+                vm.put(IS_PLAYING, true);
 
                 if(gameCenter.isCurrentlyPlaying(whitePlayer) && !gameCenter.isCurrentlyPlaying(redPlayer)) {
                         httpSession.attribute("error","Error: Player already in game");
@@ -180,6 +182,7 @@ public class GetGameRoute implements Route {
                         Gson gson = new Gson();
                         vm.put(MODE_OPTIONS_AS_JSON,gson.toJson(modeOptionsAsJSON));
                         gameCenter.gameFinished(playerServices.currentGame());
+                        vm.put(IS_PLAYING, false);
                         playerServices.finishedGame();
                 }
 

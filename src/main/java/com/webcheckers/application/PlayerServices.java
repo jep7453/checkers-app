@@ -122,6 +122,7 @@ public class PlayerServices {
     public void finishedGame(){
         this.game = null;
         this.opponent = null;
+        this.thisPlayer.setIsPlaying(false);
 
         // let game center know player finished game
     }
@@ -160,6 +161,7 @@ public class PlayerServices {
             else
                 game = temp;
         }
+        this.thisPlayer.setIsPlaying(true);
         return (game);
     }
 }

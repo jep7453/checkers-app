@@ -34,6 +34,7 @@ public class GetHomeRoute implements Route {
   public static final String PLAYER_SERVICES = "playerServices";
   public static final String VIEW_NAME = "home.ftl";
   public static final String SPECTATOR_LIST = "spectatorList";
+  public static final String SPECTATE = "spectate";
 
 
   private final GameCenter gameCenter;
@@ -106,10 +107,14 @@ public class GetHomeRoute implements Route {
     }
 
     if( gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
-
-      response.redirect(WebServer.GAME_URL);
+      if(request.queryParams(SPECTATE) != null && request.queryParams(SPECTATE).equals("yes"))
+        ;
+      else
+        response.redirect(WebServer.GAME_URL);
     }
-    playerServices.setGameOver(false);
+
+    if(playerServices.isGameOver())
+      playerServices.setGameOver(false);
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
