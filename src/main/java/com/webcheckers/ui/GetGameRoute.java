@@ -134,7 +134,7 @@ public class GetGameRoute implements Route {
                         //whitePlayer
                         whitePlayer = playerServices.getOpponent();
                 }
-                vm.put(IS_PLAYING, true);
+
 
                 if(gameCenter.isCurrentlyPlaying(whitePlayer) && !gameCenter.isCurrentlyPlaying(redPlayer)) {
                         httpSession.attribute("error","Error: Player already in game");

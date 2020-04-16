@@ -375,19 +375,19 @@ public class Game implements Comparable {
     if(resigned) {
       won = true;
     }
-    if(board.allPiecesCaptured(Checker.Color.RED)) {
+    if(board.allPiecesCaptured(Checker.Color.RED)&&turnSubmitted) {
       winner = whitePlayer;
       won = true;
     }
-    if(board.allPiecesCaptured(Checker.Color.WHITE)) {
+    if(board.allPiecesCaptured(Checker.Color.WHITE)&&turnSubmitted) {
       winner = redPlayer;
       won = true;
     }
-    if(!playerCanMove(redPlayer)) {
+    if(!playerCanMove(redPlayer)&&turnSubmitted) {
       winner = whitePlayer;
       won = true;
     }
-    if(!playerCanMove(whitePlayer)) {
+    if(!playerCanMove(whitePlayer)&&turnSubmitted) {
       winner = redPlayer;
       won = true;
     }
