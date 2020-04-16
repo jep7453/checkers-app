@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <#if play??>
+    <#if play == true>
+        <meta http-equiv="refresh" content="3">
+    </#if>
+  </#if>
   <title>${title} | Web Checkers</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/game.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script>
   window.gameData = {
-    "gameID" : ${gameID!'null'},
+    "gameID" : "${gameID!}",
     "currentUser" : "${currentUser}",
     "viewMode" : "${viewMode}",
     "modeOptions" : ${modeOptionsAsJSON!'{}'},
@@ -54,8 +59,16 @@
           <fieldset id="game-toolbar">
             <legend>Controls</legend>
             <div class="toolbar"></div>
+            <#if viewMode == "REPLAY">
+		 <button onclick="window.location.href = 
+			 '/replay/game?gameID=${gameID}&orientation=${otherOrientation}';">Rotate Board</a>
+                 <button onclick="window.location.href = '/replay/game?gameID=${gameID}&play=${true?c}';
+                 ">Play</button>
+		 <br>
+                Move #${movesMade}/${moveCount}
+            </#if>
           </fieldset>
-          
+
         </div>
   
         <div class="game-board">
