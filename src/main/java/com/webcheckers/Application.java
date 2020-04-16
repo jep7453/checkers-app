@@ -85,8 +85,6 @@ public final class Application {
       System.err.println("Could not initialize log manager because: " + e.getMessage());
     }
 
-    System.out.println(args[0]);
-
     // create the one and only gameCenter
     final GameCenter gameCenter = new GameCenter();
 
@@ -102,6 +100,8 @@ public final class Application {
 
     // inject the game center and freemarker engine into web server
     final WebServer webServer = new WebServer(gameCenter,templateEngine, gson);
+    if(args.length == 1)
+      webServer.setBoard(args[0]);
 
     // inject web server into application
     final Application app = new Application(webServer);

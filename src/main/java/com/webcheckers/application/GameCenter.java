@@ -3,8 +3,8 @@ package com.webcheckers.application;
 import com.webcheckers.model.Checkerboard;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Replay;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
