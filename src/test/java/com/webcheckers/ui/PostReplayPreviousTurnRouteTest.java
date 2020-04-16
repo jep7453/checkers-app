@@ -42,7 +42,7 @@ class PostReplayPreviousTurnRouteTest {
         when(gameCenter.replayFromID(gameID)).thenReturn(replay);
         when(replay.makePrevTurn()).thenReturn(true);
         Message message = Message.info("true");
-        assertTrue(CuT.handle(request,response) == gson.toJson(message,Message.class));
+        assertTrue(CuT.handle(request,response).equals( gson.toJson(message,Message.class)));
 
     }
 

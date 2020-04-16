@@ -15,61 +15,6 @@ class ReplayTest {
     private final String RED_PLAYER = "red";
     private final String WHITE_PLAYER = "white";
 
-    @BeforeAll
-    void setup(){
-        game = new Game(new Player(RED_PLAYER), new Player(WHITE_PLAYER));
-
-        //setup
-        game.makeMove(new Move(new Position(2, 3), new Position(3, 2)));
-        game.makeMove(new Move(new Position(5, 6), new Position(4, 7)));
-
-
-        game.makeMove(new Move(new Position(3, 2), new Position(4, 3)));
-        //jump
-        game.makeMove(new Move(new Position(5, 4), new Position(3, 2)));
-
-        game.makeMove(new Move(new Position(1, 4), new Position(2, 3)));
-        //jump
-        game.makeMove(new Move(new Position(3, 2), new Position(1, 4)));
-
-        game.makeMove(new Move(new Position(1, 2), new Position(2, 3)));
-        game.makeMove(new Move(new Position(5, 0), new Position(4, 1)));
-
-        game.makeMove(new Move(new Position(0, 3), new Position(1, 2)));
-        game.makeMove(new Move(new Position(1, 4), new Position(0, 3)));//king
-
-        game.makeMove(new Move(new Position(2, 3), new Position(3, 2)));
-        game.makeMove(new Move(new Position(4, 1), new Position(2, 3)));
-
-        game.makeMove(new Move(new Position(0, 5), new Position(1, 4)));
-        game.makeMove(new Move(new Position(2, 3), new Position(0, 5)));
-
-        game.makeMove(new Move(new Position(2, 1), new Position(3, 2)));
-        //  assertTrue(game.isValidMove(new Move(new Position(0, 3), new Position(2, 1))) == Move.Type.JUMP);
-        game.makeMove(new Move(new Position(0, 3), new Position(2, 1)));
-        //   assertTrue(game.isValidMove(new Move(new Position(2, 1), new Position(4, 3))) == Move.Type.JUMP);
-        game.makeMove(new Move(new Position(2, 1), new Position(4, 3)));
-
-        game.makeMove(new Move(new Position(2, 5), new Position(3, 6)));
-        game.makeMove(new Move(new Position(4, 7), new Position(2, 5)));
-
-        game.makeMove(new Move(new Position(2, 7), new Position(3, 6)));
-        game.makeMove(new Move(new Position(2, 5), new Position(4, 7)));
-
-        game.makeMove(new Move(new Position(0, 1), new Position(1, 2)));
-        game.makeMove(new Move(new Position(0, 5), new Position(2, 7)));
-
-        game.makeMove(new Move(new Position(0, 7), new Position(1, 6)));
-        game.makeMove(new Move(new Position(2, 7), new Position(0, 5)));
-
-        game.makeMove(new Move(new Position(1, 2), new Position(2, 3)));
-        game.makeMove(new Move(new Position(0, 5), new Position(1, 4)));
-
-        game.makeMove(new Move(new Position(1, 0), new Position(2, 1)));
-        game.makeMove(new Move(new Position(1, 4), new Position(3, 2)));
-        game.makeMove(new Move(new Position(3, 2), new Position(1, 0)));
-
-    }
 
     @Test
     void hasNextPrevMoves() {
@@ -77,8 +22,9 @@ class ReplayTest {
 
         //setup
         game.makeMove(new Move(new Position(2, 3), new Position(3, 2)));
+        game.switchPlayer();
         game.makeMove(new Move(new Position(5, 6), new Position(4, 7)));
-
+        game.switchPlayer();
         replay = new Replay(game);
 
         assertTrue(replay.hasNextMove());
@@ -107,8 +53,9 @@ class ReplayTest {
 
         //setup
         game.makeMove(new Move(new Position(2, 3), new Position(3, 2)));
+        game.switchPlayer();
         game.makeMove(new Move(new Position(5, 6), new Position(4, 7)));
-
+        game.switchPlayer();
         replay = new Replay(game);
 
 
@@ -137,6 +84,14 @@ class ReplayTest {
     @Test
     void isRedPlayerTurn() {
         game = new Game(new Player(RED_PLAYER), new Player(WHITE_PLAYER));
+
+        //setup
+        game.makeMove(new Move(new Position(2, 3), new Position(3, 2)));
+        game.switchPlayer();
+        game.makeMove(new Move(new Position(5, 6), new Position(4, 7)));
+        game.switchPlayer();
+        replay = new Replay(game);
+
         replay = new Replay(game);
         assertTrue(replay.isRedPlayerTurn());
         replay.makeNextTurn();
