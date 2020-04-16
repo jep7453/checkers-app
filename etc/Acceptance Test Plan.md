@@ -32,12 +32,12 @@
 | As a player I want to leave the game so that the game can end early. |**Given** I am in a game and it is my turn, **when** I press the resign button **then** I expect the game to end.|||PASS|JP 4-5-2020||  
 |   |**Given** I have resigned, **when** the game ends **then** I expect my opponent to be declared the winner.|||PASS|JP 4-5-2020|||  
 | As a Player I want to spectate a game so that I can see the moves being made in real time. |**Given** I am signed in **when** I see player's currently playing a game on the homepage **then** I expect to see a button allowing me to spectate.|||||PASS | KA, JP 4-16-2020  
-|   |**Given**  that I click on the spectate button of a player **when** that player is currently in a game **then** I expect to see a visual of the game.||||||  
-|   |**Given** I am spectating a game **when** either player makes a move **then** I expect my visual of the game updated||||||  
-|   |**Given** I am spectating a game **when** I choose specific player to spectate **then** I expect to see the game from their orientation.|||||||  
-|   |**Given** I am spectating a game **when** I attempt to interact with the game at all **then** I expect it to not do anything|||||  
+|   |**Given**  that I click on the spectate button of a player **when** that player is currently in a game **then** I expect to see a visual of the game.||||| PASS|KA, JP 4-16-2020  
+|   |**Given** I am spectating a game **when** either player makes a move **then** I expect my visual of the game updated|||||PASS|JP, KA 4-16-2020   
+|   |**Given** I am spectating a game **when** I choose specific player to spectate **then** I expect to see the game from their orientation.||||||PASS|JP, KA 4-16-2020     
+|   |**Given** I am spectating a game **when** I attempt to interact with the game at all **then** I expect it to not do anything|||| PASS|JP, KA 4-16-2020     
 |	|**Given** I am trying to spectate a game **when** I look for a game **then** expect a means to select a game where the games sorted by the average of the player rankings (rank(redPlayer) + rank(whitePlayer) / 2 )||||
-|	|**Given** I am spectating a game **when** I select a player**then** I expect it to see the board in wchich that player sees it (red or white pieces down)||||
+|	|**Given** I am spectating a game **when** I select a player**then** I expect it to see the board in which that player sees it (red or white pieces down)||||
 |	|**Given** I am playing or spectating a game **when** I look at the view **then** I expect to see how many people are spectating the game||||
 |	| **Given** I am spectating a game **when** I want to see the perspective of the other player **then** I expect a means to flip the board view||||
 |	|**Given** I am playing a game **when** I leave to spectate game and come back to my game **then** I expect to be able to resume my game||||
