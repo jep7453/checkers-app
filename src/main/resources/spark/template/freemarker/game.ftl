@@ -66,7 +66,7 @@
                <#if viewMode == "REPLAY">
                		 <button onclick="window.location.href =
                			 '/replay/game?gameID=${gameID}&orientation=${otherOrientation}';">Rotate Board</a>
-                                <button onclick="window.location.href = '/replay/game?gameID=${gameID}&play=${true?c}&&orientation=${otherOrientation}';
+                                <button onclick="window.location.href = '/replay/game?gameID=${gameID}&play=${true?c}';
                                 ">Play</button>
                		 <br>
                                Move #${movesMade}/${moveCount}
