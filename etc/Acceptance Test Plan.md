@@ -50,7 +50,7 @@
 |   |**Given** I am watching a game **when** I press the previous button **then** I will see one move backwards| | | | |PASS|CT 4-16-2020|
 |   |**Given** I am watching a game **when** I press the play button **then** I will see it moving a move forward every few seconds| | | | |PASS|CT 4-16-2020|
 |   |**Given** I stop watching a game **when** was in the middle of it **then** when I return i will be in the same stop| | | | |PASS|CT 4-16-2020|
-|   |**Given** I am on the homepage **when** I look at the list of games to replay **then** I will see that they are sorted in the way of my choosing| | | | |FAIL|CT 4-16-2020, only chronolofical|
+|   |**Given** I am on the homepage **when** I look at the list of games to replay **then** I will see that they are sorted in the way of my choosing| | | | |SEMI-PASS|CT 4-16-2020, only chronolofical|
 |   |**Given** I am want to replay a game **when** I select a specific player to replay **then** I will see their perspective| | | | |PASS|CT 4-16-2020|
 |   |**Given** I am watching a game **when** I press the flip board button **then** I will see the board from the other perspective.| | | | |PASS|CT 4-16-2020|
 |   |**Given** I am watching a game **when** enter a move into the replay **then** I will see the board at that move.| | | | |PASS|CT 4-16-2020|
