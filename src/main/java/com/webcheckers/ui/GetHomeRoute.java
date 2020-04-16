@@ -72,7 +72,6 @@ public class GetHomeRoute implements Route {
     vm.put(TITLE, TITLE_MSG);
 
 
-
     PlayerLobby playerLobby = gameCenter.getLobby();
 
     final Session httpSession = request.session();
@@ -107,10 +106,8 @@ public class GetHomeRoute implements Route {
     }
 
     if( gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
-      if(request.queryParams(SPECTATE) != null && request.queryParams(SPECTATE).equals("yes"))
-        ;
-      else
-        response.redirect(WebServer.GAME_URL);
+
+      response.redirect(WebServer.GAME_URL);
     }
 
     if(playerServices.isGameOver())

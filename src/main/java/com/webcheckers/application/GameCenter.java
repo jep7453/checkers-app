@@ -4,6 +4,7 @@ import com.webcheckers.model.Checkerboard;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -26,8 +27,9 @@ public class GameCenter {
     private ArrayList<Game> games;
 
     /** list of finished games in game center */
-    private ArrayList<Game> replays;
+    private ArrayList<Replay> replays;
 
+    private ArrayList<Replay> replaysWatched;
     /** The comparator to sort games by win rates */
     private WinRateComparator winComparator;
 
@@ -141,9 +143,7 @@ public class GameCenter {
             playerFinishedPlayingGame(game.getRedPlayer());
             playerFinishedPlayingGame(game.getWhitePlayer());
             games.remove(game);
-        }
-        if(!replays.contains(game)) {
-            replays.add(game);
+            replays.add(new Replay(game));
         }
     }
 
@@ -234,10 +234,14 @@ public class GameCenter {
         }
         return games;
     }
+
+    public ArrayList<Replay> getReplaysWatched() {
+        return replaysWatched;
+    }
     /**
      * Returns list of current games
      */
-    public ArrayList<Game> getReplays(){
+    public ArrayList<Replay> getReplays(){
         if(replays.isEmpty()) {
             return null;
         }
@@ -257,4 +261,17 @@ public class GameCenter {
             }
         return (null);
     }
+
+    /**
+     * Get a replay from the ID
+     * @param gameID the game id
+     */
+    public Replay replayFromID(String gameID) {
+        for(Replay r : replays){
+            if(r.getGameID().equals(gameID))
+                return (r);
+        }
+        return (null);
+    }
 }
+

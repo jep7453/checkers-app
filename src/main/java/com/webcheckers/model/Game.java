@@ -15,8 +15,10 @@ public class Game implements Comparable {
   private Player whitePlayer;   /** The WHITE Player of this game. */
   private Checkerboard board;   /** The Checkerboard this game is played on. */
   private List<Move> moves = new ArrayList<>(); /** A list of moves made, to backup */
+  private List<Move> replay = new ArrayList<>(); /** A list of moves, to replay the game. */
   private final String gameID;
   private String title;
+  private boolean turnSubmitted;
   private int numSpectators;
   private ArrayList<Player> spectators;
 
@@ -39,6 +41,7 @@ public class Game implements Comparable {
     this.currentPlayer = redPlayer;
     this.resigned=false;
     this.title = this.redPlayer.getName() + " & " +this.whitePlayer.getName();
+    this.turnSubmitted=false;
   }
 
   /** Gets the Player whose turn it currently is.
@@ -86,6 +89,12 @@ public class Game implements Comparable {
   }
 
 
+  public List<Move> getReplay(){
+    return (replay);
+  }
+
+
+
   public Move.Type isValidMove(Move move) {
     return board.isValidMove(move);
 
@@ -130,6 +139,9 @@ public class Game implements Comparable {
   }
 
   public void switchPlayer() {
+    for(Move move :moves) {
+      replay.add(move);
+    }
     moves.clear();
     if(currentPlayer.equals(whitePlayer)) {
       currentPlayer=redPlayer;
@@ -174,13 +186,23 @@ public class Game implements Comparable {
       Checkerboard newBoard = board;
       if(currentPlayer.equals(redPlayer)) {
 
-        newBoard=board.reverseBoardJump();
-        lastSquare = newBoard.getSquare(7-(lastMove.getEnd().getCell()),7-(lastMove.getEnd().getRow()));
+        newBoard = board.reverseBoard();
+        for (int i = 0; i < Checkerboard.NUM_RANKS; i++) {
+          for (int j = 0; j < Checkerboard.NUM_FILES; j++) {
+            if (newBoard.getSquare(i, j).hasChecker()) {
+              if (newBoard.getSquare(i, j).getChecker().equals(lastSquare.getChecker())) {
+                lastSquare = newBoard.getSquare(i, j);
+              }
+            }
+          }
+        }
+
       }
       if(newBoard.pieceCanJump(lastSquare)) {
         System.out.println("Need to jump twice");
         return false;
       }
+      turnSubmitted=true;
       return true;
   }
 
@@ -220,6 +242,7 @@ public class Game implements Comparable {
       return false;
     }
     makeMove(lastMove);
+    turnSubmitted=true;
     return true;
 
 
@@ -370,6 +393,20 @@ public class Game implements Comparable {
     }
     return (won);
   }
+//getting the list of moves
+public List<Move> getMoves() {
+  return moves;
+}
+
+  public void replaySetPlayer(Checker.Color color) {
+    if(color== Checker.Color.RED) {
+      currentPlayer=whitePlayer;
+    }
+    else {
+      currentPlayer=redPlayer;
+    }
+  }
+
 
   /**
    * Gets the player who won

@@ -26,6 +26,11 @@ public class PlayerServices {
 
     private boolean gameOver;
 
+    private boolean canLeaveGame;
+
+    /** list of a players replays */
+    private ArrayList<Replay> replays;
+
     /**
      * Create a new PlayerServices
      * @param gameCenter the game center for the whole game
@@ -36,6 +41,8 @@ public class PlayerServices {
         this.signedIn = false;
         this.thisPlayer= null;
         this.gameOver=false;
+        this.canLeaveGame=false;
+        replays = new ArrayList<>();
 
     }
 
@@ -124,6 +131,7 @@ public class PlayerServices {
         this.opponent = null;
         this.thisPlayer.setIsPlaying(false);
 
+        canLeaveGame=false;
         // let game center know player finished game
     }
 
@@ -161,7 +169,28 @@ public class PlayerServices {
             else
                 game = temp;
         }
+        canLeaveGame=true;
         this.thisPlayer.setIsPlaying(true);
         return (game);
+    }
+
+    public boolean getCanLeaveGame() {
+        return canLeaveGame;
+    }
+
+    /**
+     * Get a replay from the ID
+     * @param gameID the game id
+     */
+    public Replay replayFromID(String gameID) {
+        for(Replay r : replays){
+            if(r.getGameID().equals(gameID))
+                return (r);
+        }
+        return (null);
+    }
+
+    public void addReplay(Replay replay) {
+        replays.add(replay);
     }
 }

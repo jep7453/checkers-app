@@ -189,6 +189,8 @@ public class GetGameRoute implements Route {
                 //message
                 vm.put(MSG, WELCOME_MSG);
 
+                vm.put(GAME_ID,null);
+                //todo: use FreeMaker Template to fillup game.ftl
                 return templateEngine.render(new ModelAndView(vm , "game.ftl"));
                 //return gameCenter.getGame(redPlayer, whitePlayer);
         }
