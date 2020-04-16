@@ -38,7 +38,7 @@
 |   |**Given** I am spectating a game **when** I attempt to interact with the game at all **then** I expect it to not do anything||||| PASS|JP, KA 4-16-2020     
 |	|**Given** I am trying to spectate a game **when** I look for a game **then** expect a means to select a game where the games sorted by the average of the player rankings (rank(redPlayer) + rank(whitePlayer) / 2 )|||||PASS|JP, KA 4-16-2020 
 |	|**Given** I am spectating a game **when** I select a player**then** I expect it to see the board in which that player sees it (red or white pieces down)|||||PASS|JP, KA 4-16-2020 
-|	|**Given** I am playing or spectating a game **when** I look at the view **then** I expect to see how many people are spectating the game|||||SEMI-FAIL|JP, KA 4-16-2020 
+|	|**Given** I am playing or spectating a game **when** I look at the view **then** I expect to see how many people are spectating the game|||||SEMI-FAIL|JP, KA 4-16-2020, it shows a number but its wrong.
 |	| **Given** I am spectating a game **when** I want to see the perspective of the other player **then** I expect a means to flip the board view|||||PASS|JP, KA 4-16-2020 
 |	|**Given** I am playing a game **when** I leave to spectate game and come back to my game **then** I expect to be able to resume my game|||||PASS|JP, KA 4-16-2020 
 |	|**Given** I have played games **when** win or lose a game **then** I expect my player ranking to be determined by (total wins/ total games played)|||||PASS|JP, KA 4-16-2020 
