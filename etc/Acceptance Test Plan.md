@@ -36,12 +36,12 @@
 |   |**Given** I am spectating a game **when** either player makes a move **then** I expect my visual of the game updated|||||PASS|JP, KA 4-16-2020   
 |   |**Given** I am spectating a game **when** I choose specific player to spectate **then** I expect to see the game from their orientation.|||||PASS|JP, KA 4-16-2020     
 |   |**Given** I am spectating a game **when** I attempt to interact with the game at all **then** I expect it to not do anything||||| PASS|JP, KA 4-16-2020     
-|	|**Given** I am trying to spectate a game **when** I look for a game **then** expect a means to select a game where the games sorted by the average of the player rankings (rank(redPlayer) + rank(whitePlayer) / 2 )||||
-|	|**Given** I am spectating a game **when** I select a player**then** I expect it to see the board in which that player sees it (red or white pieces down)||||
-|	|**Given** I am playing or spectating a game **when** I look at the view **then** I expect to see how many people are spectating the game||||
-|	| **Given** I am spectating a game **when** I want to see the perspective of the other player **then** I expect a means to flip the board view||||
-|	|**Given** I am playing a game **when** I leave to spectate game and come back to my game **then** I expect to be able to resume my game||||
-|	|**Given** I have played games **when** win or lose a game **then** I expect my player ranking to be determined by (total wins/ total games played)||||
+|	|**Given** I am trying to spectate a game **when** I look for a game **then** expect a means to select a game where the games sorted by the average of the player rankings (rank(redPlayer) + rank(whitePlayer) / 2 )|||||PASS|JP, KA 4-16-2020 
+|	|**Given** I am spectating a game **when** I select a player**then** I expect it to see the board in which that player sees it (red or white pieces down)|||||PASS|JP, KA 4-16-2020 
+|	|**Given** I am playing or spectating a game **when** I look at the view **then** I expect to see how many people are spectating the game|||||SEMI-FAIL|JP, KA 4-16-2020 
+|	| **Given** I am spectating a game **when** I want to see the perspective of the other player **then** I expect a means to flip the board view|||||PASS|JP, KA 4-16-2020 
+|	|**Given** I am playing a game **when** I leave to spectate game and come back to my game **then** I expect to be able to resume my game|||||PASS|JP, KA 4-16-2020 
+|	|**Given** I have played games **when** win or lose a game **then** I expect my player ranking to be determined by (total wins/ total games played)|||||PASS|JP, KA 4-16-2020 
 | As a player, I want to be able to replay the game so that I can see what moves I used in the previous game. |**Given** I have finished a game **when** I am about to exit **then** I expect to see a means to replay and/or store a game to replay later| | | | |PASS|CT 4-16-2020|  
 |   |**Given** I have stored a game **when** I want to view my list of games to repeat **then** I expect a means to show me a list of games I can replay| | | | |PASS|CT 4-16-2020|  
 |   |**Given** I have stored a game and I see my list of games to repeat **when** I want to watch a game **then** I expect to watch a game when I select one| | | | |PASS|CT 4-16-2020|  
