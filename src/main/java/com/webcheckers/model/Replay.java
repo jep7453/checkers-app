@@ -112,9 +112,6 @@ public class Replay {
         return board;
     }
 
-    public int getMovesMade() {
-        return movesMade;
-    }
 
     public boolean getPlay(){
         return play;
