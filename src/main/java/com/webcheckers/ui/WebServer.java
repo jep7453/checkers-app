@@ -90,6 +90,8 @@ public class WebServer {
 
   public static final String PREVIOUS_URL = "/replay/previousTurn";
 
+  public static final String SPECTATOR_CHECK_TURN = "/spectator/checkTurn";
+
 
 
 
@@ -213,6 +215,8 @@ public class WebServer {
     get(SPECTATOR_GAME, new GetSpectatorGameRoute(gamecenter, templateEngine));
 
     get(SPECTATOR_STOP_WATCHING, new GetSpectatorStopWatchingRoute(gamecenter));
+
+    post(SPECTATOR_CHECK_TURN, new PostSpectatorCheckTurnRoute());
 
 
     post(NEXT_URL, new PostReplayNextTurnRoute(gson));

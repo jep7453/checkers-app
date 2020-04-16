@@ -37,7 +37,7 @@ public class Game implements Comparable {
     this.whitePlayer = whitePlayer;
     this.spectators = new ArrayList<>();
     this.numSpectators = 0;
-    this.board = new Checkerboard("kingPromotion.txt");
+    this.board = new Checkerboard();
     this.currentPlayer = redPlayer;
     this.resigned=false;
     this.title = this.redPlayer.getName() + " & " +this.whitePlayer.getName();
