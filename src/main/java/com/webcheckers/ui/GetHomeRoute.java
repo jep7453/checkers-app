@@ -100,7 +100,7 @@ public class GetHomeRoute implements Route {
       vm.put("message", WELCOME_MSG);
     }
 
-    if( gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())){
+    if( gameCenter.isCurrentlyPlaying(playerServices.getThisPlayer())&& !playerServices.getCanLeaveGame()){
 
       response.redirect(WebServer.GAME_URL);
     }

@@ -31,6 +31,7 @@ public class GetReplayGameRoute implements Route {
 
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
+    private  Replay replay;
 
     public GetReplayGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -53,14 +54,18 @@ public class GetReplayGameRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Welcome!");
 
+        final Session httpSession = request.session();
+        //get playerServices from session
+        PlayerServices playerServices = httpSession.attribute("playerServices");
+
 
         //gameID
         final String gameID = request.queryParams(GAME_ID);
-        Replay replay = gameCenter.replayFromID(gameID);
+        if(playerServices.replayFromID(gameID)==null) {
+            playerServices.addReplay(new Replay(gameCenter.replayFromID(gameID).getReplayGame()));
+        }
+        replay = playerServices.replayFromID(gameID);
 
-        //currentUser
-        final Session httpSession = request.session();
-        final PlayerServices playerServices = httpSession.attribute("playerServices");
         vm.put("currentUser", playerServices.getThisPlayer().getName());
 
         //modeOptionsAsJSON
@@ -99,7 +104,10 @@ public class GetReplayGameRoute implements Route {
             replay.makeNextTurn();
             vm.put("play",true);
         }
+
         replay.setPlay(true);
+        vm.put("moveCount",replay.getMoveCount());
+        vm.put("movesMade",replay.getMovesMade());
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }
