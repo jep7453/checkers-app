@@ -63,7 +63,7 @@ class GetReplayGameRouteTest {
         when(session.attribute("playerServices")).thenReturn(playerServices);
 
         when(playerServices.getThisPlayer()).thenReturn(redPlayer);
-        //when(redPlayer.getName()).thenReturn("red");
+        when(redPlayer.getName()).thenReturn("red");
 
         //when(playerServices.getThisPlayer().getName()).thenReturn("red");
 
@@ -94,7 +94,7 @@ class GetReplayGameRouteTest {
 
     @Test void players(){
 
-        CuT.handle(request, response);
+      CuT.handle(request, response);
 
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
