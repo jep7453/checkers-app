@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Replay;
+import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -13,7 +14,9 @@ import java.util.Objects;
 
 /*
  * This is the get game route for the replay class.
- * @author Kesa Abbas Lnu <kl3468@rit.edu>*/
+ * @author Kesa Abbas Lnu <kl3468@rit.edu>
+ * @author Scott Court <sxc4981@rit.edu>
+ */
 
 public class GetReplayGameRoute implements Route {
 
@@ -28,6 +31,7 @@ public class GetReplayGameRoute implements Route {
     static final String MODE_OPTIONS_AS_JSON = "modeOptionsAsJSON";
     static final String HAS_NEXT = "hasNext";
     static final String HAS_PREVIOUS = "hasPrevious";
+    static final String PARAM_ORIENTATION = "orientation";
 
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
@@ -51,17 +55,19 @@ public class GetReplayGameRoute implements Route {
     public Object handle(Request request, Response response) throws Exception {
 
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Welcome!");
+	Player facingPlayer;
+	final String orientation;
 
+	//final 
+        vm.put("title", "Welcome!");
 
         //gameID
         final String gameID = request.queryParams(GAME_ID);
         Replay replay = gameCenter.replayFromID(gameID);
 
-        //currentUser
+        //Initialization
         final Session httpSession = request.session();
         final PlayerServices playerServices = httpSession.attribute("playerServices");
-        vm.put("currentUser", playerServices.getThisPlayer().getName());
 
         //modeOptionsAsJSON
         Map<String,Object> modeOptionsAsJSON = new HashMap<>();
@@ -77,9 +83,7 @@ public class GetReplayGameRoute implements Route {
         vm.put(RED_PLAYER, replay.getRedPlayer().getName());
         vm.put(WHITE_PLAYER, replay.getWhitePlayer().getName());
 
-
-
-        //Avtive Color
+        //Active Color
         if(replay.isRedPlayerTurn()){
             vm.put(ACTIVE_COLOR,ActiveColor.RED);
         }
@@ -89,6 +93,14 @@ public class GetReplayGameRoute implements Route {
 
         //Board
         vm.put(BOARD_VIEW_KEY,new BoardView(replay.getBoard()));
+
+	//Orientation
+        orientation = request.queryParams(PARAM_ORIENTATION);
+	if ( orientation != null && orientation.equalsIgnoreCase("red") )
+		facingPlayer = replay.getRedPlayer();
+	else
+		facingPlayer = replay.getWhitePlayer();
+	vm.put("currentUser", facingPlayer.getName());
 
         //message
         vm.put(MESSAGE_KEY, MESSAGE);
@@ -103,3 +115,4 @@ public class GetReplayGameRoute implements Route {
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }
+
