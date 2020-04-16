@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import org.junit.jupiter.api.BeforeAll;
 import com.webcheckers.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,14 +59,15 @@ class GameTest {
     //red
     board=new Checkerboard("multipleJumpRed.txt");
     game.setBoard(board);
-    move = new Move(new Position(3,4),new Position(2,5));
+    move = new Move(new Position(3,4),new Position(5,2));
     move.setType(Move.Type.JUMP);
     game.makeMove(move);
     assertFalse(game.isValidTurn());
-    move = new Move(new Position(2,5),new Position(4,7));
+    move = new Move(new Position(5,2),new Position(7,4));
     move.setType(Move.Type.JUMP);
     game.makeMove(move);
     assertTrue(game.isValidTurn());
+    move = new Move(new Position(7,4),new Position(6,3));
     move.setType(Move.Type.SINGLE);
     game.makeMove(move);
     assertFalse(game.isValidTurn());
@@ -92,9 +94,8 @@ class GameTest {
     move.setType(Move.Type.SINGLE);
     game.makeMove(move);
     assertFalse(game.isValidTurn());
-
     game.switchPlayer();
-    game.makeMove(move);
+    game.makeMove(new Move(new Position(2,3),new Position(3,2)));
     assertFalse(game.isValidTurn());
   }
 
@@ -102,6 +103,9 @@ class GameTest {
   void GameWonTest() {
     board=new Checkerboard("noMovesWhite.txt");
     game.setBoard(board);
+    game.switchPlayer();
+    game.makeMove(new Move(new Position(5,0),new Position(4,1)));
+    game.isValidTurn();
     assertTrue(game.isGameWon());
     game = new Game(red,white);
     game.resigned();
@@ -110,12 +114,5 @@ class GameTest {
     assertFalse(game.isGameWon());
   }
 
-  @Test
-  public void spectatorTest(){
-    Player spectator = new Player("Spectator");
-    game.startedSpectating(spectator);
-    assertEquals(1, game.getNumSpectators());
-    game.stoppedSpectating(spectator);
-    assertEquals(0, game.getNumSpectators());
-  }
+
 }
