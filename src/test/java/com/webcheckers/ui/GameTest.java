@@ -103,6 +103,9 @@ class GameTest {
   void GameWonTest() {
     board=new Checkerboard("noMovesWhite.txt");
     game.setBoard(board);
+    game.switchPlayer();
+    game.makeMove(new Move(new Position(5,0),new Position(4,1)));
+    game.isValidTurn();
     assertTrue(game.isGameWon());
     game = new Game(red,white);
     game.resigned();

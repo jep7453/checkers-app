@@ -18,6 +18,7 @@ public class Game {
   private List<Move> replay = new ArrayList<>(); /** A list of moves, to replay the game. */
   private final String gameID;
   private String title;
+  private boolean turnSubmitted;
 
   Player currentPlayer;         /** The Player whose turn it currently is. */
 
@@ -36,6 +37,7 @@ public class Game {
     this.currentPlayer = redPlayer;
     this.resigned=false;
     this.title = this.redPlayer.getName() + " & " +this.whitePlayer.getName();
+    this.turnSubmitted=false;
   }
 
   /** Gets the Player whose turn it currently is.
@@ -95,6 +97,7 @@ public class Game {
   }
 
   public void makeMove(Move move) {
+    turnSubmitted=false;
     board.makeMove(move);
     moves.add(move);
   }
@@ -140,6 +143,7 @@ public class Game {
     else {
       return singleValidation(lastMove);
     }
+
   }
 
   public boolean jumpValidation(Move lastMove) {
@@ -156,13 +160,23 @@ public class Game {
       Checkerboard newBoard = board;
       if(currentPlayer.equals(redPlayer)) {
 
-        newBoard=board.reverseBoardJump();
-        lastSquare = newBoard.getSquare(7-(lastMove.getEnd().getCell()),7-(lastMove.getEnd().getRow()));
+        newBoard = board.reverseBoard();
+        for (int i = 0; i < Checkerboard.NUM_RANKS; i++) {
+          for (int j = 0; j < Checkerboard.NUM_FILES; j++) {
+            if (newBoard.getSquare(i, j).hasChecker()) {
+              if (newBoard.getSquare(i, j).getChecker().equals(lastSquare.getChecker())) {
+                lastSquare = newBoard.getSquare(i, j);
+              }
+            }
+          }
+        }
+
       }
       if(newBoard.pieceCanJump(lastSquare)) {
         System.out.println("Need to jump twice");
         return false;
       }
+      turnSubmitted=true;
       return true;
   }
 
@@ -202,6 +216,7 @@ public class Game {
       return false;
     }
     makeMove(lastMove);
+    turnSubmitted=true;
     return true;
 
 
@@ -334,19 +349,19 @@ public class Game {
     if(resigned) {
       won = true;
     }
-    if(board.allPiecesCaptured(Checker.Color.RED)) {
+    if(board.allPiecesCaptured(Checker.Color.RED)&&turnSubmitted) {
       winner = whitePlayer;
       won = true;
     }
-    if(board.allPiecesCaptured(Checker.Color.WHITE)) {
+    if(board.allPiecesCaptured(Checker.Color.WHITE)&&turnSubmitted) {
       winner = redPlayer;
       won = true;
     }
-    if(!playerCanMove(redPlayer)) {
+    if(!playerCanMove(redPlayer)&&turnSubmitted) {
       winner = whitePlayer;
       won = true;
     }
-    if(!playerCanMove(whitePlayer)) {
+    if(!playerCanMove(whitePlayer)&&turnSubmitted) {
       winner = redPlayer;
       won = true;
     }
@@ -357,12 +372,12 @@ public List<Move> getMoves() {
   return moves;
 }
 
-  public void setCurrentPlayer(Checker.Color color) {
+  public void replaySetPlayer(Checker.Color color) {
     if(color== Checker.Color.RED) {
-      currentPlayer=redPlayer;
+      currentPlayer=whitePlayer;
     }
     else {
-      currentPlayer=whitePlayer;
+      currentPlayer=redPlayer;
     }
   }
 

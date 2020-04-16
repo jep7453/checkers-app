@@ -60,11 +60,15 @@
             <legend>Controls</legend>
             <div class="toolbar"></div>
             <#if viewMode == "REPLAY">
-                <a href="/replay/game?gameID=${gameID}&play=${true?c}">PLAY</a>
-		<a href="/replay/game?gameID=${gameID}&orientation=${otherOrientation}">ROTATE BOARD</a>
+		 <button onclick="window.location.href = 
+			 '/replay/game?gameID=${gameID}&orientation=${otherOrientation}';">Rotate Board</a>
+                 <button onclick="window.location.href = '/replay/game?gameID=${gameID}&play=${true?c}';
+                 ">Play</button>
+		 <br>
+                Move #${movesMade}/${moveCount}
             </#if>
           </fieldset>
-          
+
         </div>
   
         <div class="game-board">
