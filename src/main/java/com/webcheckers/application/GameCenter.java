@@ -1,10 +1,10 @@
 package com.webcheckers.application;
 
+import com.webcheckers.model.Checkerboard;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.logging.Logger;
 
 /**
@@ -31,6 +31,9 @@ public class GameCenter {
     /** The comparator to sort games by win rates */
     private WinRateComparator winComparator;
 
+    /** A custom board */
+    private String customBoard;
+
     /**
      * game id
      */
@@ -45,6 +48,16 @@ public class GameCenter {
         games = new ArrayList<>();
         replays = new ArrayList<>();
         this.winComparator = new WinRateComparator();
+        this.customBoard = null;
+    }
+
+    public GameCenter(String customBoard){
+        currentlyPlaying = new ArrayList<>();
+        lobby = new PlayerLobby();
+        games = new ArrayList<>();
+        replays = new ArrayList<>();
+        this.winComparator = new WinRateComparator();
+        this.customBoard = customBoard;
     }
 
     /**
@@ -161,6 +174,10 @@ public class GameCenter {
             playerStartedPlayingGame(player1);
             playerStartedPlayingGame(player2);
             games.sort(winComparator);
+
+            // for testing
+            if(customBoard != null)
+                game.setBoard(new Checkerboard(customBoard));
             return (game);
         }
 
@@ -239,14 +256,5 @@ public class GameCenter {
                 return (g);
             }
         return (null);
-    }
-}
-
-class WinRateComparator implements Comparator{
-    @Override
-    public int compare(Object o1, Object o2) {
-        if(o1 instanceof Game && o2 instanceof Game)
-            return ((Game) o1).compareTo(((Game) o2));
-        return -1;
     }
 }

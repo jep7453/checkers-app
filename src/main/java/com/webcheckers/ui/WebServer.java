@@ -94,6 +94,7 @@ public class WebServer {
   private final TemplateEngine templateEngine;
   private final Gson gson;
   private final GameCenter gamecenter;
+  private String board;
 
   //
   // Constructor
@@ -117,7 +118,16 @@ public class WebServer {
     //
     this.templateEngine = templateEngine;
     this.gson = gson;
+    this.board = "";
     this.gamecenter = gameCenter;
+  }
+
+  /**
+   * Set a custom board
+   * @param board the name of the text file
+   */
+  public void setBoard(String board){
+    this.board = board;
   }
 
   //

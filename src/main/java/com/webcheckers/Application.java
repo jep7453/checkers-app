@@ -1,16 +1,15 @@
 package com.webcheckers;
 
+import com.google.gson.Gson;
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.ui.WebServer;
+import spark.TemplateEngine;
+import spark.template.freemarker.FreeMarkerEngine;
+
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-
-import com.google.gson.Gson;
-import com.webcheckers.application.GameCenter;
-
-import com.webcheckers.ui.WebServer;
-import spark.TemplateEngine;
-import spark.template.freemarker.FreeMarkerEngine;
 
 
 /**
@@ -85,6 +84,8 @@ public final class Application {
       e.printStackTrace();
       System.err.println("Could not initialize log manager because: " + e.getMessage());
     }
+
+    System.out.println(args[0]);
 
     // create the one and only gameCenter
     final GameCenter gameCenter = new GameCenter();
