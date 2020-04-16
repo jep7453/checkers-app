@@ -2,11 +2,13 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Replay;
 import com.webcheckers.util.Message;
 import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
+import spark.Session;
 import spark.TemplateEngine;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,22 +26,28 @@ class PostReplayNextTurnRouteTest {
     private Request request;
     private Response response;
     private Replay replay;
+    private PlayerServices playerServices;
+    private Session session;
 
     private String gameID = "1234";
 
 
 
     @Test
-    public void nextTurn(){
+    public void nextTurn() throws Exception {
         this.gson = new Gson();
         this.gameCenter = mock(GameCenter.class);
         this.request = mock(Request.class);
         this.response = mock(Response.class);
         this.replay = mock(Replay.class);
-        CuT = new PostReplayNextTurnRoute(gameCenter,gson);
+        this.session = mock(Session.class);
+        this.playerServices = mock(PlayerServices.class);
+        CuT = new PostReplayNextTurnRoute(gson);
 
+        when(request.session()).thenReturn(session);
         when(request.queryParams(PostReplayNextTurnRoute.GAME_ID)).thenReturn(gameID);
-        when(gameCenter.replayFromID(gameID)).thenReturn(replay);
+        when(session.attribute("playerServices")).thenReturn(playerServices);
+        when(playerServices.replayFromID(gameID)).thenReturn(replay);
         when(replay.makeNextTurn()).thenReturn(true);
         Message message = Message.info("true");
         assertTrue(CuT.handle(request,response).equals(gson.toJson(message,Message.class)));

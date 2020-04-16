@@ -60,10 +60,12 @@
             <legend>Controls</legend>
             <div class="toolbar"></div>
             <#if viewMode == "REPLAY">
-                <a href="/replay/game?gameID=${gameID}&play=${true?c}">PLAY</a>
+                 <button onclick="window.location.href = '/replay/game?gameID=${gameID}&play=${true?c}';
+                 ">Play</button>
+                Move #${movesMade}/${moveCount}
             </#if>
           </fieldset>
-          
+
         </div>
   
         <div class="game-board">

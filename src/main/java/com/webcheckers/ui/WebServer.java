@@ -196,10 +196,10 @@ public class WebServer {
     //Post Sign out
     post(SIGN_OUT_URL, new PostSignOutRoute(gamecenter, templateEngine));
 
-    post(NEXT_URL, new PostReplayNextTurnRoute(gamecenter, gson));
-    post(PREVIOUS_URL, new PostReplayPreviousTurnRoute(gamecenter, gson));
+    post(NEXT_URL, new PostReplayNextTurnRoute(gson));
+    post(PREVIOUS_URL, new PostReplayPreviousTurnRoute(gson));
     get(REPLAY_URL, new GetReplayGameRoute(templateEngine,gamecenter));
-    get(REPLAY_STOP_URL, new GetReplayStopWatchingRoute(gamecenter));
+    get(REPLAY_STOP_URL, new GetReplayStopWatchingRoute());
     LOG.config("WebServer is initialized.");
   }
 

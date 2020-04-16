@@ -530,31 +530,9 @@ public class Checkerboard {
       for (int j = cols - 1; j >= 0; j--) {
         int tempRank = 7-(squares[i][j].getFile());
         int tempFile = 7-(squares[i][j].getRank());
-        array[rows - 1 - i][cols - 1 - j] = new Square(squares[i][j].getColor(), tempFile, tempRank);
+        array[rows - 1 - i][cols - 1 -  j] = new Square(squares[i][j].getColor(), tempFile, tempRank);
         if (squares[i][j].hasChecker()) {
           array[rows - 1 - i][cols - 1 - j].setChecker(squares[i][j].getChecker());
-        }
-      }
-    }
-    return (new Checkerboard(array));
-  }
-
-  /**
-   * Reverse the checker board to check if a red player can move
-   *
-   * @return the reversed board
-   */
-  public Checkerboard reverseBoardJump() {
-    int rows = squares.length;
-    int cols = squares[0].length;
-    Square array[][] = new Square[rows][cols];
-    for (int i = rows - 1; i >= 0; i--) {
-      for (int j = cols - 1; j >= 0; j--) {
-        int tempRank = 7-(squares[i][j].getRank());
-        int tempFile = 7-(squares[i][j].getFile());
-        array[cols - 1 - j][rows - 1 - i] = new Square(squares[i][j].getColor(), tempFile, tempRank);
-        if (squares[i][j].hasChecker()) {
-          array[cols - 1 - j][rows - 1 - i].setChecker(squares[i][j].getChecker());
         }
       }
     }

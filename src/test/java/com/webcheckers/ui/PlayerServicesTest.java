@@ -4,6 +4,7 @@ import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Replay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -187,5 +188,17 @@ public class PlayerServicesTest {
         CuT.currentGame();
 
         assertNull(CuT.currentGame());
+    }
+
+    @Test
+    public void getReplayFromID(){
+        Player opp = new Player(oppID);
+        gameCenter.signIn(opp);
+        CuT.signIn(uid);
+        CuT.setOpponent(oppID);
+        CuT.currentGame();
+        Replay replay= new Replay(CuT.currentGame());
+        CuT.addReplay(replay);
+        assertTrue(CuT.replayFromID(CuT.currentGame().getGameID()).equals(replay));
     }
 }

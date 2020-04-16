@@ -14,19 +14,15 @@ import static spark.Spark.halt;
 
 public class GetReplayStopWatchingRoute implements Route {
 
-    static final String GAME_ID = "gameID";
 
-    private final GameCenter gameCenter;
 
-    public GetReplayStopWatchingRoute(GameCenter gameCenter) {
-        this.gameCenter = gameCenter;
+
+    public GetReplayStopWatchingRoute() {
+
     }
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-
-        //gameID
-        final String gameID = request.queryParams(GAME_ID);
 
                 response.redirect(WebServer.HOME_URL);
                 halt();

@@ -18,12 +18,15 @@ public class Replay {
     private Checkerboard board;
     private String title;
     private boolean play;
+    private int moveCount;
 
     public Replay(Game game) {
         this.game = game;
         this.moves = game.getReplay();
         this.board=new Checkerboard();
         this.title=game.getTitle();
+        game.replaySetPlayer(Checker.Color.WHITE);
+        this.moveCount=moves.size();
     }
 
     //checks if next move is there or not
@@ -54,10 +57,15 @@ public class Replay {
         return null;
     }
 
+    public int getMoveCount() {
+        return moveCount;
+    }
+
     //makes the next move
     public boolean makeNextTurn(){
         Move next = getNextMove();
         if(next != null){
+            updatePlayer(next);
             board.makeMove(next);
             movesMade++;
             return true;
@@ -70,18 +78,18 @@ public class Replay {
         Move prev = getPrevMove();
         if(prev != null){
             board.backUpMove(prev);
+            updatePlayer(prev);
             movesMade--;
             return true;
         }
         return false;
     }
 
-    public void updatePlayer() {
-        Move move = moves.get(movesMade);
+    public void updatePlayer(Move move) {
         int row = move.getStart().getRow();
         int cell = move.getStart().getCell();
         Checker checker = board.getSquare(row,cell).getChecker();
-        game.setCurrentPlayer(checker.getColor());
+        game.replaySetPlayer(checker.getColor());
     }
 
     public Player getRedPlayer(){
@@ -103,6 +111,7 @@ public class Replay {
     public Checkerboard getBoard(){
         return board;
     }
+
 
     public boolean getPlay(){
         return play;
