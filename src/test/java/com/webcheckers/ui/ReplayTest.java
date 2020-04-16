@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/*
+ * Test  for the replay enhancement.
+ * @author: Kesa Abbas Lnu <kl3468@rit.edu>
+ */
 class ReplayTest {
 
     private Game game;
