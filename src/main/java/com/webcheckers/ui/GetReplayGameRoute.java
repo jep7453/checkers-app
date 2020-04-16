@@ -96,10 +96,14 @@ public class GetReplayGameRoute implements Route {
 
 	//Orientation
         orientation = request.queryParams(PARAM_ORIENTATION);
-	if ( orientation != null && orientation.equalsIgnoreCase("red") )
+	if ( orientation != null && orientation.equalsIgnoreCase("red") ) {
 		facingPlayer = replay.getRedPlayer();
-	else
+		vm.put("otherOrientation", "white");
+	}
+	else {
 		facingPlayer = replay.getWhitePlayer();
+		vm.put("otherOrientation", "red");
+	}
 	vm.put("currentUser", facingPlayer.getName());
 
         //message

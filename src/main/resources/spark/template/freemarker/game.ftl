@@ -61,6 +61,7 @@
             <div class="toolbar"></div>
             <#if viewMode == "REPLAY">
                 <a href="/replay/game?gameID=${gameID}&play=${true?c}">PLAY</a>
+		<a href="/replay/game?gameID=${gameID}&orientation=${otherOrientation}">ROTATE BOARD</a>
             </#if>
           </fieldset>
           
