@@ -10,13 +10,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReplayTest {
 
-    private Game game;
-    private Replay replay;
-    private final String RED_PLAYER = "red";
-    private final String WHITE_PLAYER = "white";
+    static private Game game;
+    static private Replay replay;
+    static private final String RED_PLAYER = "red";
+    static private final String WHITE_PLAYER = "white";
 
     @BeforeAll
-    void setup(){
+    static void setup(){
         game = new Game(new Player(RED_PLAYER), new Player(WHITE_PLAYER));
 
         //setup
@@ -78,6 +78,7 @@ class ReplayTest {
         //setup
         game.makeMove(new Move(new Position(2, 3), new Position(3, 2)));
         game.makeMove(new Move(new Position(5, 6), new Position(4, 7)));
+        game.switchPlayer();
 
         replay = new Replay(game);
 
@@ -108,7 +109,7 @@ class ReplayTest {
         //setup
         game.makeMove(new Move(new Position(2, 3), new Position(3, 2)));
         game.makeMove(new Move(new Position(5, 6), new Position(4, 7)));
-
+        game.switchPlayer();
         replay = new Replay(game);
 
 
@@ -137,10 +138,13 @@ class ReplayTest {
     @Test
     void isRedPlayerTurn() {
         game = new Game(new Player(RED_PLAYER), new Player(WHITE_PLAYER));
+        game.makeMove(new Move(new Position(2, 3), new Position(3, 2)));
+        game.switchPlayer();
+        game.makeMove(new Move(new Position(5, 6), new Position(4, 7)));
+        game.switchPlayer();
         replay = new Replay(game);
         assertTrue(replay.isRedPlayerTurn());
         replay.makeNextTurn();
-        replay.updatePlayer();
         assertTrue(!replay.isRedPlayerTurn());
     }
 
