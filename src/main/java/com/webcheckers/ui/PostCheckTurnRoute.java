@@ -61,7 +61,7 @@ public class PostCheckTurnRoute implements Route {
       turnMessage= Message.info("true");
     }
     else {
-      turnMessage=Message.error("false");
+      turnMessage=Message.error("Waiting for turn");
     }
     return gson.toJson(turnMessage,Message.class);
   }
