@@ -53,7 +53,8 @@ public class GetReplayGameRoute implements Route {
 
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) //throws Exception
+    {
 
         Map<String, Object> vm = new HashMap<>();
 	Player facingPlayer;
