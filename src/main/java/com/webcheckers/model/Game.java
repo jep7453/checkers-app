@@ -110,7 +110,8 @@ public class Game implements Comparable {
    * @param player the new spectator
    */
   public synchronized void startedSpectating(Player player){
-    spectators.add(player);
+    if(!spectators.contains(player))
+      spectators.add(player);
   }
 
   /**

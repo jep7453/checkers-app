@@ -84,7 +84,7 @@ public class GetSpectatorGameRoute implements Route {
         else
             vm.put(GetGameRoute.ACTIVE_COLOR, GetGameRoute.ActiveColor.WHITE);
         vm.put(GetGameRoute.BOARD_VIEW_KEY, new BoardView(game.getBoard()));
-        game.startedSpectating(playerServices.getOpponent());
+        game.startedSpectating(playerServices.getThisPlayer());
         // render
         return engine.render(new ModelAndView(vm, GetGameRoute.VIEW_NAME));
     }
