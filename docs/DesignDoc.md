@@ -199,23 +199,33 @@ with the WebCheckers application.
 > ![Creating a Game Object](model_sequence_diagram.png)
 
 ### Design Improvements
-> The improvement would be to remove the duplicate classes from the UI Tier such as Row, Spaces, Pieces, and Boardview 
->since it violates the Object Oriented Design Principles. Since these classes have already been implemented
->in Model Tier classes. Most of the classes could be cleaned up and have small helper classes to have low coupling. 
->The checkerboard class has the most of the logic of the game. This class can be decomposed into smaller helper classes 
-> such as single, single jump and multiple jump move classes. This would result in low coupling and high cohesion
->since the checker class would have only access to the object of the move classes. The design could be more efficient 
->if the king logic would be broken into smaller helper classes such as promotion to king. The smaller classes
->would allow easier debugging when a fault arises.
+
+### Refactoring
+> - There is some chaining of methods in the `Game` class that could be fixed. 
+> - Look through some of algorithms written in `Game` and `Checkerboard` are complex and 
+> not very understandable and could probably be written cleaner.
+> - Breaking up the `Game` class to have less godly powers. It does a lot of stuff 
+> it probably doesn't need to do 
+> - Some of the UI classes could have been extended because a lot of them do
+> similar stuff that is repeated a lot. 
+
+### Design Improvements
+> - Make the end game logic a little less clunky, there is some
+> weird code in `GetHomeRoute`, `Game`, and `PlayerServices` all are weirdly
+> tied together and janky.
+> - Checking moves was not very easy, the implementation is really clunky and could
+> be designed way better.
+> - Some interactions between `PlayerServices`, `GameCenter`, and `Player`
+> are weirdly tied together and could be made to have `PlayerServices` 
+> encapsulate `Player` better
 
 ## Testing
 
 ### Acceptance Testing
-> **13** Stories have passed acceptance testing. A lot of the issues we 
+> **15** Stories have passed acceptance testing. A lot of the issues we 
 > found when test were signing in a out a lot could get annoying 
 > and slow down testing. Potential changes for auto sign in 
 > for testing might come. 
-> - current issue of validating king moves properly
 
 ### Unit Testing and Code Coverage
 > **90%** of our code is covered. Anywhere from 90%-95% will be 
