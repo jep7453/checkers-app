@@ -26,11 +26,21 @@ a web micro-framework.
 3. Open in your browser `http://localhost:4567/`
 4. Start a game and begin playing.
 
-## Known bugs and disclaimers
-(It may be the case that your implementation is not perfect.)
+## How to load a custom board
+**You must have google chrome installed and be running windows**
+1. In `/etc` there is a file `load_custom_board.bat`
+2. All test board files **MUST** be present in `src/main/resources/testboards`, 
+there is a readme in how to structure a test board
+3. Click the batch file and enter the name of the test board 
+4. The batch file will then open two tabs in Chrome and start the webserver
+5. Be sure to close the webserver before you try rerunning it
 
-Document any known bug or nuisance.
-If any shortcomings, make clear what these are and where they are located.
+## Known bugs and disclaimers
+
+### Resignation error
+> Sometimes when you start a game and immediately resign it can throw
+> a 500 server error because not all players have been properly refreshed and 
+> updated 
 
 ## How to test it
 
