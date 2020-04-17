@@ -86,7 +86,8 @@ public final class Application {
     }
 
     // create the one and only gameCenter
-    final GameCenter gameCenter = new GameCenter();
+    boolean customBoardPresent = args.length >= 1;
+    final GameCenter gameCenter = ((customBoardPresent) ? (new GameCenter(args[0])) : (new GameCenter()));
 
     // The application uses FreeMarker templates to generate the HTML
     // responses sent back to the client. This will be the engine processing
@@ -100,8 +101,6 @@ public final class Application {
 
     // inject the game center and freemarker engine into web server
     final WebServer webServer = new WebServer(gameCenter,templateEngine, gson);
-    if(args.length == 1)
-      webServer.setBoard(args[0]);
 
     // inject web server into application
     final Application app = new Application(webServer);

@@ -53,6 +53,10 @@ public class GameCenter {
         this.customBoard = null;
     }
 
+    public void setCustomBoard(String customBoard) {
+        this.customBoard = customBoard;
+    }
+
     public GameCenter(String customBoard){
         currentlyPlaying = new ArrayList<>();
         lobby = new PlayerLobby();
@@ -60,6 +64,10 @@ public class GameCenter {
         replays = new ArrayList<>();
         this.winComparator = new WinRateComparator();
         this.customBoard = customBoard;
+    }
+
+    public String getCustomBoard() {
+        return customBoard;
     }
 
     /**
@@ -176,6 +184,7 @@ public class GameCenter {
             games.sort(winComparator);
 
             // for testing
+            System.out.println(customBoard);
             if(customBoard != null)
                 game.setBoard(new Checkerboard(customBoard));
             return (game);
