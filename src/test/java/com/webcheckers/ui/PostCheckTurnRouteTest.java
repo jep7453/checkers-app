@@ -71,6 +71,6 @@ public class PostCheckTurnRouteTest {
         //when(player.equals(test)).thenReturn(false);
 
         Object stuff = CuT.handle(request, response);
-        assertTrue(((String)stuff).contains("false"));
+        assertTrue(((String)stuff).contains("Waiting for turn"));
     }
 }
