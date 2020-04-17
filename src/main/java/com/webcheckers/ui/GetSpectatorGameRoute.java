@@ -24,8 +24,10 @@ public class GetSpectatorGameRoute implements Route {
     /** The engine */
     private TemplateEngine engine;
 
+    /** the welcome message */
     private static final String MESSAGE = "Welcome!";
 
+    /** the parameter for the orientation */
     static final String PARAM_ORIENTATION = "orientation";
 
     /**
@@ -47,7 +49,7 @@ public class GetSpectatorGameRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
-// get important stuff from session and query parameters
+        // get important stuff from session and query parameters
         Session session = request.session();
         Player facingPlayer;
         PlayerServices playerServices = session.attribute("playerServices");
@@ -73,16 +75,21 @@ public class GetSpectatorGameRoute implements Route {
             facingPlayer = game.getWhitePlayer();
             vm.put("otherOrientation", "red");
         }
+
+        // populate vm
         vm.put("currentUser", facingPlayer.getName());
         vm.put(GetGameRoute.TITLE, MESSAGE);
         vm.put("gameID",gameID);
         vm.put(GetGameRoute.VIEW_MODE, GetGameRoute.ViewMode.SPECTATOR);
         vm.put(GetGameRoute.RED_PLAYER, game.getRedPlayer().getName());
         vm.put(GetGameRoute.WHITE_PLAYER, game.getWhitePlayer().getName());
+
+        // set active color
         if(game.getRedPlayer().equals(game.getCurrentPlayer()))
             vm.put(GetGameRoute.ACTIVE_COLOR, GetGameRoute.ActiveColor.RED);
         else
             vm.put(GetGameRoute.ACTIVE_COLOR, GetGameRoute.ActiveColor.WHITE);
+
         vm.put(GetGameRoute.BOARD_VIEW_KEY, new BoardView(game.getBoard()));
         game.startedSpectating(playerServices.getThisPlayer());
         // render
