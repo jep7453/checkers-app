@@ -54,11 +54,16 @@ geometry: margin=1in
 
 ### Roadmap of Enhancements
 > - Spectate, As a Player I want to spectate a game so that I can see the moves being made in real time.
->  - Active games are sorted by an aerage of the players rank
+>  - Active games are sorted by an average of the players rank
 >  - Player rank determined by percentage of games won to total games
 >  - Number of spectators is reported to everyone apart of the game
->  - Abiliity to swap perspective of the game
+>  - Ability to swap perspective of the game
 > - Replay, As a player, I want to be able to replay the game so that I can see what moves I used in the previous game.
+>  - The players can watch a replay of the game they finished.
+>  -  A list of the past games is displayed, and players can choose the games they want to watch, and exit at any time.
+>  -  There is an option to change the perspective of the game to either red or white team.
+>  - There is a choice for the players to either go forwards, or backwards on the total moves.
+>  -  Players can also watch the saved game as it progresses, and save the spot where they left.
 
 
 ## Application Domain
