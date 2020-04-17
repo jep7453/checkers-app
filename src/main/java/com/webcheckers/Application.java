@@ -1,16 +1,15 @@
 package com.webcheckers;
 
+import com.google.gson.Gson;
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.ui.WebServer;
+import spark.TemplateEngine;
+import spark.template.freemarker.FreeMarkerEngine;
+
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-
-import com.google.gson.Gson;
-import com.webcheckers.application.GameCenter;
-import com.webcheckers.ui.WebServer;
-
-import spark.TemplateEngine;
-import spark.template.freemarker.FreeMarkerEngine;
 
 
 /**
@@ -101,6 +100,8 @@ public final class Application {
 
     // inject the game center and freemarker engine into web server
     final WebServer webServer = new WebServer(gameCenter,templateEngine, gson);
+    if(args.length == 1)
+      webServer.setBoard(args[0]);
 
     // inject web server into application
     final Application app = new Application(webServer);

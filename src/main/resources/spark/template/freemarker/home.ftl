@@ -38,9 +38,15 @@
         <p>
             Games Being Played:
         </p>
+
         <#list gameList as game>
             <p>
-                <a href="/spectate/game?gameID=${game.gameID}">${game.title}</a>
+                <#if game.redPlayer.name == currentUser || game.whitePlayer.name == currentUser>
+                    <a href="/game">${game.title}: ${game.numSpectators} Spectators (click to resume your game)</a>
+                    <#else >
+                    <a href="/spectator/game?gameID=${game.gameID}">${game.title}: ${game.numSpectators} Spectators</a>
+                </#if>
+
             </p>
         </#list>
       </#if>
@@ -49,9 +55,9 @@
         <p>
             Replays:
         </p>
-           <#list replayList as replay>
+           <#list replayList as game>
               <p>
-                   <a href="/replay/game?gameID=${replay.gameID}">${replay.title}</a>
+                   <a href="/replay/game?gameID=${game.gameID}">${game.title}</a>
               </p>
            </#list>
       </#if>

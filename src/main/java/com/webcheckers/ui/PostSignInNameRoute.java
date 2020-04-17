@@ -34,6 +34,10 @@ public class PostSignInNameRoute implements Route {
     public static final String TITLE= "title";
     public static final String TITLE_MSG= "Welcome!";
     public static final String HELP_MSG = "Error: Please enter a correctly formatted username";
+    public static final String NAME_ALREADY_TAKE = "Error: This username is already taken";
+    public static final String VIEW_NAME = "signin.ftl";
+    public static final String GAME_WON = "gameWon";
+
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
      *
@@ -62,9 +66,6 @@ public class PostSignInNameRoute implements Route {
     private boolean userNameValid(final String username){
         // assume username is valid
         boolean isValid = true;
-
-//        if(username == null)
-  //          return (false);
 
         if(username.equals("")){
             return (false);
@@ -112,12 +113,12 @@ public class PostSignInNameRoute implements Route {
         LOG.finer("PostSignInName is invoked.");
         //
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Welcome!");
+        vm.put(TITLE, TITLE_MSG);
 
         final Session httpSession = request.session();
 
         //retrieve playerServices
-        final PlayerServices playerServices = httpSession.attribute("playerServices");
+        final PlayerServices playerServices = httpSession.attribute(GetHomeRoute.PLAYER_SERVICES);
 
         // retrieve username assume username is valid until
         // it fails from checks
@@ -125,8 +126,8 @@ public class PostSignInNameRoute implements Route {
 
         //error check username
         if( !userNameValid(userName) ) {
-            vm.put("message", Message.info(HELP_MSG));
-            return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+            vm.put(MESSAGE_TYPE_ATTR, Message.info(HELP_MSG));
+            return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
         }
 
         //create player with input userName
@@ -134,10 +135,10 @@ public class PostSignInNameRoute implements Route {
 
         //error check playerlobby
         if(gameCenter.isSignedIn(player)) {
-            vm.put("message", Message.info("Error: This username is already taken"));
-            return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+            vm.put(MESSAGE_TYPE_ATTR, Message.info(NAME_ALREADY_TAKE));
+            return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
         }
-        httpSession.attribute("gameWon",false);
+        httpSession.attribute(GAME_WON,false);
         playerServices.signIn(player.getName());
         // render the View
         response.redirect(WebServer.HOME_URL);

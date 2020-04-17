@@ -8,6 +8,14 @@ public class Player {
    */
 
   private String name;  /** The name of the player. */
+  /** total played by player */
+  private int totalGames;
+
+  /* total games on by player */
+  private int gamesWon;
+
+  /** is the user playing */
+  private boolean isPlaying;
 
   /** Creates a new Player object with the specified name.
    * @param name        The name of the Player.
@@ -31,6 +39,40 @@ public class Player {
     }
     that = (Player) o;
     return this.name.equals(that.name);
+  }
+
+  public boolean getIsPlaying() {
+    return isPlaying;
+  }
+
+  public void setIsPlaying(boolean playing) {
+    isPlaying = playing;
+  }
+
+  /**
+   * Tell the player they won the game
+   */
+  public void wonGame(){
+    totalGames++;
+    gamesWon++;
+  }
+
+  /**
+   * Tell player they lost a game
+   */
+  public void lostGame(){
+    totalGames++;
+  }
+
+  /**
+   * Get the win rate of the player
+   * @return
+   */
+  public int getWinRate(){
+    if(totalGames == 0){
+      return 0;
+    }
+    return (int)(((gamesWon + 0.0)/totalGames)*100);
   }
 
   @Override

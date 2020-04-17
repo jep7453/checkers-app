@@ -3,8 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.model.*;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /***
  * This is unit test for Logic from Player Class.
@@ -26,5 +25,19 @@ class PlayerTest {
     assertFalse(player1.hashCode()==player2.hashCode());
     assertTrue(player1.hashCode()==player3.hashCode());
     assertFalse(player1.equals(four));
+  }
+
+  @Test
+  public void gameWon(){
+    Player player1 = new Player("name");
+    player1.wonGame();
+    assertEquals(100, player1.getWinRate());
+  }
+
+  @Test
+  public void gameLost(){
+    Player player1 = new Player("name");
+    player1.lostGame();
+    assertEquals(0, player1.getWinRate());
   }
 }

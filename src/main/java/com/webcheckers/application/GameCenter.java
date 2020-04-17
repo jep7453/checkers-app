@@ -1,10 +1,10 @@
 package com.webcheckers.application;
 
+import com.webcheckers.model.Checkerboard;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Replay;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -30,6 +30,12 @@ public class GameCenter {
     private ArrayList<Replay> replays;
 
     private ArrayList<Replay> replaysWatched;
+    /** The comparator to sort games by win rates */
+    private WinRateComparator winComparator;
+
+    /** A custom board */
+    private String customBoard;
+
     /**
      * game id
      */
@@ -43,6 +49,17 @@ public class GameCenter {
         lobby = new PlayerLobby();
         games = new ArrayList<>();
         replays = new ArrayList<>();
+        this.winComparator = new WinRateComparator();
+        this.customBoard = null;
+    }
+
+    public GameCenter(String customBoard){
+        currentlyPlaying = new ArrayList<>();
+        lobby = new PlayerLobby();
+        games = new ArrayList<>();
+        replays = new ArrayList<>();
+        this.winComparator = new WinRateComparator();
+        this.customBoard = customBoard;
     }
 
     /**
@@ -115,6 +132,14 @@ public class GameCenter {
      */
     public void gameFinished(Game game){
         if(games.contains(game)){
+            // adjust win rates of players
+            if(game.getWinner().equals(game.getRedPlayer())){
+                game.getRedPlayer().wonGame();
+                game.getWinner().lostGame();
+            } else {
+                game.getRedPlayer().lostGame();
+                game.getWhitePlayer().wonGame();
+            }
             playerFinishedPlayingGame(game.getRedPlayer());
             playerFinishedPlayingGame(game.getWhitePlayer());
             games.remove(game);
@@ -148,6 +173,11 @@ public class GameCenter {
                     "' and '" + player2.getName() + "'");
             playerStartedPlayingGame(player1);
             playerStartedPlayingGame(player2);
+            games.sort(winComparator);
+
+            // for testing
+            if(customBoard != null)
+                game.setBoard(new Checkerboard(customBoard));
             return (game);
         }
 

@@ -125,7 +125,7 @@ public class Replay {
         return game.getGameID();
     }
 
-    //adding a test check fro replay test
+    //adding a test check for replay test
     public int getMovesMade() {
         return movesMade;
     }

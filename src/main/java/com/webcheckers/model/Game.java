@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Game {
+public class Game implements Comparable {
 
   /** Represents a checker Game.
    *
@@ -19,6 +19,8 @@ public class Game {
   private final String gameID;
   private String title;
   private boolean turnSubmitted;
+  private int numSpectators;
+  private ArrayList<Player> spectators;
 
   Player currentPlayer;         /** The Player whose turn it currently is. */
 
@@ -33,6 +35,8 @@ public class Game {
     this.gameID = UUID.randomUUID().toString();
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
+    this.spectators = new ArrayList<>();
+    this.numSpectators = 0;
     this.board = new Checkerboard();
     this.currentPlayer = redPlayer;
     this.resigned=false;
@@ -97,9 +101,33 @@ public class Game {
   }
 
   public void makeMove(Move move) {
-    turnSubmitted=false;
     board.makeMove(move);
     moves.add(move);
+  }
+
+  /**
+   * Tell a game a player started spectating
+   * @param player the new spectator
+   */
+  public synchronized void startedSpectating(Player player){
+    if(!spectators.contains(player))
+      spectators.add(player);
+  }
+
+  /**
+   * Tell the game a spectator left
+   * @param player the spectator leaving
+   */
+  public synchronized void stoppedSpectating(Player player){
+    spectators.remove(player);
+  }
+
+  /**
+   * Get the total number of spectators
+   * @return the total number of spectators
+   */
+  public synchronized int getNumSpectators(){
+    return this.spectators.size();
   }
 
   public Player currentPlayer() {
@@ -143,7 +171,6 @@ public class Game {
     else {
       return singleValidation(lastMove);
     }
-
   }
 
   public boolean jumpValidation(Move lastMove) {
@@ -382,5 +409,27 @@ public List<Move> getMoves() {
   }
 
 
+  /**
+   * Gets the player who won
+   * @return the player who won
+   */
+  public Player getWinner(){
+    return (this.winner);
+  }
+
+  /**
+   * Gets the ranking of the game or the average
+   * if the players ranks
+   *
+   * @return the average of the players ranks
+   */
+  public int getGameRank(){
+    return (int)(0.5 * (double)(this.redPlayer.getWinRate() + this.whitePlayer.getWinRate()));
+  }
+
+  @Override
+  public int compareTo(Object o) {
+    return Integer.compare(this.getGameRank(), ((Game) o).getGameRank());
+  }
 }
 

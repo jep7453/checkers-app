@@ -1,16 +1,13 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Move;
 import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
-import spark.Session;
 import spark.Route;
-
+import spark.Session;
 
 import java.util.logging.Logger;
 
@@ -64,7 +61,7 @@ public class PostCheckTurnRoute implements Route {
       turnMessage= Message.info("true");
     }
     else {
-      turnMessage=Message.error("false");
+      turnMessage=Message.error("Waiting for turn");
     }
     return gson.toJson(turnMessage,Message.class);
   }

@@ -32,8 +32,13 @@ public class GetGameRoute implements Route {
         static final String BOARD_VIEW_KEY = "board";
         private static final Message WELCOME_MSG = Message.info("Lets begin the game.");
         private final GameCenter gameCenter; // game center
-
+        public static final String CURRENT_USER = "currentUser";
+        public static final String TITLE = "title";
+        public static final String PLAYER_SERVICES_ATTR = "playerServices";
+        public static final String OPPONENT_PARAM = "player";
+        public static final String MSG = "message";
         public static final String HOME_URL = "/";
+        public static final String IS_PLAYING = "isPlaying"; // to allow spectatorship during an active game
 
         /**
          * The URL pattern to request the Sign in Page.
@@ -70,7 +75,7 @@ public class GetGameRoute implements Route {
 
                 //title
                 Map<String, Object> vm = new HashMap<>();
-                vm.put("title", "Welcome!");
+                vm.put(TITLE, "Welcome!");
 
 
                 //gameID
@@ -80,9 +85,9 @@ public class GetGameRoute implements Route {
 
                 //currentUser
                 final Session httpSession = request.session();
-                final PlayerServices playerServices = httpSession.attribute("playerServices");
-                vm.put("currentUser", playerServices.getThisPlayer().getName());
-                String opponentName = request.queryParams("player");
+                final PlayerServices playerServices = httpSession.attribute(PLAYER_SERVICES_ATTR);
+                vm.put(CURRENT_USER, playerServices.getThisPlayer().getName());
+                String opponentName = request.queryParams(OPPONENT_PARAM);
                 playerServices.setOpponent(opponentName);
 
 
@@ -130,6 +135,7 @@ public class GetGameRoute implements Route {
                         whitePlayer = playerServices.getOpponent();
                 }
 
+
                 if(gameCenter.isCurrentlyPlaying(whitePlayer) && !gameCenter.isCurrentlyPlaying(redPlayer)) {
                         httpSession.attribute("error","Error: Player already in game");
                         response.redirect(WebServer.HOME_URL);
@@ -176,11 +182,12 @@ public class GetGameRoute implements Route {
                         Gson gson = new Gson();
                         vm.put(MODE_OPTIONS_AS_JSON,gson.toJson(modeOptionsAsJSON));
                         gameCenter.gameFinished(playerServices.currentGame());
+                        vm.put(IS_PLAYING, false);
                         playerServices.finishedGame();
                 }
 
                 //message
-                vm.put("message", WELCOME_MSG);
+                vm.put(MSG, WELCOME_MSG);
 
                 vm.put(GAME_ID,null);
                 //todo: use FreeMaker Template to fillup game.ftl

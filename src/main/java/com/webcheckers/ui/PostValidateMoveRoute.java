@@ -1,16 +1,14 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
-import spark.Session;
 import spark.Route;
-
+import spark.Session;
 
 import java.util.logging.Logger;
 
@@ -26,6 +24,8 @@ public class PostValidateMoveRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(com.webcheckers.ui.PostValidateMoveRoute.class.getName());
     private Gson gson;
+    private static final String MOVE_MADE = "Move made";
+    private static final String INVALID_MOVE = "Move Invalid";
 
 
 
@@ -58,15 +58,15 @@ public class PostValidateMoveRoute implements Route {
       final Move move = gson.fromJson(request.queryParams("actionData"),Move.class);
 
       Session httpSession =request.session();
-      PlayerServices playerServices = httpSession.attribute("playerServices");
+      PlayerServices playerServices = httpSession.attribute(GetHomeRoute.PLAYER_SERVICES);
       Game game = playerServices.currentGame();
       move.setType(game.isValidMove(move));
         if(move.getType()!= Move.Type.INVALID) {
           game.makeMove(move);
-          moveMessage = Message.info("Move made");
+          moveMessage = Message.info(MOVE_MADE);
         }
         else {
-          moveMessage = Message.error("Move Invalid");
+          moveMessage = Message.error(INVALID_MOVE);
         }
         return gson.toJson(moveMessage,Message.class);
     }

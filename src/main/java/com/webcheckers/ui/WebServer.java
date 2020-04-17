@@ -78,6 +78,10 @@ public class WebServer {
 
   public static final String BACK_URL = "/backupMove";
 
+  public static final String SPECTATOR_GAME = "/spectator/game";
+
+  public static final String SPECTATOR_STOP_WATCHING = "/spectator/stopWatching";
+
   public static final String REPLAY_URL = "/replay/game";
 
   public static final String REPLAY_STOP_URL = "/replay/stopWatching";
@@ -85,6 +89,8 @@ public class WebServer {
   public static final String NEXT_URL = "/replay/nextTurn";
 
   public static final String PREVIOUS_URL = "/replay/previousTurn";
+
+  public static final String SPECTATOR_CHECK_TURN = "/spectator/checkTurn";
 
 
 
@@ -98,6 +104,7 @@ public class WebServer {
   private final TemplateEngine templateEngine;
   private final Gson gson;
   private final GameCenter gamecenter;
+  private String board;
 
   //
   // Constructor
@@ -121,7 +128,16 @@ public class WebServer {
     //
     this.templateEngine = templateEngine;
     this.gson = gson;
+    this.board = "";
     this.gamecenter = gameCenter;
+  }
+
+  /**
+   * Set a custom board
+   * @param board the name of the text file
+   */
+  public void setBoard(String board){
+    this.board = board;
   }
 
   //
@@ -195,6 +211,13 @@ public class WebServer {
     get(GAME_URL, new GetGameRoute(templateEngine,  gamecenter));
     //Post Sign out
     post(SIGN_OUT_URL, new PostSignOutRoute(gamecenter, templateEngine));
+
+    get(SPECTATOR_GAME, new GetSpectatorGameRoute(gamecenter, templateEngine));
+
+    get(SPECTATOR_STOP_WATCHING, new GetSpectatorStopWatchingRoute(gamecenter));
+
+    post(SPECTATOR_CHECK_TURN, new PostSpectatorCheckTurnRoute(gson));
+
 
     post(NEXT_URL, new PostReplayNextTurnRoute(gson));
     post(PREVIOUS_URL, new PostReplayPreviousTurnRoute(gson));
