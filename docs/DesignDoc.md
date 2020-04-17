@@ -139,6 +139,11 @@ with the WebCheckers application.
 > -GetSpectatorStopWatchingRoute: tells the game the player has stopped spectating and redirects to the homepage
 >- GetReplayGameRoute: tells the game that a player would like to replay a previous finished game
 >- GetReplayStopWatchingRoute: tells the game that a player would like to stop the replay and redirects to the homepage
+> - GetSpectatorGameRoute: gets a game to spectate, tells the game there is a spectator and renders 
+> the board
+> - PostCheckTurnRoute: checks to see if the baord has been updated and refreshed page
+> - GetSpectatorStopWatchingRoute: Tells the game the spectator stopped watching 
+> and redirects to home page
 >
 >The server responsible for handling the POST and GET routes is the Jetty WebServer in the WebServer Class.
 
