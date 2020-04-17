@@ -1,14 +1,25 @@
 MVN=mvn
 PANDOC=pandoc
 
+# Specify a board to use. Assumes BOARD is at
+# src/main/resources/testboards/BOARD.txt
+ifdef BOARD
+EXEC_ARGS+= -Dexec.mainClass="src.main.java.com.webcheckers.Application.java" -Dexec.args="$(BOARD).txt"
+endif
+
+.PHONY: run build build-test clean test test-ui test-appl test-model
+
 run:
-	$(MVN) compile exec:java
+	$(MVN) compile exec:java $(EXEC_ARGS)
 
 build:
 	$(MVN) compile
 
 build-test:
 	$(MVN) test-compile
+
+clean:
+	$(MVN) -q clean
 
 test: test-ui test-appl test-model
 
