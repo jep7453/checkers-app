@@ -106,7 +106,9 @@ with the WebCheckers application.
 > where they can enter a name, and sign in with it. If the name is not acceptable it will redirect them
 > back to the sign in page. If the name is accepted it will send them back to the home page where they can 
 > see other players that are signed in. Upon selecting another players name, it will send them to a game page
-> where they can player their game of checkers.
+> where they can player their game of checkers. If a user is not playing a game and there is an ongoing
+> game, then the user has the option to spectate the ongoing game. If a user is not playing a game,
+> and a previous game has been finished then the user can choose to watch the replay.
 
 
 ### UI Tier
@@ -135,6 +137,8 @@ with the WebCheckers application.
 >- PostValidateMoveRoute: It submits a single move made by the player to the server to check if that action is valid or not.
 > -GetSpectatorGameRoute: Finds game that a user would like to spectate and renders the game view for the spectator
 > -GetSpectatorStopWatchingRoute: tells the game the player has stopped spectating and redirects to the homepage
+>- GetReplayGameRoute: tells the game that a player would like to replay a previous finished game
+>- GetReplayStopWatchingRoute: tells the game that a player would like to stop the replay and redirects to the homepage
 >
 >The server responsible for handling the POST and GET routes is the Jetty WebServer in the WebServer Class.
 
