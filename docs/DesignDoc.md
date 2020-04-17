@@ -148,6 +148,9 @@ with the WebCheckers application.
  >
  > **How Resigning works**
  > ![Resignation Sequence Diagram](resign_sequence_diagram.png)
+>
+> **How spectating works**
+>![Spectator Sequence Diagram](SpectatorSequenceDiagram.png)
 
 ### Application Tier
 
