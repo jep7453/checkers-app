@@ -52,7 +52,7 @@ geometry: margin=1in
 > - As a player I want to sign out so I can stop checkers.
 
 
-### Roadmap of Enhancements
+### Enhancements
 > - Spectate, As a Player I want to spectate a game so that I can see the moves being made in real time.
 >  - Active games are sorted by an aerage of the players rank
 >  - Player rank determined by percentage of games won to total games
