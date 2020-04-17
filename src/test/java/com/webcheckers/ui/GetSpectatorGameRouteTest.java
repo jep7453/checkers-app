@@ -90,7 +90,7 @@ public class GetSpectatorGameRouteTest {
         testHelper.assertViewModelIsaMap();
         testHelper.assertViewModelAttribute(GetGameRoute.RED_PLAYER, redplayer.getName());
         testHelper.assertViewModelAttribute(GetGameRoute.WHITE_PLAYER, whitePlayer.getName());
-        testHelper.assertViewModelAttribute(GetGameRoute.CURRENT_USER, spectator.getName());
+        testHelper.assertViewModelAttribute(GetGameRoute.CURRENT_USER, whitePlayer.getName());
     }
 
     /**
