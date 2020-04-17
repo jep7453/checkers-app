@@ -176,6 +176,10 @@ public class PlayerServices {
         return (game);
     }
 
+    /**
+     * Can the player leave the game?
+     * @return true if they can, false if not
+     */
     public boolean getCanLeaveGame() {
         return canLeaveGame;
     }
@@ -192,6 +196,10 @@ public class PlayerServices {
         return (null);
     }
 
+    /**
+     * Put a game the player just played into their replay list
+     * @param replay the replay to save
+     */
     public void addReplay(Replay replay) {
         replays.add(replay);
     }

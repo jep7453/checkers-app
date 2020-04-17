@@ -53,10 +53,18 @@ public class GameCenter {
         this.customBoard = null;
     }
 
+    /**
+     * Set the string for the custom board
+     * @param customBoard the name of the file in the "/testboard directory
+     */
     public void setCustomBoard(String customBoard) {
         this.customBoard = customBoard;
     }
 
+    /**
+     * Custom board constructor
+     * @param customBoard the custom board to load
+     */
     public GameCenter(String customBoard){
         currentlyPlaying = new ArrayList<>();
         lobby = new PlayerLobby();
@@ -66,6 +74,10 @@ public class GameCenter {
         this.customBoard = customBoard;
     }
 
+    /**
+     * Get the file name of the custom board
+     * @return the file name
+     */
     public String getCustomBoard() {
         return customBoard;
     }
@@ -196,6 +208,11 @@ public class GameCenter {
         return null;
     }
 
+    /**
+     * Find an active game by a player
+     * @param player the player in the game
+     * @return the game if found, null if not
+     */
     public Game findActiveGame(Player player){
         // search list of games
         for(Game g : games){
@@ -244,9 +261,14 @@ public class GameCenter {
         return games;
     }
 
+    /**
+     * get the replays watched
+     * @return replays watched
+     */
     public ArrayList<Replay> getReplaysWatched() {
         return replaysWatched;
     }
+
     /**
      * Returns list of current games
      */
