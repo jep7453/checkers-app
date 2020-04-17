@@ -5,6 +5,7 @@ import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.PlayerServices;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Replay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * This is a test suite for the @Link GameCenterTest class
@@ -82,11 +81,8 @@ public class GameCenterTest {
     public void gameFinished(){
         CuT.signIn(player1);
         CuT.signIn(player2);
-        Game game = mock(Game.class);
-        when(game.isGameWon()).thenReturn(true);
-        when(game.getRedPlayer()).thenReturn(player1);
-        when(game.getWhitePlayer()).thenReturn(player1);
-
+        Game game = CuT.getGame(player1, player2);
+        assertNotNull(CuT.findActiveGame(player1));
         CuT.gameFinished(game);
         assertNull(CuT.findActiveGame(player1));
     }
@@ -120,5 +116,28 @@ public class GameCenterTest {
     public void playerServicesGet(){
         PlayerServices test =  CuT.newPlayerServices();
         assertSame(test.getClass(), PlayerServices.class);
+    }
+
+    /**
+     * Game from ID returns correct game
+     */
+    @Test
+    public void gameFromIDTest() {
+        CuT.signIn(player1);
+        CuT.signIn(player2);
+        Game game = CuT.getGame(player1, player2);
+        assertTrue(CuT.gameFromID(game.getGameID()).equals(game));
+    }
+
+    /**
+     * Replay from ID returns correct game
+     */
+    @Test
+    public void replayFromIDTest() {
+        CuT.signIn(player1);
+        CuT.signIn(player2);
+        Game game = CuT.getGame(player1, player2);
+        CuT.gameFinished(game);
+        assertTrue(CuT.replayFromID(game.getGameID()).equals(CuT.getReplays().get(0)));
     }
 }
