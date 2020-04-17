@@ -151,6 +151,9 @@ with the WebCheckers application.
 >
 > **How spectating works**
 >![Spectator Sequence Diagram](SpectatorSequenceDiagram.png)
+>
+> **How replay works**
+>![Replay Sequence Diagram](ReplaySequenceDiagram.png)
 
 ### Application Tier
 
