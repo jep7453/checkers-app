@@ -59,6 +59,10 @@
           <fieldset id="game-toolbar">
             <legend>Controls</legend>
             <div class="toolbar"></div>
+            <#if viewMode == "SPECTATOR">
+            		 <button onclick="window.location.href =
+            			 '/spectator/game?gameID=${gameID}&orientation=${otherOrientation}';">Rotate Board</a>
+            </#if>
             <#if viewMode == "REPLAY">
 		 <button onclick="window.location.href = 
 			 '/replay/game?gameID=${gameID}&orientation=${otherOrientation}';">Rotate Board</a>
