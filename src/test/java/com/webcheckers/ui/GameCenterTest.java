@@ -82,6 +82,7 @@ public class GameCenterTest {
         CuT.signIn(player2);
         Game game = CuT.getGame(player1, player2);
         assertNotNull(CuT.findActiveGame(player1));
+        game.resigned();
         CuT.gameFinished(game);
         assertNull(CuT.findActiveGame(player1));
     }
@@ -136,6 +137,7 @@ public class GameCenterTest {
         CuT.signIn(player1);
         CuT.signIn(player2);
         Game game = CuT.getGame(player1, player2);
+        game.resigned();
         CuT.gameFinished(game);
         assertTrue(CuT.replayFromID(game.getGameID()).equals(CuT.getReplays().get(0)));
     }
